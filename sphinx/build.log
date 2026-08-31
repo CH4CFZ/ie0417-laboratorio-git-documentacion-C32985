@@ -1,0 +1,119 @@
+Running Sphinx v9.1.0
+loading translations [es]... done
+making output directory... done
+[autosummary] generating autosummary for: api/black.brackets.rst, api/black.cache.rst, api/black.comments.rst, api/black.concurrency.rst, api/black.const.rst, api/black.debug.rst, api/black.files.rst, api/black.handle_ipynb_magics.rst, api/black.linegen.rst, api/black.lines.rst, ..., api/black.report.rst, api/black.resources.rst, api/black.rst, api/black.rusty.rst, api/black.schema.rst, api/black.strings.rst, api/black.trans.rst, api/modules.rst, index.rst, introduccion.rst
+building [mo]: targets for 0 po files that are out of date
+writing output... 
+building [html]: targets for 26 source files that are out of date
+updating environment: [new config] 26 added, 0 changed, 0 removed
+reading sources... [  4%] api/black
+reading sources... [  8%] api/black.brackets
+reading sources... [ 12%] api/black.cache
+reading sources... [ 15%] api/black.comments
+reading sources... [ 19%] api/black.concurrency
+reading sources... [ 23%] api/black.const
+reading sources... [ 27%] api/black.debug
+reading sources... [ 31%] api/black.files
+reading sources... [ 35%] api/black.handle_ipynb_magics
+reading sources... [ 38%] api/black.linegen
+reading sources... [ 42%] api/black.lines
+reading sources... [ 46%] api/black.mode
+reading sources... [ 50%] api/black.nodes
+reading sources... [ 54%] api/black.numerics
+reading sources... [ 58%] api/black.output
+reading sources... [ 62%] api/black.parsing
+reading sources... [ 65%] api/black.ranges
+reading sources... [ 69%] api/black.report
+reading sources... [ 73%] api/black.resources
+reading sources... [ 77%] api/black.rusty
+reading sources... [ 81%] api/black.schema
+reading sources... [ 85%] api/black.strings
+reading sources... [ 88%] api/black.trans
+reading sources... [ 92%] api/modules
+reading sources... [ 96%] index
+reading sources... [100%] introduccion
+
+/home/claude/candidatos/black/src/black/nodes.py:docstring of black.nodes.parent_type:5: WARNING: Definition list ends without a blank line; unexpected unindent. [docutils]
+/home/claude/candidatos/black/src/black/nodes.py:docstring of black.nodes.replace_child:3: WARNING: Bullet list ends without a blank line; unexpected unindent. [docutils]
+/home/claude/candidatos/black/src/black/nodes.py:docstring of black.nodes.replace_child:5: WARNING: Definition list ends without a blank line; unexpected unindent. [docutils]
+/home/claude/candidatos/black/src/black/strings.py:docstring of black.strings.assert_is_leaf_string:8: WARNING: Bullet list ends without a blank line; unexpected unindent. [docutils]
+/home/claude/candidatos/black/src/black/trans.py:docstring of black.trans.insert_str_child_factory:16: WARNING: Definition list ends without a blank line; unexpected unindent. [docutils]
+/home/claude/candidatos/black/src/black/trans.py:docstring of black.trans.insert_str_child_factory:17: WARNING: Definition list ends without a blank line; unexpected unindent. [docutils]
+/home/claude/candidatos/black/src/black/trans.py:docstring of black.trans.insert_str_child_factory:19: WARNING: Inline literal start-string without end-string. [docutils]
+/home/claude/candidatos/black/src/black/trans.py:docstring of black.trans.insert_str_child_factory:29: WARNING: Inline literal start-string without end-string. [docutils]
+/home/claude/candidatos/black/src/black/trans.py:docstring of black.trans.insert_str_child_factory:29: WARNING: Inline interpreted text or phrase reference start-string without end-string. [docutils]
+/home/claude/candidatos/black/src/black/trans.py:docstring of black.trans.insert_str_child_factory:43: WARNING: Definition list ends without a blank line; unexpected unindent. [docutils]
+/home/claude/candidatos/black/src/black/trans.py:docstring of black.trans.insert_str_child_factory:44: WARNING: Definition list ends without a blank line; unexpected unindent. [docutils]
+/home/claude/candidatos/black/src/black/trans.py:docstring of black.trans.is_valid_index_factory:3: WARNING: Inline literal start-string without end-string. [docutils]
+/home/claude/candidatos/black/src/black/trans.py:docstring of black.trans.is_valid_index_factory:11: WARNING: Inline literal start-string without end-string. [docutils]
+/home/claude/candidatos/black/src/black/trans.py:docstring of black.trans.is_valid_index_factory:11: WARNING: Inline interpreted text or phrase reference start-string without end-string. [docutils]
+looking for now-outdated files... none found
+pickling environment... done
+checking consistency... done
+preparing documents... done
+copying assets... 
+copying static files... 
+Writing evaluated template result to /home/claude/entrega/sphinx/build_html/_static/basic.css
+Writing evaluated template result to /home/claude/entrega/sphinx/build_html/_static/documentation_options.js
+Writing evaluated template result to /home/claude/entrega/sphinx/build_html/_static/language_data.js
+Writing evaluated template result to /home/claude/entrega/sphinx/build_html/_static/js/versions.js
+copying static files: done
+copying extra files... 
+copying extra files: done
+copying assets: done
+writing output... [  4%] api/black
+writing output... [  8%] api/black.brackets
+writing output... [ 12%] api/black.cache
+writing output... [ 15%] api/black.comments
+writing output... [ 19%] api/black.concurrency
+writing output... [ 23%] api/black.const
+writing output... [ 27%] api/black.debug
+writing output... [ 31%] api/black.files
+writing output... [ 35%] api/black.handle_ipynb_magics
+writing output... [ 38%] api/black.linegen
+writing output... [ 42%] api/black.lines
+writing output... [ 46%] api/black.mode
+writing output... [ 50%] api/black.nodes
+writing output... [ 54%] api/black.numerics
+writing output... [ 58%] api/black.output
+writing output... [ 62%] api/black.parsing
+writing output... [ 65%] api/black.ranges
+writing output... [ 69%] api/black.report
+writing output... [ 73%] api/black.resources
+writing output... [ 77%] api/black.rusty
+writing output... [ 81%] api/black.schema
+writing output... [ 85%] api/black.strings
+writing output... [ 88%] api/black.trans
+writing output... [ 92%] api/modules
+writing output... [ 96%] index
+writing output... [100%] introduccion
+
+generating indices... genindex py-modindex done
+highlighting module code... [  5%] black
+highlighting module code... [ 10%] black.brackets
+highlighting module code... [ 14%] black.cache
+highlighting module code... [ 19%] black.comments
+highlighting module code... [ 24%] black.concurrency
+highlighting module code... [ 29%] black.debug
+highlighting module code... [ 33%] black.files
+highlighting module code... [ 38%] black.handle_ipynb_magics
+highlighting module code... [ 43%] black.linegen
+highlighting module code... [ 48%] black.lines
+highlighting module code... [ 52%] black.mode
+highlighting module code... [ 57%] black.nodes
+highlighting module code... [ 62%] black.numerics
+highlighting module code... [ 67%] black.output
+highlighting module code... [ 71%] black.parsing
+highlighting module code... [ 76%] black.ranges
+highlighting module code... [ 81%] black.report
+highlighting module code... [ 86%] black.rusty
+highlighting module code... [ 90%] black.schema
+highlighting module code... [ 95%] black.strings
+highlighting module code... [100%] black.trans
+
+writing additional pages... search done
+dumping search index in Spanish (code: es)... done
+dumping object inventory... done
+build succeeded, 14 warnings.
+
+The HTML pages are in build_html.
