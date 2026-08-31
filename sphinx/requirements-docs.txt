@@ -1,0 +1,16 @@
+# Black se instala directamente desde el commit exacto analizado:
+# pip install git+https://github.com/psf/black.git@8947c48ef2077c3a301b03c1e814dc2e3f78436e
+click==8.5.0
+packaging==26.3
+pathspec==1.1.1
+platformdirs==4.11.5
+pytokens==0.4.1
+Sphinx==9.1.0
+sphinx_rtd_theme==3.1.0
+sphinxcontrib-applehelp==2.0.0
+sphinxcontrib-devhelp==2.0.0
+sphinxcontrib-htmlhelp==2.1.0
+sphinxcontrib-jquery==4.1
+sphinxcontrib-jsmath==1.0.1
+sphinxcontrib-qthelp==2.0.0
+sphinxcontrib-serializinghtml==2.0.0
