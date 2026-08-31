@@ -754,8 +754,6 @@ En los últimos niveles se comprendió cómo se integra el trabajo de varias ram
 
 ## Análisis obligatorio de Git 
 
-> Cada respuesta debe incluir al menos un ejemplo tomado de los niveles resueltos arriba. Los espacios `[COMPLETAR]` deben llenarse citando el ID del nivel correspondiente (por ejemplo "como en M1.4...").
-
 1. **¿Cuál es la diferencia entre `merge` y `rebase`? ¿Qué ocurre con el historial en cada caso?**
    `merge` crea un commit nuevo con dos padres que une dos historiales divergentes sin alterar los commits existentes. `rebase` reescribe el historial creando copias de los commits sobre una nueva base, produciendo un historial lineal pero cambiando los identificadores de los commits reaplicados, esto se vio evidenciado en el nivel M1.4 pues el arbol del grafico paso de tener dos bifurcaciones a estat lineal. 
 
