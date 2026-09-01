@@ -1,0 +1,19 @@
+<map id="formatter&lt; T, char, typename std::enable_if&lt; std::is_base_of&lt; std::exception, T &gt;::value &gt;::type &gt;::write_padded" name="formatter&lt; T, char, typename std::enable_if&lt; std::is_base_of&lt; std::exception, T &gt;::value &gt;::type &gt;::write_padded">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,124,199,208"/>
+<area shape="rect" id="Node000002" href="$namespacedetail.html#ac1d79c868f281cf669a044a2236f0e89" title=" " alt="" coords="247,104,457,129"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="198,144,273,129,274,135,199,150"/>
+<area shape="rect" id="Node000006" href="$namespacedetail.html#a29dacf26eedc9e3575fb57329a5ca0a3" title=" " alt="" coords="302,177,402,203"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="199,173,289,181,288,187,199,178"/>
+<area shape="rect" id="Node000003" href="$base_8h.html#aa6e4c2631b1a133286786130bf11a9cc" title=" " alt="" coords="557,29,600,55"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="391,101,543,51,544,56,393,106"/>
+<area shape="rect" id="Node000004" href="$format-inl_8h.html#a5555893692b00b61b3886349332fd01f" title=" " alt="" coords="529,79,628,104"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="457,102,515,96,516,101,458,108"/>
+<area shape="rect" id="Node000005" href="$namespacedetail.html#a4855e668246c731a97484efc329f2aac" title=" " alt="" coords="505,128,652,153"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="458,125,492,129,491,134,457,130"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="556,38,537,27,535,15,549,6,579,3,605,5,620,11,623,22,614,32,611,28,618,21,616,15,603,10,579,8,551,11,540,17,542,24,559,34"/>
+<area shape="rect" id="Node000007" href="$color_8h.html#a680fd35ea38d8c3b75d640cacfab53fd" title=" " alt="" coords="545,177,612,203"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="402,187,531,187,531,193,402,193"/>
+<area shape="rect" id="Node000008" href="$namespacedetail.html#a05e3e231207d3f28f83261c2e7ad2fe5" title=" " alt="" coords="507,251,650,276"/>
+<area shape="poly" id="edge8_Node000006_Node000008" title=" " alt="" coords="393,200,526,244,524,249,392,205"/>
+<area shape="poly" id="edge9_Node000008_Node000008" title=" " alt="" coords="542,252,534,242,538,232,553,226,579,224,611,228,623,237,619,241,609,233,579,229,554,231,542,236,539,242,546,249"/>
+</map>

@@ -1,0 +1,12 @@
+<map id="detail::write" name="detail::write">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,105,56"/>
+<area shape="rect" id="Node000002" href="$format-inl_8h.html#a5555893692b00b61b3886349332fd01f" title=" " alt="" coords="154,5,253,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,32,140,26,141,31,106,37"/>
+<area shape="rect" id="Node000003" href="$namespacedetail.html#a29dacf26eedc9e3575fb57329a5ca0a3" title=" " alt="" coords="153,55,253,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="106,49,140,54,139,60,105,54"/>
+<area shape="rect" id="Node000004" href="$color_8h.html#a680fd35ea38d8c3b75d640cacfab53fd" title=" " alt="" coords="339,17,406,43"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="253,54,325,38,326,43,254,59"/>
+<area shape="rect" id="Node000005" href="$namespacedetail.html#a05e3e231207d3f28f83261c2e7ad2fe5" title=" " alt="" coords="301,91,444,116"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="254,75,300,85,299,90,253,81"/>
+<area shape="poly" id="edge5_Node000005_Node000005" title=" " alt="" coords="345,92,339,82,342,73,353,66,373,64,396,67,406,76,402,80,393,72,373,69,355,71,346,76,344,82,349,89"/>
+</map>

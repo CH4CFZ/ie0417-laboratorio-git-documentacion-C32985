@@ -1,0 +1,11 @@
+<map id="vformat" name="vformat">
+<area shape="rect" id="Node000001" title=" " alt="" coords="259,55,333,80"/>
+<area shape="rect" id="Node000002" href="$xchar_8h.html#ad6ffb0d2adddec03527640e3511e9a77" title=" " alt="" coords="144,5,211,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="251,52,208,33,210,28,253,47"/>
+<area shape="rect" id="Node000003" href="$xchar_8h.html#a1d7a0b8fce519d1d08758bfeca40fcab" title=" " alt="" coords="144,55,211,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="245,70,211,70,211,65,245,65"/>
+<area shape="rect" id="Node000004" href="$xchar_8h.html#a082005429bfc92924f174a8e1b8619cf" title=" " alt="" coords="144,104,211,129"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="253,88,210,106,208,101,251,83"/>
+<area shape="rect" id="Node000005" href="$xchar_8h.html#ac097a9b8ef6c373be32b7ce1bf329d0b" title="Converts value to std::wstring using the default format for type T." alt="" coords="5,104,96,129"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="130,119,96,119,96,114,130,114"/>
+</map>

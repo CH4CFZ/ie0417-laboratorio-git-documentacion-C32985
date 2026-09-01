@@ -1,0 +1,18 @@
+<map id="formatter&lt; std::error_code &gt;::format" name="formatter&lt; std::error_code &gt;::format">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,97,164,137"/>
+<area shape="rect" id="Node000002" href="$classdetail_1_1buffer.html#aeb33e0a2d2be2bbca9e0236c148089c8" title="Returns a pointer to the buffer data (not null&#45;terminated)." alt="" coords="246,29,389,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="130,94,211,63,240,55,241,61,213,69,132,99"/>
+<area shape="rect" id="Node000003" href="$namespacedetail.html#ac1d79c868f281cf669a044a2236f0e89" title=" " alt="" coords="212,79,423,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="164,105,198,102,199,107,165,111"/>
+<area shape="rect" id="Node000007" href="$classdetail_1_1buffer.html#a8685285932360c284d19003fc4ba3edc" title="Returns the size of this buffer." alt="" coords="248,128,387,153"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="165,122,234,129,234,135,164,128"/>
+<area shape="rect" id="Node000008" href="$classbasic__specs.html#ab451ba98e651e28feab471f1871f1e5c" title=" " alt="" coords="249,177,386,203"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="134,134,213,163,242,171,240,177,211,169,132,139"/>
+<area shape="rect" id="Node000004" href="$base_8h.html#aa6e4c2631b1a133286786130bf11a9cc" title=" " alt="" coords="523,29,565,55"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="376,76,509,47,510,52,377,81"/>
+<area shape="rect" id="Node000005" href="$format-inl_8h.html#a5555893692b00b61b3886349332fd01f" title=" " alt="" coords="495,79,593,104"/>
+<area shape="poly" id="edge5_Node000003_Node000005" title=" " alt="" coords="423,89,480,89,480,94,423,94"/>
+<area shape="rect" id="Node000006" href="$namespacedetail.html#a4855e668246c731a97484efc329f2aac" title=" " alt="" coords="471,128,617,153"/>
+<area shape="poly" id="edge6_Node000003_Node000006" title=" " alt="" coords="377,101,472,122,471,128,376,107"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="521,38,503,27,500,15,515,6,544,3,570,5,585,11,589,22,580,32,576,28,584,21,581,15,569,10,544,8,516,11,505,17,507,24,524,34"/>
+</map>

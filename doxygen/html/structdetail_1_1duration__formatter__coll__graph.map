@@ -1,0 +1,9 @@
+<map id="detail::duration_formatter&lt; Char, Rep, Period &gt;" name="detail::duration_formatter&lt; Char, Rep, Period &gt;">
+<area shape="rect" id="Node000001" title=" " alt="" coords="82,181,273,221"/>
+<area shape="rect" id="Node000002" href="$classbasic__appender.html" title=" " alt="" coords="5,93,189,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="118,127,163,179,159,183,114,131"/>
+<area shape="rect" id="Node000003" href="$classdetail_1_1buffer.html" title=" " alt="" coords="15,5,180,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="100,45,100,93,95,93,95,45"/>
+<area shape="rect" id="Node000004" href="$classlocale__ref.html" title=" " alt="" coords="214,93,301,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="241,131,196,183,192,179,237,127"/>
+</map>

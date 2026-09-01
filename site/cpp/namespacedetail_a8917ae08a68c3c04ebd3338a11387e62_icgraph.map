@@ -1,0 +1,15 @@
+<map id="detail::write_digit2_separated" name="detail::write_digit2_separated">
+<area shape="rect" id="Node000001" title=" " alt="" coords="431,69,575,109"/>
+<area shape="rect" id="Node000002" href="$classdetail_1_1tm__writer.html#a0bde45708906c93315b487f53fcf4057" title=" " alt="" coords="244,5,383,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="429,67,372,48,374,43,431,62"/>
+<area shape="rect" id="Node000004" href="$classdetail_1_1tm__writer.html#a23f9e904d6c3f7c990065e218ec30ac1" title=" " alt="" coords="244,69,383,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="417,92,383,92,383,87,417,87"/>
+<area shape="rect" id="Node000006" href="$classdetail_1_1tm__writer.html#a472013df4de61a40940d291bb092b051" title=" " alt="" coords="244,133,383,173"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="431,116,374,136,372,131,429,111"/>
+<area shape="rect" id="Node000003" href="$structdetail_1_1duration__formatter.html#ad9e131f8bfd982dc0e64790dba0a9329" title=" " alt="" coords="5,5,196,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="230,28,196,28,196,23,230,23"/>
+<area shape="rect" id="Node000005" href="$structformatter_3_01year__month__day_00_01Char_01_4.html#afd07d03cd75f58699b78ba75fee24323" title=" " alt="" coords="12,69,189,109"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="230,92,189,92,189,87,230,87"/>
+<area shape="rect" id="Node000007" href="$classdetail_1_1tm__writer.html#ad3f81bfcf9ee2f4be505b0b80e17f38c" title=" " alt="" coords="31,133,170,173"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="230,156,170,156,170,151,230,151"/>
+</map>

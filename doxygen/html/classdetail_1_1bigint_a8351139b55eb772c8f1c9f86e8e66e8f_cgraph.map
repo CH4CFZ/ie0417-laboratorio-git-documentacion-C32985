@@ -1,0 +1,22 @@
+<map id="detail::bigint::assign_pow10" name="detail::bigint::assign_pow10">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,131,160,171"/>
+<area shape="rect" id="Node000002" href="$namespacedetail.html#af252d1b8eaeab79d234b012c14fd58b0" title=" " alt="" coords="215,77,357,102"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="149,128,229,104,231,109,150,133"/>
+<area shape="rect" id="Node000006" href="$classdetail_1_1bigint.html#a15833eda9c0cc326a77b0a37ac208a20" title=" " alt="" coords="208,198,364,223"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="152,168,230,192,229,197,151,173"/>
+<area shape="rect" id="Node000003" href="$namespacedetail.html#ad00fda1ba244e2bc2ee99476eb1d57a0" title=" " alt="" coords="422,5,565,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="327,74,414,47,416,52,329,79"/>
+<area shape="rect" id="Node000004" href="$namespacedetail.html#a75ed2634319883d038944529dbb954e2" title=" " alt="" coords="423,69,564,109"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="358,87,409,87,409,92,358,92"/>
+<area shape="rect" id="Node000005" href="$namespacedetail.html#a1fe84ebaf96215ce0665d95b3124c2df" title=" " alt="" coords="623,77,785,102"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="565,87,609,87,609,92,565,92"/>
+<area shape="rect" id="Node000007" href="$classdetail_1_1bigint.html#ad23c661d46b255d93b1f4e7e4ce09f53" title=" " alt="" coords="423,133,564,173"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="332,195,409,174,410,179,333,201"/>
+<area shape="rect" id="Node000008" href="$classdetail_1_1buffer.html#a8685285932360c284d19003fc4ba3edc" title="Returns the size of this buffer." alt="" coords="635,169,773,194"/>
+<area shape="poly" id="edge9_Node000006_Node000008" title=" " alt="" coords="364,203,621,184,621,190,365,208"/>
+<area shape="rect" id="Node000009" href="$classbasic__memory__buffer.html#a9a5d3f229ccaf48e4176d7cdcfd84383" title=" " alt="" coords="412,248,575,288"/>
+<area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="333,221,408,242,407,247,332,226"/>
+<area shape="rect" id="Node000010" href="$namespacedetail.html#a4855e668246c731a97484efc329f2aac" title=" " alt="" coords="420,313,567,338"/>
+<area shape="poly" id="edge10_Node000006_Node000010" title=" " alt="" coords="304,222,351,259,413,298,431,306,429,310,411,302,348,263,300,226"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="565,160,621,168,621,173,564,165"/>
+</map>

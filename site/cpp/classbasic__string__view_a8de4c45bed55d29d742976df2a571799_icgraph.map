@@ -1,0 +1,9 @@
+<map id="basic_string_view::remove_prefix" name="basic_string_view::remove_prefix">
+<area shape="rect" id="Node000001" title=" " alt="" coords="497,37,643,77"/>
+<area shape="rect" id="Node000002" href="$classparse__context.html#aa797d1308d9cd7a7755327c6db352665" title="Advances the begin iterator to it." alt="" coords="252,45,449,70"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="484,60,449,60,449,55,484,55"/>
+<area shape="rect" id="Node000003" href="$classbasic__format__arg.html#a3b7fa96ef8955aafd18aa6f7e6b7ce5c" title=" " alt="" coords="11,5,198,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="239,46,198,40,198,35,240,40"/>
+<area shape="rect" id="Node000004" href="$classdetail_1_1format__string__checker.html#a46989250888510a42557dcaa938d371b" title=" " alt="" coords="5,69,204,109"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="240,74,205,79,204,74,239,69"/>
+</map>
