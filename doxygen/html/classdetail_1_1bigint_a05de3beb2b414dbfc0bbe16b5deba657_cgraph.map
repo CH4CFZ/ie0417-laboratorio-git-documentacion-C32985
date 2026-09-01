@@ -1,0 +1,19 @@
+<map id="detail::bigint::align" name="detail::bigint::align">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,141,149,167"/>
+<area shape="rect" id="Node000002" href="$classdetail_1_1buffer.html#aeb33e0a2d2be2bbca9e0236c148089c8" title="Returns a pointer to the buffer data (not null&#45;terminated)." alt="" coords="207,5,350,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="87,139,131,91,162,64,196,40,209,33,211,38,199,44,165,68,134,95,91,143"/>
+<area shape="rect" id="Node000003" href="$namespacedetail.html#a818b390bd30ad25b638f7b067cb50f15" title=" " alt="" coords="229,55,328,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="99,139,143,115,196,90,219,82,221,87,198,95,146,120,102,144"/>
+<area shape="rect" id="Node000005" href="$classdetail_1_1bigint.html#ad23c661d46b255d93b1f4e7e4ce09f53" title=" " alt="" coords="208,105,349,145"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="149,141,194,134,195,140,150,146"/>
+<area shape="rect" id="Node000006" href="$classdetail_1_1buffer.html#a8685285932360c284d19003fc4ba3edc" title="Returns the size of this buffer." alt="" coords="408,140,547,165"/>
+<area shape="poly" id="edge8_Node000001_Node000006" title=" " alt="" coords="150,153,197,154,360,154,394,153,395,158,360,159,197,159,150,159"/>
+<area shape="rect" id="Node000007" href="$classbasic__memory__buffer.html#a9a5d3f229ccaf48e4176d7cdcfd84383" title=" " alt="" coords="197,219,360,259"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="109,164,219,212,217,216,107,169"/>
+<area shape="rect" id="Node000008" href="$namespacedetail.html#a4855e668246c731a97484efc329f2aac" title=" " alt="" coords="205,284,352,309"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="90,165,134,216,165,244,199,269,213,276,211,281,196,274,161,248,130,219,86,169"/>
+<area shape="rect" id="Node000004" href="$namespacedetail.html#adecb5dbdc5faeb0d252ab0f4cb92c8a9" title=" " alt="" coords="426,55,529,80"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="328,65,412,65,412,70,328,70"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="445,56,438,46,441,36,455,30,477,28,504,32,516,40,512,45,502,36,477,33,456,35,445,40,443,46,449,53"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="350,132,395,138,394,144,349,137"/>
+</map>

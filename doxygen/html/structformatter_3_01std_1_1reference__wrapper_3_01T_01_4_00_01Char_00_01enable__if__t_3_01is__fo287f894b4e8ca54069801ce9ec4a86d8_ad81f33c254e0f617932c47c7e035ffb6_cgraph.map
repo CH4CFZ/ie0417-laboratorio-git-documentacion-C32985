@@ -1,0 +1,5 @@
+<map id="formatter&lt; std::reference_wrapper&lt; T &gt;, Char, enable_if_t&lt; is_formattable&lt; remove_cvref_t&lt; T &gt;, Char &gt;::value &amp;&amp;!detail::has_format_as&lt; T &gt;::value &amp;&amp;!detail::has_format_as_member&lt; T &gt;::value &gt; &gt;::format" name="formatter&lt; std::reference_wrapper&lt; T &gt;, Char, enable_if_t&lt; is_formattable&lt; remove_cvref_t&lt; T &gt;, Char &gt;::value &amp;&amp;!detail::has_format_as&lt; T &gt;::value &amp;&amp;!detail::has_format_as_member&lt; T &gt;::value &gt; &gt;::format">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,253,119"/>
+<area shape="rect" id="Node000002" href="$color_8h.html#a680fd35ea38d8c3b75d640cacfab53fd" title=" " alt="" coords="301,49,368,75"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="254,59,288,59,288,65,254,65"/>
+</map>

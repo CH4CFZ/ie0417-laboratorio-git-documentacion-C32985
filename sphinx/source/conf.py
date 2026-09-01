@@ -13,7 +13,7 @@ import sys
 # (aunque en esta entrega también se instaló en el entorno virtual con
 # `pip install .` para que sus dependencias declaradas queden resueltas).
 BLACK_SRC = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "..", "..", "..", "candidatos", "black", "src")
+    os.path.join(os.path.dirname(__file__), "..", "..", "..", "black-fuente", "src")
 )
 sys.path.insert(0, BLACK_SRC)
 

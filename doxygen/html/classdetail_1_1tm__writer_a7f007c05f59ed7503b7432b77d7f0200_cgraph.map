@@ -1,0 +1,10 @@
+<map id="detail::tm_writer::on_day_of_year" name="detail::tm_writer::on_day_of_year">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,22,144,62"/>
+<area shape="rect" id="Node000002" href="$namespacedetail.html#ac0e83d3dc2ba3f2f63d4710da3e1b45b" title=" " alt="" coords="192,29,351,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="144,39,179,39,179,45,144,45"/>
+<area shape="rect" id="Node000003" href="$namespacedetail.html#a818b390bd30ad25b638f7b067cb50f15" title=" " alt="" coords="399,29,497,55"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="351,39,385,39,385,45,351,45"/>
+<area shape="rect" id="Node000004" href="$namespacedetail.html#adecb5dbdc5faeb0d252ab0f4cb92c8a9" title=" " alt="" coords="545,29,648,55"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="498,39,531,39,531,45,498,45"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="572,31,567,21,569,11,580,5,597,3,617,6,626,15,622,18,614,11,597,8,581,10,574,15,572,20,576,28"/>
+</map>

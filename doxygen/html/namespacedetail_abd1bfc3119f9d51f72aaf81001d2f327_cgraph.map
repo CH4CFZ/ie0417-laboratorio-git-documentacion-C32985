@@ -1,0 +1,18 @@
+<map id="detail::write" name="detail::write">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,111,105,136"/>
+<area shape="rect" id="Node000002" href="$namespacedetail.html#ae970ad8cf6b25d7896f788089ca1b0eb" title=" " alt="" coords="153,61,300,87"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="99,108,167,88,169,93,101,113"/>
+<area shape="rect" id="Node000007" href="$namespacedetail.html#ad066261eea6878e8474f069668e9a592" title=" " alt="" coords="155,111,298,136"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="105,121,142,121,142,126,105,126"/>
+<area shape="rect" id="Node000008" href="$format_8h.html#adb6e274f8eb0b74b2865215e1b49c535" title=" " alt="" coords="207,160,247,185"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="101,133,194,161,193,166,99,139"/>
+<area shape="rect" id="Node000003" href="$namespacedetail.html#a300bc96ee936e9f6ef3565c8dff68a72" title=" " alt="" coords="348,22,495,62"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="300,59,334,54,335,59,300,65"/>
+<area shape="rect" id="Node000005" href="$namespacedetail.html#a75ed2634319883d038944529dbb954e2" title=" " alt="" coords="351,86,492,126"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="300,83,337,90,336,95,300,89"/>
+<area shape="rect" id="Node000004" href="$namespacedetail.html#adecb5dbdc5faeb0d252ab0f4cb92c8a9" title=" " alt="" coords="573,29,675,55"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="495,39,559,39,559,45,495,45"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="591,31,584,21,587,11,601,5,624,3,652,6,664,16,660,20,650,11,624,8,602,10,591,15,589,20,595,28"/>
+<area shape="rect" id="Node000006" href="$namespacedetail.html#a1fe84ebaf96215ce0665d95b3124c2df" title=" " alt="" coords="543,93,705,119"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="492,103,529,103,529,109,492,109"/>
+</map>

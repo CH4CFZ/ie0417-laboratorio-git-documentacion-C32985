@@ -1,0 +1,15 @@
+<map id="basic_specs::dynamic_width" name="basic_specs::dynamic_width">
+<area shape="rect" id="Node000001" title=" " alt="" coords="247,200,411,240"/>
+<area shape="rect" id="Node000002" href="$structformatter_3_01bytes_01_4.html#a241e55955c26ece96e7df9029b3cf5a4" title=" " alt="" coords="27,5,177,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="308,189,263,124,232,89,197,60,176,48,179,43,200,55,236,85,267,120,312,186"/>
+<area shape="rect" id="Node000003" href="$structformatter_3_01std_1_1complex_3_01T_01_4_00_01Char_01_4.html#aa62b28a5bebe60b586c9936443e3669b" title=" " alt="" coords="11,69,193,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="294,193,250,157,197,124,171,112,173,107,200,119,253,153,297,189"/>
+<area shape="rect" id="Node000004" href="$structformatter_3_01T_00_01char_00_01typename_01std_1_1enable__if_3_01std_1_1is__base__of_3_01std369b0d8e9c4d722950acabeda16337b.html#a4ef348cfedc93ef62177762991ae2272" title=" " alt="" coords="5,134,199,218"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="233,204,198,197,199,192,234,199"/>
+<area shape="rect" id="Node000005" href="$structdetail_1_1native__formatter.html#af6f15bad58e42d84e9e3a55324b30492" title=" " alt="" coords="13,243,191,283"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="234,241,191,249,190,243,233,235"/>
+<area shape="rect" id="Node000006" href="$structformatter_3_01group__digits__view_3_01T_01_4_01_4.html#ad4a94105ce2e3ca473930da056b3edbb" title=" " alt="" coords="13,307,191,347"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="286,250,200,297,170,309,168,304,198,292,284,245"/>
+<area shape="rect" id="Node000007" href="$structdetail_1_1format__handler.html#a09d27ff5a97fa95ecc391da6bc255f41" title=" " alt="" coords="19,371,185,411"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="308,253,262,308,233,336,200,361,177,373,175,368,197,356,229,332,258,304,303,250"/>
+</map>

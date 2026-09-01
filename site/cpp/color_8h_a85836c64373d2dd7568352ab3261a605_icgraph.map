@@ -1,0 +1,14 @@
+<map id="print" name="print">
+<area shape="rect" id="Node000001" title=" " alt="" coords="349,55,401,80"/>
+<area shape="rect" id="Node000002" href="$color_8h.html#a60847f7e952841f7021e501457928a3f" title=" " alt="" coords="239,5,291,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="335,53,290,32,293,27,338,48"/>
+<area shape="rect" id="Node000003" href="$color_8h.html#a86192aabb5e3ab5d0461f757afbbfb4e" title=" " alt="" coords="235,55,295,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="335,79,296,78,296,73,336,73"/>
+<area shape="rect" id="Node000004" href="$color_8h.html#afd5c9e188d84e05dc264a370d38fae66" title=" " alt="" coords="229,104,301,129"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="338,87,296,106,293,101,336,82"/>
+<area shape="poly" id="edge3_Node000003_Node000001" title=" " alt="" coords="309,56,349,57,349,62,309,61"/>
+<area shape="rect" id="Node000005" href="$color_8h.html#aad27c4224b542f016d1709fdee0dcbcc" title=" " alt="" coords="117,104,181,129"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="215,119,182,119,182,114,215,114"/>
+<area shape="rect" id="Node000006" href="$color_8h.html#a2cd4ca40185be0695d2c4646d92acc43" title=" " alt="" coords="5,104,69,129"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="103,119,69,119,69,114,103,114"/>
+</map>

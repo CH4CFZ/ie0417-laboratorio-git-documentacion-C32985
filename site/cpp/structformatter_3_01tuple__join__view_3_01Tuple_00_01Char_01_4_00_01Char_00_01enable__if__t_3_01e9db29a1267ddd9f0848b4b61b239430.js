@@ -1,0 +1,5 @@
+var structformatter_3_01tuple__join__view_3_01Tuple_00_01Char_01_4_00_01Char_00_01enable__if__t_3_01e9db29a1267ddd9f0848b4b61b239430 =
+[
+    [ "format", "structformatter_3_01tuple__join__view_3_01Tuple_00_01Char_01_4_00_01Char_00_01enable__if__t_3_01e9db29a1267ddd9f0848b4b61b239430.html#ae9c238d779217a81eae41da5025be6ad", null ],
+    [ "parse", "structformatter_3_01tuple__join__view_3_01Tuple_00_01Char_01_4_00_01Char_00_01enable__if__t_3_01e9db29a1267ddd9f0848b4b61b239430.html#af03ed0783ce9dc120a40f34ccf9d2552", null ]
+];

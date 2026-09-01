@@ -1,0 +1,5 @@
+<map id="detail::is_contiguous&lt; T, void_t&lt; decltype(std::declval&lt; T &amp; &gt;().data()), decltype(std::declval&lt; T &amp; &gt;().size()), decltype(std::declval&lt; T &amp; &gt;().operator[](size_t()))&gt; &gt;" name="detail::is_contiguous&lt; T, void_t&lt; decltype(std::declval&lt; T &amp; &gt;().data()), decltype(std::declval&lt; T &amp; &gt;().size()), decltype(std::declval&lt; T &amp; &gt;().operator[](size_t()))&gt; &gt;">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,79,248,192"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="71,5,183,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="129,44,129,78,124,78,124,44"/>
+</map>
