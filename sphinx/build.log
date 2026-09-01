@@ -1,12 +1,13 @@
 Running Sphinx v9.1.0
 loading translations [es]... done
 WARNING: html_static_path entry '_static' does not exist
+loading pickled environment... The configuration has changed (2 options: 'html_permalinks_icon', 'jquery_use_sri')
+done
 [autosummary] generating autosummary for: index.rst, introduccion.rst
 building [mo]: targets for 0 po files that are out of date
 writing output... 
-building [html]: targets for 2 source files that are out of date
-updating environment: [new config] 2 added, 0 changed, 0 removed
-reading sources... [ 50%] index
+building [html]: targets for 0 source files that are out of date
+updating environment: 0 added, 1 changed, 0 removed
 reading sources... [100%] introduccion
 
 /home/isaacfz/DisenoSoftwre/REAL/ie0417-laboratorio-git-documentacion-C32985/sphinx/source/introduccion.rst:58: WARNING: toctree contains reference to nonexisting document 'api/modules' [toc.not_readable]
