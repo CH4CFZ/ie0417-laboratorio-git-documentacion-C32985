@@ -1,0 +1,672 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>black.handle_ipynb_magics &mdash; documentación de Black - 0.1 (commit 8947c48)</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=0dabe907"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/translations.js?v=f85f4cfb"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Black
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenidos:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduccion.html">Introducción a Black</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Black</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Código de módulo</a></li>
+          <li class="breadcrumb-item"><a href="../black.html">black</a></li>
+      <li class="breadcrumb-item active">black.handle_ipynb_magics</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Código fuente para black.handle_ipynb_magics</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Functions to process IPython magics with."""</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">ast</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">collections</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">dataclasses</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">secrets</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">string</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Collection</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">lru_cache</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">importlib.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">find_spec</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TypeGuard</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">black.mode</span><span class="w"> </span><span class="kn">import</span> <span class="n">Mode</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">black.output</span><span class="w"> </span><span class="kn">import</span> <span class="n">out</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">black.report</span><span class="w"> </span><span class="kn">import</span> <span class="n">NothingChanged</span>
+
+<span class="n">TRANSFORMED_MAGICS</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">((</span>
+    <span class="s2">"get_ipython().run_cell_magic"</span><span class="p">,</span>
+    <span class="s2">"get_ipython().system"</span><span class="p">,</span>
+    <span class="s2">"get_ipython().getoutput"</span><span class="p">,</span>
+    <span class="s2">"get_ipython().run_line_magic"</span><span class="p">,</span>
+<span class="p">))</span>
+<span class="n">TOKENS_TO_IGNORE</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">((</span>
+    <span class="s2">"ENDMARKER"</span><span class="p">,</span>
+    <span class="s2">"NL"</span><span class="p">,</span>
+    <span class="s2">"NEWLINE"</span><span class="p">,</span>
+    <span class="s2">"COMMENT"</span><span class="p">,</span>
+    <span class="s2">"DEDENT"</span><span class="p">,</span>
+    <span class="s2">"UNIMPORTANT_WS"</span><span class="p">,</span>
+    <span class="s2">"ESCAPED_NL"</span><span class="p">,</span>
+<span class="p">))</span>
+<span class="n">PYTHON_CELL_MAGICS</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">((</span>
+    <span class="s2">"capture"</span><span class="p">,</span>
+    <span class="s2">"prun"</span><span class="p">,</span>
+    <span class="s2">"pypy"</span><span class="p">,</span>
+    <span class="s2">"python"</span><span class="p">,</span>
+    <span class="s2">"python3"</span><span class="p">,</span>
+    <span class="s2">"time"</span><span class="p">,</span>
+    <span class="s2">"timeit"</span><span class="p">,</span>
+<span class="p">))</span>
+
+
+<div class="viewcode-block" id="Replacement">
+<a class="viewcode-back" href="../../api/black.handle_ipynb_magics.html#black.handle_ipynb_magics.Replacement">[documentos]</a>
+<span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Replacement</span><span class="p">:</span>
+    <span class="n">mask</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">src</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+
+<div class="viewcode-block" id="jupyter_dependencies_are_installed">
+<a class="viewcode-back" href="../../api/black.handle_ipynb_magics.html#black.handle_ipynb_magics.jupyter_dependencies_are_installed">[documentos]</a>
+<span class="nd">@lru_cache</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">jupyter_dependencies_are_installed</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">warn</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="n">installed</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">find_spec</span><span class="p">(</span><span class="s2">"tokenize_rt"</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">find_spec</span><span class="p">(</span><span class="s2">"IPython"</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">installed</span> <span class="ow">and</span> <span class="n">warn</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">"Skipping .ipynb files as Jupyter dependencies are not installed.</span><span class="se">\n</span><span class="s2">"</span>
+            <span class="s1">'You can fix this by running ``pip install "black[jupyter]"``'</span>
+        <span class="p">)</span>
+        <span class="n">out</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">installed</span></div>
+
+
+
+<div class="viewcode-block" id="validate_cell">
+<a class="viewcode-back" href="../../api/black.handle_ipynb_magics.html#black.handle_ipynb_magics.validate_cell">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_cell</span><span class="p">(</span><span class="n">src</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="n">Mode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Check that cell does not already contain TransformerManager transformations,</span>
+<span class="sd">    or non-Python cell magics, which might cause tokenizer_rt to break because of</span>
+<span class="sd">    indentations.</span>
+
+<span class="sd">    If a cell contains ``!ls``, then it'll be transformed to</span>
+<span class="sd">    ``get_ipython().system('ls')``. However, if the cell originally contained</span>
+<span class="sd">    ``get_ipython().system('ls')``, then it would get transformed in the same way:</span>
+
+<span class="sd">        &gt;&gt;&gt; TransformerManager().transform_cell("get_ipython().system('ls')")</span>
+<span class="sd">        "get_ipython().system('ls')\n"</span>
+<span class="sd">        &gt;&gt;&gt; TransformerManager().transform_cell("!ls")</span>
+<span class="sd">        "get_ipython().system('ls')\n"</span>
+
+<span class="sd">    Due to the impossibility of safely roundtripping in such situations, cells</span>
+<span class="sd">    containing transformed magics will be ignored.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">transformed_magic</span> <span class="ow">in</span> <span class="n">src</span> <span class="k">for</span> <span class="n">transformed_magic</span> <span class="ow">in</span> <span class="n">TRANSFORMED_MAGICS</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">NothingChanged</span>
+
+    <span class="n">line</span> <span class="o">=</span> <span class="n">_get_code_start</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"</span><span class="si">%%</span><span class="s2">"</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span>
+        <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">maxsplit</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">:]</span>
+        <span class="ow">not</span> <span class="ow">in</span> <span class="n">PYTHON_CELL_MAGICS</span> <span class="o">|</span> <span class="n">mode</span><span class="o">.</span><span class="n">python_cell_magics</span>
+    <span class="p">):</span>
+        <span class="k">raise</span> <span class="n">NothingChanged</span></div>
+
+
+
+<div class="viewcode-block" id="remove_trailing_semicolon">
+<a class="viewcode-back" href="../../api/black.handle_ipynb_magics.html#black.handle_ipynb_magics.remove_trailing_semicolon">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">remove_trailing_semicolon</span><span class="p">(</span><span class="n">src</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Remove trailing semicolon from Jupyter notebook cell.</span>
+
+<span class="sd">    For example,</span>
+
+<span class="sd">        fig, ax = plt.subplots()</span>
+<span class="sd">        ax.plot(x_data, y_data);  # plot data</span>
+
+<span class="sd">    would become</span>
+
+<span class="sd">        fig, ax = plt.subplots()</span>
+<span class="sd">        ax.plot(x_data, y_data)  # plot data</span>
+
+<span class="sd">    Mirrors the logic in `quiet` from `IPython.core.displayhook`, but uses</span>
+<span class="sd">    ``tokenize_rt`` so that round-tripping works fine.</span>
+<span class="sd">    """</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">tokenize_rt</span><span class="w"> </span><span class="kn">import</span> <span class="n">reversed_enumerate</span><span class="p">,</span> <span class="n">src_to_tokens</span><span class="p">,</span> <span class="n">tokens_to_src</span>
+
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">src_to_tokens</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
+    <span class="n">trailing_semicolon</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">reversed_enumerate</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">TOKENS_TO_IGNORE</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">"OP"</span> <span class="ow">and</span> <span class="n">token</span><span class="o">.</span><span class="n">src</span> <span class="o">==</span> <span class="s2">";"</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">tokens</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+            <span class="n">trailing_semicolon</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">break</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">trailing_semicolon</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">src</span><span class="p">,</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="n">tokens_to_src</span><span class="p">(</span><span class="n">tokens</span><span class="p">),</span> <span class="kc">True</span></div>
+
+
+
+<div class="viewcode-block" id="put_trailing_semicolon_back">
+<a class="viewcode-back" href="../../api/black.handle_ipynb_magics.html#black.handle_ipynb_magics.put_trailing_semicolon_back">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">put_trailing_semicolon_back</span><span class="p">(</span><span class="n">src</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">has_trailing_semicolon</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Put trailing semicolon back if cell originally had it.</span>
+
+<span class="sd">    Mirrors the logic in `quiet` from `IPython.core.displayhook`, but uses</span>
+<span class="sd">    ``tokenize_rt`` so that round-tripping works fine.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">has_trailing_semicolon</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">src</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">tokenize_rt</span><span class="w"> </span><span class="kn">import</span> <span class="n">reversed_enumerate</span><span class="p">,</span> <span class="n">src_to_tokens</span><span class="p">,</span> <span class="n">tokens_to_src</span>
+
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">src_to_tokens</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">reversed_enumerate</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">TOKENS_TO_IGNORE</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">tokens</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">_replace</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="n">token</span><span class="o">.</span><span class="n">src</span> <span class="o">+</span> <span class="s2">";"</span><span class="p">)</span>
+        <span class="k">break</span>
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># pragma: nocover</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span>
+            <span class="s2">"INTERNAL ERROR: Was not able to reinstate trailing semicolon. "</span>
+            <span class="s2">"Please report a bug on https://github.com/psf/black/issues.  "</span>
+        <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="kc">None</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">tokens_to_src</span><span class="p">(</span><span class="n">tokens</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="mask_cell">
+<a class="viewcode-back" href="../../api/black.handle_ipynb_magics.html#black.handle_ipynb_magics.mask_cell">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">mask_cell</span><span class="p">(</span><span class="n">src</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">Replacement</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">"""Mask IPython magics so content becomes parseable Python code.</span>
+
+<span class="sd">    For example,</span>
+
+<span class="sd">        %matplotlib inline</span>
+<span class="sd">        'foo'</span>
+
+<span class="sd">    becomes</span>
+
+<span class="sd">        b"25716f358c32750"</span>
+<span class="sd">        'foo'</span>
+
+<span class="sd">    The replacements are returned, along with the transformed code.</span>
+<span class="sd">    """</span>
+    <span class="n">replacements</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Replacement</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">ast</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">SyntaxError</span><span class="p">:</span>
+        <span class="c1"># Might have IPython magics, will process below.</span>
+        <span class="k">pass</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Syntax is fine, nothing to mask, early return.</span>
+        <span class="k">return</span> <span class="n">src</span><span class="p">,</span> <span class="n">replacements</span>
+
+    <span class="kn">from</span><span class="w"> </span><span class="nn">IPython.core.inputtransformer2</span><span class="w"> </span><span class="kn">import</span> <span class="n">TransformerManager</span>
+
+    <span class="n">transformer_manager</span> <span class="o">=</span> <span class="n">TransformerManager</span><span class="p">()</span>
+    <span class="c1"># A side effect of the following transformation is that it also removes any</span>
+    <span class="c1"># empty lines at the beginning of the cell.</span>
+    <span class="n">transformed</span> <span class="o">=</span> <span class="n">transformer_manager</span><span class="o">.</span><span class="n">transform_cell</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
+    <span class="n">transformed</span><span class="p">,</span> <span class="n">cell_magic_replacements</span> <span class="o">=</span> <span class="n">replace_cell_magics</span><span class="p">(</span><span class="n">transformed</span><span class="p">)</span>
+    <span class="n">replacements</span> <span class="o">+=</span> <span class="n">cell_magic_replacements</span>
+    <span class="n">transformed</span> <span class="o">=</span> <span class="n">transformer_manager</span><span class="o">.</span><span class="n">transform_cell</span><span class="p">(</span><span class="n">transformed</span><span class="p">)</span>
+    <span class="n">transformed</span><span class="p">,</span> <span class="n">magic_replacements</span> <span class="o">=</span> <span class="n">replace_magics</span><span class="p">(</span><span class="n">transformed</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">transformed</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">())</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()):</span>
+        <span class="c1"># Multi-line magic, not supported.</span>
+        <span class="k">raise</span> <span class="n">NothingChanged</span>
+    <span class="n">replacements</span> <span class="o">+=</span> <span class="n">magic_replacements</span>
+    <span class="k">return</span> <span class="n">transformed</span><span class="p">,</span> <span class="n">replacements</span></div>
+
+
+
+<div class="viewcode-block" id="create_token">
+<a class="viewcode-back" href="../../api/black.handle_ipynb_magics.html#black.handle_ipynb_magics.create_token">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_token</span><span class="p">(</span><span class="n">n_chars</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Create a randomly generated token that is n_chars characters long."""</span>
+    <span class="k">assert</span> <span class="n">n_chars</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">n_chars</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">secrets</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_letters</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">n_chars</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">"_"</span> <span class="o">+</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">secrets</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_letters</span> <span class="o">+</span> <span class="n">string</span><span class="o">.</span><span class="n">digits</span> <span class="o">+</span> <span class="s2">"_"</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_chars</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="n">n_bytes</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">n_chars</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">token</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_hex</span><span class="p">(</span><span class="n">n_bytes</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">&gt;</span> <span class="n">n_chars</span><span class="p">:</span>
+        <span class="n">token</span> <span class="o">=</span> <span class="n">token</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="c1"># We use a bytestring so that the string does not get interpreted</span>
+    <span class="c1"># as a docstring.</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s1">'b"</span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s1">"'</span></div>
+
+
+
+<div class="viewcode-block" id="get_token">
+<a class="viewcode-back" href="../../api/black.handle_ipynb_magics.html#black.handle_ipynb_magics.get_token">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_token</span><span class="p">(</span><span class="n">src</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">magic</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">existing_tokens</span><span class="p">:</span> <span class="n">Collection</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Return randomly generated token to mask IPython magic with.</span>
+
+<span class="sd">    For example, if 'magic' was `%matplotlib inline`, then a possible</span>
+<span class="sd">    token to mask it with would be `"43fdd17f7e5ddc83"`. The token</span>
+<span class="sd">    will be the same length as the magic, and we make sure that it was</span>
+<span class="sd">    not already present anywhere else in the cell.</span>
+<span class="sd">    """</span>
+    <span class="k">assert</span> <span class="n">magic</span>
+    <span class="n">n_chars</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">magic</span><span class="p">)</span>
+    <span class="n">token</span> <span class="o">=</span> <span class="n">create_token</span><span class="p">(</span><span class="n">n_chars</span><span class="p">)</span>
+    <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">src</span> <span class="ow">or</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">existing_tokens</span><span class="p">:</span>
+        <span class="n">token</span> <span class="o">=</span> <span class="n">create_token</span><span class="p">(</span><span class="n">n_chars</span><span class="p">)</span>
+        <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">counter</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span>
+                <span class="s2">"INTERNAL ERROR: Black was not able to replace IPython magic. "</span>
+                <span class="s2">"Please report a bug on https://github.com/psf/black/issues.  "</span>
+                <span class="sa">f</span><span class="s2">"The magic might be helpful: </span><span class="si">{</span><span class="n">magic</span><span class="si">}</span><span class="s2">"</span>
+            <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="kc">None</span>
+    <span class="k">return</span> <span class="n">token</span></div>
+
+
+
+<div class="viewcode-block" id="replace_cell_magics">
+<a class="viewcode-back" href="../../api/black.handle_ipynb_magics.html#black.handle_ipynb_magics.replace_cell_magics">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">replace_cell_magics</span><span class="p">(</span><span class="n">src</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">Replacement</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Replace cell magic with token.</span>
+
+<span class="sd">    Note that 'src' will already have been processed by IPython's</span>
+<span class="sd">    TransformerManager().transform_cell.</span>
+
+<span class="sd">    Example,</span>
+
+<span class="sd">        get_ipython().run_cell_magic('t', '-n1', 'ls =!ls\n')</span>
+
+<span class="sd">    becomes</span>
+
+<span class="sd">        "a794."</span>
+<span class="sd">        ls =!ls</span>
+
+<span class="sd">    The replacement, along with the transformed code, is returned.</span>
+<span class="sd">    """</span>
+    <span class="n">replacements</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Replacement</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">tree</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
+
+    <span class="n">cell_magic_finder</span> <span class="o">=</span> <span class="n">CellMagicFinder</span><span class="p">()</span>
+    <span class="n">cell_magic_finder</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">cell_magic_finder</span><span class="o">.</span><span class="n">cell_magic</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">src</span><span class="p">,</span> <span class="n">replacements</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="n">cell_magic_finder</span><span class="o">.</span><span class="n">cell_magic</span><span class="o">.</span><span class="n">header</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">get_token</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">header</span><span class="p">)</span>
+    <span class="n">replacements</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Replacement</span><span class="p">(</span><span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">,</span> <span class="n">src</span><span class="o">=</span><span class="n">header</span><span class="p">))</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">mask</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">cell_magic_finder</span><span class="o">.</span><span class="n">cell_magic</span><span class="o">.</span><span class="n">body</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">replacements</span></div>
+
+
+
+<div class="viewcode-block" id="replace_magics">
+<a class="viewcode-back" href="../../api/black.handle_ipynb_magics.html#black.handle_ipynb_magics.replace_magics">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">replace_magics</span><span class="p">(</span><span class="n">src</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">Replacement</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">"""Replace magics within body of cell.</span>
+
+<span class="sd">    Note that 'src' will already have been processed by IPython's</span>
+<span class="sd">    TransformerManager().transform_cell.</span>
+
+<span class="sd">    Example, this</span>
+
+<span class="sd">        get_ipython().run_line_magic('matplotlib', 'inline')</span>
+<span class="sd">        'foo'</span>
+
+<span class="sd">    becomes</span>
+
+<span class="sd">        "5e67db56d490fd39"</span>
+<span class="sd">        'foo'</span>
+
+<span class="sd">    The replacement, along with the transformed code, are returned.</span>
+<span class="sd">    """</span>
+    <span class="n">replacements</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">existing_tokens</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">magic_finder</span> <span class="o">=</span> <span class="n">MagicFinder</span><span class="p">()</span>
+    <span class="n">magic_finder</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">ast</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">src</span><span class="p">))</span>
+    <span class="n">new_srcs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">),</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">magic_finder</span><span class="o">.</span><span class="n">magics</span><span class="p">:</span>
+            <span class="n">offsets_and_magics</span> <span class="o">=</span> <span class="n">magic_finder</span><span class="o">.</span><span class="n">magics</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">offsets_and_magics</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># pragma: nocover</span>
+                <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">"Expecting one magic per line, got: </span><span class="si">{</span><span class="n">offsets_and_magics</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span>
+                    <span class="s2">"Please report a bug on https://github.com/psf/black/issues."</span>
+                <span class="p">)</span>
+            <span class="n">col_offset</span><span class="p">,</span> <span class="n">magic</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">offsets_and_magics</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">col_offset</span><span class="p">,</span>
+                <span class="n">offsets_and_magics</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">magic</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="n">get_token</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">magic</span><span class="p">,</span> <span class="n">existing_tokens</span><span class="p">)</span>
+            <span class="n">replacements</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Replacement</span><span class="p">(</span><span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">,</span> <span class="n">src</span><span class="o">=</span><span class="n">magic</span><span class="p">))</span>
+            <span class="n">existing_tokens</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="p">[:</span><span class="n">col_offset</span><span class="p">]</span> <span class="o">+</span> <span class="n">mask</span>
+        <span class="n">new_srcs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">new_srcs</span><span class="p">),</span> <span class="n">replacements</span></div>
+
+
+
+<div class="viewcode-block" id="unmask_cell">
+<a class="viewcode-back" href="../../api/black.handle_ipynb_magics.html#black.handle_ipynb_magics.unmask_cell">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">unmask_cell</span><span class="p">(</span><span class="n">src</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">replacements</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Replacement</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Remove replacements from cell.</span>
+
+<span class="sd">    For example</span>
+
+<span class="sd">        "9b20"</span>
+<span class="sd">        foo = bar</span>
+
+<span class="sd">    becomes</span>
+
+<span class="sd">        %%time</span>
+<span class="sd">        foo = bar</span>
+<span class="sd">    """</span>
+    <span class="k">for</span> <span class="n">replacement</span> <span class="ow">in</span> <span class="n">replacements</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">src</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">replacement</span><span class="o">.</span><span class="n">mask</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">NothingChanged</span>
+        <span class="n">src</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">replacement</span><span class="o">.</span><span class="n">mask</span><span class="p">,</span> <span class="n">replacement</span><span class="o">.</span><span class="n">src</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">src</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_code_start</span><span class="p">(</span><span class="n">src</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Provides the first line where the code starts.</span>
+
+<span class="sd">    Iterates over lines of code until it finds the first line that doesn't</span>
+<span class="sd">    contain only empty spaces and comments. It removes any empty spaces at the</span>
+<span class="sd">    start of the line and returns it. If such line doesn't exist, it returns an</span>
+<span class="sd">    empty string.</span>
+<span class="sd">    """</span>
+    <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="s2">".+"</span><span class="p">,</span> <span class="n">src</span><span class="p">):</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">line</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"#"</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">line</span>
+    <span class="k">return</span> <span class="s2">""</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_is_ipython_magic</span><span class="p">(</span><span class="n">node</span><span class="p">:</span> <span class="n">ast</span><span class="o">.</span><span class="n">expr</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TypeGuard</span><span class="p">[</span><span class="n">ast</span><span class="o">.</span><span class="n">Attribute</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Check if attribute is IPython magic.</span>
+
+<span class="sd">    Note that the source of the abstract syntax tree</span>
+<span class="sd">    will already have been processed by IPython's</span>
+<span class="sd">    TransformerManager().transform_cell.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">Attribute</span><span class="p">)</span>
+        <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">Call</span><span class="p">)</span>
+        <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">func</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">Name</span><span class="p">)</span>
+        <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="s2">"get_ipython"</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_str_args</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ast</span><span class="o">.</span><span class="n">expr</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="n">str_args</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">Constant</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="n">str_args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arg</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">str_args</span>
+
+
+<div class="viewcode-block" id="CellMagic">
+<a class="viewcode-back" href="../../api/black.handle_ipynb_magics.html#black.handle_ipynb_magics.CellMagic">[documentos]</a>
+<span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">CellMagic</span><span class="p">:</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">params</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">body</span><span class="p">:</span> <span class="nb">str</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">header</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">"%%</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="si">}</span><span class="s2">"</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"%%</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span></div>
+
+
+
+<span class="c1"># ast.NodeVisitor + dataclass = breakage under mypyc.</span>
+<div class="viewcode-block" id="CellMagicFinder">
+<a class="viewcode-back" href="../../api/black.handle_ipynb_magics.html#black.handle_ipynb_magics.CellMagicFinder">[documentos]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CellMagicFinder</span><span class="p">(</span><span class="n">ast</span><span class="o">.</span><span class="n">NodeVisitor</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Find cell magics.</span>
+
+<span class="sd">    Note that the source of the abstract syntax tree</span>
+<span class="sd">    will already have been processed by IPython's</span>
+<span class="sd">    TransformerManager().transform_cell.</span>
+
+<span class="sd">    For example,</span>
+
+<span class="sd">        %%time\n</span>
+<span class="sd">        foo()</span>
+
+<span class="sd">    would have been transformed to</span>
+
+<span class="sd">        get_ipython().run_cell_magic('time', '', 'foo()\n')</span>
+
+<span class="sd">    and we look for instances of the latter.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell_magic</span><span class="p">:</span> <span class="n">CellMagic</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cell_magic</span> <span class="o">=</span> <span class="n">cell_magic</span>
+
+<div class="viewcode-block" id="CellMagicFinder.visit_Expr">
+<a class="viewcode-back" href="../../api/black.handle_ipynb_magics.html#black.handle_ipynb_magics.CellMagicFinder.visit_Expr">[documentos]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_Expr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">ast</span><span class="o">.</span><span class="n">Expr</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Find cell magic, extract header and body."""</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">Call</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="n">_is_ipython_magic</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">func</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">attr</span> <span class="o">==</span> <span class="s2">"run_cell_magic"</span>
+        <span class="p">):</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="n">_get_str_args</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">args</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cell_magic</span> <span class="o">=</span> <span class="n">CellMagic</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">params</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">body</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">generic_visit</span><span class="p">(</span><span class="n">node</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="OffsetAndMagic">
+<a class="viewcode-back" href="../../api/black.handle_ipynb_magics.html#black.handle_ipynb_magics.OffsetAndMagic">[documentos]</a>
+<span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">OffsetAndMagic</span><span class="p">:</span>
+    <span class="n">col_offset</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">magic</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+
+<span class="c1"># Unsurprisingly, subclassing ast.NodeVisitor means we can't use dataclasses here</span>
+<span class="c1"># as mypyc will generate broken code.</span>
+<div class="viewcode-block" id="MagicFinder">
+<a class="viewcode-back" href="../../api/black.handle_ipynb_magics.html#black.handle_ipynb_magics.MagicFinder">[documentos]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MagicFinder</span><span class="p">(</span><span class="n">ast</span><span class="o">.</span><span class="n">NodeVisitor</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Visit cell to look for get_ipython calls.</span>
+
+<span class="sd">    Note that the source of the abstract syntax tree</span>
+<span class="sd">    will already have been processed by IPython's</span>
+<span class="sd">    TransformerManager().transform_cell.</span>
+
+<span class="sd">    For example,</span>
+
+<span class="sd">        %matplotlib inline</span>
+
+<span class="sd">    would have been transformed to</span>
+
+<span class="sd">        get_ipython().run_line_magic('matplotlib', 'inline')</span>
+
+<span class="sd">    and we look for instances of the latter (and likewise for other</span>
+<span class="sd">    types of magics).</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">magics</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">OffsetAndMagic</span><span class="p">]]</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MagicFinder.visit_Assign">
+<a class="viewcode-back" href="../../api/black.handle_ipynb_magics.html#black.handle_ipynb_magics.MagicFinder.visit_Assign">[documentos]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_Assign</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">ast</span><span class="o">.</span><span class="n">Assign</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Look for system assign magics.</span>
+
+<span class="sd">        For example,</span>
+
+<span class="sd">            black_version = !black --version</span>
+<span class="sd">            env = %env var</span>
+
+<span class="sd">        would have been (respectively) transformed to</span>
+
+<span class="sd">            black_version = get_ipython().getoutput('black --version')</span>
+<span class="sd">            env = get_ipython().run_line_magic('env', 'var')</span>
+
+<span class="sd">        and we look for instances of any of the latter.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">Call</span><span class="p">)</span> <span class="ow">and</span> <span class="n">_is_ipython_magic</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">func</span><span class="p">):</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="n">_get_str_args</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">args</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">attr</span> <span class="o">==</span> <span class="s2">"getoutput"</span><span class="p">:</span>
+                <span class="n">src</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"!</span><span class="si">{</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+            <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">attr</span> <span class="o">==</span> <span class="s2">"run_line_magic"</span><span class="p">:</span>
+                <span class="n">src</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"%</span><span class="si">{</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+                <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">src</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">" </span><span class="si">{</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">"Unexpected IPython magic </span><span class="si">{</span><span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">attr</span><span class="si">!r}</span><span class="s2"> found. "</span>
+                    <span class="s2">"Please report a bug on https://github.com/psf/black/issues."</span>
+                <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">magics</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">lineno</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">OffsetAndMagic</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">col_offset</span><span class="p">,</span> <span class="n">src</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">generic_visit</span><span class="p">(</span><span class="n">node</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MagicFinder.visit_Expr">
+<a class="viewcode-back" href="../../api/black.handle_ipynb_magics.html#black.handle_ipynb_magics.MagicFinder.visit_Expr">[documentos]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_Expr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">ast</span><span class="o">.</span><span class="n">Expr</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Look for magics in body of cell.</span>
+
+<span class="sd">        For examples,</span>
+
+<span class="sd">            !ls</span>
+<span class="sd">            !!ls</span>
+<span class="sd">            ?ls</span>
+<span class="sd">            ??ls</span>
+
+<span class="sd">        would (respectively) get transformed to</span>
+
+<span class="sd">            get_ipython().system('ls')</span>
+<span class="sd">            get_ipython().getoutput('ls')</span>
+<span class="sd">            get_ipython().run_line_magic('pinfo', 'ls')</span>
+<span class="sd">            get_ipython().run_line_magic('pinfo2', 'ls')</span>
+
+<span class="sd">        and we look for instances of any of the latter.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">Call</span><span class="p">)</span> <span class="ow">and</span> <span class="n">_is_ipython_magic</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">func</span><span class="p">):</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="n">_get_str_args</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">args</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">attr</span> <span class="o">==</span> <span class="s2">"run_line_magic"</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"pinfo"</span><span class="p">:</span>
+                    <span class="n">src</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"?</span><span class="si">{</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+                <span class="k">elif</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"pinfo2"</span><span class="p">:</span>
+                    <span class="n">src</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"??</span><span class="si">{</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">src</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"%</span><span class="si">{</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+                    <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                        <span class="n">src</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">" </span><span class="si">{</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+            <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">attr</span> <span class="o">==</span> <span class="s2">"system"</span><span class="p">:</span>
+                <span class="n">src</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"!</span><span class="si">{</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+            <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">attr</span> <span class="o">==</span> <span class="s2">"getoutput"</span><span class="p">:</span>
+                <span class="n">src</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"!!</span><span class="si">{</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">NothingChanged</span>  <span class="c1"># unsupported magic.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">magics</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">lineno</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">OffsetAndMagic</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">col_offset</span><span class="p">,</span> <span class="n">src</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">generic_visit</span><span class="p">(</span><span class="n">node</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2026, Laboratorio IE0417.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

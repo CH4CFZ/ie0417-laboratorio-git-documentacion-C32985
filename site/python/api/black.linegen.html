@@ -1,0 +1,451 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>black.linegen module &mdash; documentación de Black - 0.1 (commit 8947c48)</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=0dabe907"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=f85f4cfb"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+    <link rel="next" title="black.lines module" href="black.lines.html" />
+    <link rel="prev" title="black.handle_ipynb_magics module" href="black.handle_ipynb_magics.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Black
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenidos:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../introduccion.html">Introducción a Black</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduccion.html#que-es-black">¿Qué es Black?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduccion.html#organizacion-del-codigo-fuente">Organización del código fuente</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../introduccion.html#alcance-de-esta-documentacion">Alcance de esta documentación</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="modules.html">black</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="black.html">black package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Black</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../introduccion.html">Introducción a Black</a></li>
+          <li class="breadcrumb-item"><a href="modules.html">black</a></li>
+          <li class="breadcrumb-item"><a href="black.html">black package</a></li>
+      <li class="breadcrumb-item active">black.linegen module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/black.linegen.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-black.linegen">
+<span id="black-linegen-module"></span><h1>black.linegen module<a class="headerlink" href="#module-black.linegen" title="Link to this heading"></a></h1>
+<p>Generating lines of code.</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="black.linegen.CannotSplit">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">black.linegen.</span></span><span class="sig-name descname"><span class="pre">CannotSplit</span></span><a class="reference internal" href="../_modules/black/linegen.html#CannotSplit"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.CannotSplit" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="black.trans.html#black.trans.CannotTransform" title="black.trans.CannotTransform"><code class="xref py py-class docutils literal notranslate"><span class="pre">CannotTransform</span></code></a></p>
+<p>A readable split that fits the allotted line length is impossible.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="black.linegen.LineGenerator">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">black.linegen.</span></span><span class="sig-name descname"><span class="pre">LineGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.mode.html#black.mode.Feature" title="black.mode.Feature"><span class="pre">Feature</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/black/linegen.html#LineGenerator"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.LineGenerator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="black.nodes.html#black.nodes.Visitor" title="black.nodes.Visitor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Visitor</span></code></a>[<a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><code class="xref py py-class docutils literal notranslate"><span class="pre">Line</span></code></a>]</p>
+<p>Generates reformatted Line objects.  Empty lines are not emitted.</p>
+<p>Note: destroys the tree it’s visiting by mutating prefixes of its leaves
+in ways that will no longer stringify to valid Python code on the tree.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="black.linegen.LineGenerator.line">
+<span class="sig-name descname"><span class="pre">line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">indent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#LineGenerator.line"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.LineGenerator.line" title="Link to this definition"></a></dt>
+<dd><p>Generate a line.</p>
+<p>If the line is empty, only emit if it makes sense.
+If the line is too long, split it first and then generate.</p>
+<p>If any lines were generated, set up a new current_line.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.linegen.LineGenerator.visit_default">
+<span class="sig-name descname"><span class="pre">visit_default</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#LineGenerator.visit_default"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.LineGenerator.visit_default" title="Link to this definition"></a></dt>
+<dd><p>Default <cite>visit_*()</cite> implementation. Recurses to children of <cite>node</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.linegen.LineGenerator.visit_test">
+<span class="sig-name descname"><span class="pre">visit_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#LineGenerator.visit_test"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.LineGenerator.visit_test" title="Link to this definition"></a></dt>
+<dd><p>Visit an <cite>x if y else z</cite> test</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.linegen.LineGenerator.visit_INDENT">
+<span class="sig-name descname"><span class="pre">visit_INDENT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#LineGenerator.visit_INDENT"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.LineGenerator.visit_INDENT" title="Link to this definition"></a></dt>
+<dd><p>Increase indentation level, maybe yield a line.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.linegen.LineGenerator.visit_DEDENT">
+<span class="sig-name descname"><span class="pre">visit_DEDENT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#LineGenerator.visit_DEDENT"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.LineGenerator.visit_DEDENT" title="Link to this definition"></a></dt>
+<dd><p>Decrease indentation level, maybe yield a line.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.linegen.LineGenerator.visit_stmt">
+<span class="sig-name descname"><span class="pre">visit_stmt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keywords</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#LineGenerator.visit_stmt"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.LineGenerator.visit_stmt" title="Link to this definition"></a></dt>
+<dd><p>Visit a statement.</p>
+<p>This implementation is shared for <cite>if</cite>, <cite>while</cite>, <cite>for</cite>, <cite>try</cite>, <cite>except</cite>,
+<cite>def</cite>, <cite>with</cite>, <cite>class</cite>, <cite>assert</cite>, and assignments.</p>
+<p>The relevant Python language <cite>keywords</cite> for a given statement
+appear as NAME leaves within it. This method puts those on a
+separate line.</p>
+<p><cite>parens</cite> holds a set of string leaf values immediately after which
+invisible parens should be put.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.linegen.LineGenerator.visit_typeparams">
+<span class="sig-name descname"><span class="pre">visit_typeparams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#LineGenerator.visit_typeparams"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.LineGenerator.visit_typeparams" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.linegen.LineGenerator.visit_typevartuple">
+<span class="sig-name descname"><span class="pre">visit_typevartuple</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#LineGenerator.visit_typevartuple"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.LineGenerator.visit_typevartuple" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.linegen.LineGenerator.visit_paramspec">
+<span class="sig-name descname"><span class="pre">visit_paramspec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#LineGenerator.visit_paramspec"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.LineGenerator.visit_paramspec" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.linegen.LineGenerator.visit_dictsetmaker">
+<span class="sig-name descname"><span class="pre">visit_dictsetmaker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#LineGenerator.visit_dictsetmaker"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.LineGenerator.visit_dictsetmaker" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.linegen.LineGenerator.visit_funcdef">
+<span class="sig-name descname"><span class="pre">visit_funcdef</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#LineGenerator.visit_funcdef"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.LineGenerator.visit_funcdef" title="Link to this definition"></a></dt>
+<dd><p>Visit function definition.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.linegen.LineGenerator.visit_match_case">
+<span class="sig-name descname"><span class="pre">visit_match_case</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#LineGenerator.visit_match_case"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.LineGenerator.visit_match_case" title="Link to this definition"></a></dt>
+<dd><p>Visit either a match or case statement.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.linegen.LineGenerator.visit_suite">
+<span class="sig-name descname"><span class="pre">visit_suite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#LineGenerator.visit_suite"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.LineGenerator.visit_suite" title="Link to this definition"></a></dt>
+<dd><p>Visit a suite.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.linegen.LineGenerator.visit_simple_stmt">
+<span class="sig-name descname"><span class="pre">visit_simple_stmt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#LineGenerator.visit_simple_stmt"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.LineGenerator.visit_simple_stmt" title="Link to this definition"></a></dt>
+<dd><p>Visit a statement without nested statements.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.linegen.LineGenerator.visit_async_stmt">
+<span class="sig-name descname"><span class="pre">visit_async_stmt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#LineGenerator.visit_async_stmt"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.LineGenerator.visit_async_stmt" title="Link to this definition"></a></dt>
+<dd><p>Visit <cite>async def</cite>, <cite>async for</cite>, <cite>async with</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.linegen.LineGenerator.visit_decorators">
+<span class="sig-name descname"><span class="pre">visit_decorators</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#LineGenerator.visit_decorators"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.LineGenerator.visit_decorators" title="Link to this definition"></a></dt>
+<dd><p>Visit decorators.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.linegen.LineGenerator.visit_power">
+<span class="sig-name descname"><span class="pre">visit_power</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#LineGenerator.visit_power"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.LineGenerator.visit_power" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.linegen.LineGenerator.visit_SEMI">
+<span class="sig-name descname"><span class="pre">visit_SEMI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#LineGenerator.visit_SEMI"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.LineGenerator.visit_SEMI" title="Link to this definition"></a></dt>
+<dd><p>Remove a semicolon and put the other statement on a separate line.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.linegen.LineGenerator.visit_ENDMARKER">
+<span class="sig-name descname"><span class="pre">visit_ENDMARKER</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#LineGenerator.visit_ENDMARKER"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.LineGenerator.visit_ENDMARKER" title="Link to this definition"></a></dt>
+<dd><p>End of file. Process outstanding comments and end with a newline.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.linegen.LineGenerator.visit_STANDALONE_COMMENT">
+<span class="sig-name descname"><span class="pre">visit_STANDALONE_COMMENT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#LineGenerator.visit_STANDALONE_COMMENT"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.LineGenerator.visit_STANDALONE_COMMENT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.linegen.LineGenerator.visit_factor">
+<span class="sig-name descname"><span class="pre">visit_factor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#LineGenerator.visit_factor"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.LineGenerator.visit_factor" title="Link to this definition"></a></dt>
+<dd><p>Force parentheses between a unary op and a binary power:</p>
+<p>-2 ** 8 -&gt; -(2 ** 8)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.linegen.LineGenerator.visit_tname">
+<span class="sig-name descname"><span class="pre">visit_tname</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#LineGenerator.visit_tname"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.LineGenerator.visit_tname" title="Link to this definition"></a></dt>
+<dd><p>Add potential parentheses around types in function parameter lists to be made
+into real parentheses in case the type hint is too long to fit on a line
+Examples:
+def foo(a: int, b: float = 7): …</p>
+<p>-&gt;</p>
+<p>def foo(a: (int), b: (float) = 7): …</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.linegen.LineGenerator.visit_STRING">
+<span class="sig-name descname"><span class="pre">visit_STRING</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#LineGenerator.visit_STRING"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.LineGenerator.visit_STRING" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.linegen.LineGenerator.visit_NUMBER">
+<span class="sig-name descname"><span class="pre">visit_NUMBER</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#LineGenerator.visit_NUMBER"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.LineGenerator.visit_NUMBER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.linegen.LineGenerator.visit_atom">
+<span class="sig-name descname"><span class="pre">visit_atom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#LineGenerator.visit_atom"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.LineGenerator.visit_atom" title="Link to this definition"></a></dt>
+<dd><p>Visit any atom</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.linegen.LineGenerator.visit_fstring">
+<span class="sig-name descname"><span class="pre">visit_fstring</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#LineGenerator.visit_fstring"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.LineGenerator.visit_fstring" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.linegen.LineGenerator.visit_tstring">
+<span class="sig-name descname"><span class="pre">visit_tstring</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#LineGenerator.visit_tstring"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.LineGenerator.visit_tstring" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.linegen.LineGenerator.visit_comp_for">
+<span class="sig-name descname"><span class="pre">visit_comp_for</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#LineGenerator.visit_comp_for"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.LineGenerator.visit_comp_for" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.linegen.LineGenerator.visit_old_comp_for">
+<span class="sig-name descname"><span class="pre">visit_old_comp_for</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#LineGenerator.visit_old_comp_for"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.LineGenerator.visit_old_comp_for" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.linegen.transform_line">
+<span class="sig-prename descclassname"><span class="pre">black.linegen.</span></span><span class="sig-name descname"><span class="pre">transform_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.mode.html#black.mode.Feature" title="black.mode.Feature"><span class="pre">Feature</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#transform_line"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.transform_line" title="Link to this definition"></a></dt>
+<dd><p>Transform a <cite>line</cite>, potentially splitting it into many lines.</p>
+<p>They should fit in the allotted <cite>line_length</cite> but might not be able to.</p>
+<p><cite>features</cite> are syntactical features that may be used in the output.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.linegen.should_split_funcdef_with_rhs">
+<span class="sig-prename descclassname"><span class="pre">black.linegen.</span></span><span class="sig-name descname"><span class="pre">should_split_funcdef_with_rhs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/linegen.html#should_split_funcdef_with_rhs"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.should_split_funcdef_with_rhs" title="Link to this definition"></a></dt>
+<dd><p>If a funcdef has a magic trailing comma in the return type, then we should first
+split the line with rhs to respect the comma.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.linegen.left_hand_split">
+<span class="sig-prename descclassname"><span class="pre">black.linegen.</span></span><span class="sig-name descname"><span class="pre">left_hand_split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.mode.html#black.mode.Feature" title="black.mode.Feature"><span class="pre">Feature</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#left_hand_split"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.left_hand_split" title="Link to this definition"></a></dt>
+<dd><p>Split line into many lines, starting with the first matching bracket pair.</p>
+<p>Note: this usually looks weird, only use this for function definitions.
+Prefer RHS otherwise.  This is why this function is not symmetrical with
+<a class="reference internal" href="#black.linegen.right_hand_split" title="black.linegen.right_hand_split"><code class="xref py py-func docutils literal notranslate"><span class="pre">right_hand_split()</span></code></a> which also handles optional parentheses.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.linegen.right_hand_split">
+<span class="sig-prename descclassname"><span class="pre">black.linegen.</span></span><span class="sig-name descname"><span class="pre">right_hand_split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.mode.html#black.mode.Feature" title="black.mode.Feature"><span class="pre">Feature</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#right_hand_split"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.right_hand_split" title="Link to this definition"></a></dt>
+<dd><p>Split line into many lines, starting with the last matching bracket pair.</p>
+<p>If the split was by optional parentheses, attempt splitting without them, too.
+<cite>omit</cite> is a collection of closing bracket IDs that shouldn’t be considered for
+this split.</p>
+<p>Note: running this function modifies <cite>bracket_depth</cite> on the leaves of <cite>line</cite>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.linegen.bracket_split_succeeded_or_raise">
+<span class="sig-prename descclassname"><span class="pre">black.linegen.</span></span><span class="sig-name descname"><span class="pre">bracket_split_succeeded_or_raise</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">head</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tail</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/linegen.html#bracket_split_succeeded_or_raise"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.bracket_split_succeeded_or_raise" title="Link to this definition"></a></dt>
+<dd><p>Raise <a class="reference internal" href="#black.linegen.CannotSplit" title="black.linegen.CannotSplit"><code class="xref py py-exc docutils literal notranslate"><span class="pre">CannotSplit</span></code></a> if the last left- or right-hand split failed.</p>
+<p>Do nothing otherwise.</p>
+<p>A left- or right-hand split is based on a pair of brackets. Content before
+(and including) the opening bracket is left on one line, content inside the
+brackets is put on a separate line, and finally content starting with and
+following the closing bracket is put on a separate line.</p>
+<p>Those are called <cite>head</cite>, <cite>body</cite>, and <cite>tail</cite>, respectively. If the split
+produced the same line (all content in <cite>head</cite>) or ended up with an empty <cite>body</cite>
+and the <cite>tail</cite> is just the closing bracket, then it’s considered failed.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.linegen.bracket_split_build_line">
+<span class="sig-prename descclassname"><span class="pre">black.linegen.</span></span><span class="sig-name descname"><span class="pre">bracket_split_build_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Leaf</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">original</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">opening_bracket</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">component</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_BracketSplitComponent</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></span><a class="reference internal" href="../_modules/black/linegen.html#bracket_split_build_line"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.bracket_split_build_line" title="Link to this definition"></a></dt>
+<dd><p>Return a new line with given <cite>leaves</cite> and respective comments from <cite>original</cite>.</p>
+<p>If it’s the head component, brackets will be tracked so trailing commas are
+respected.</p>
+<p>If it’s the body component, the result line is one-indented inside brackets and as
+such has its first leaf’s prefix normalized and a trailing comma added when
+expected.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.linegen.dont_increase_indentation">
+<span class="sig-prename descclassname"><span class="pre">black.linegen.</span></span><span class="sig-name descname"><span class="pre">dont_increase_indentation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">split_func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.mode.html#black.mode.Feature" title="black.mode.Feature"><span class="pre">Feature</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.mode.html#black.mode.Feature" title="black.mode.Feature"><span class="pre">Feature</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#dont_increase_indentation"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.dont_increase_indentation" title="Link to this definition"></a></dt>
+<dd><p>Normalize prefix of the first leaf in every line returned by <cite>split_func</cite>.</p>
+<p>This is a decorator over relevant split functions.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.linegen.delimiter_split">
+<span class="sig-prename descclassname"><span class="pre">black.linegen.</span></span><span class="sig-name descname"><span class="pre">delimiter_split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.mode.html#black.mode.Feature" title="black.mode.Feature"><span class="pre">Feature</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#delimiter_split"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.delimiter_split" title="Link to this definition"></a></dt>
+<dd><p>Split according to delimiters of the highest priority.</p>
+<p>If the appropriate Features are given, the split will add trailing commas
+also in function signatures and calls that contain <cite>*</cite> and <cite>**</cite>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.linegen.standalone_comment_split">
+<span class="sig-prename descclassname"><span class="pre">black.linegen.</span></span><span class="sig-name descname"><span class="pre">standalone_comment_split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.mode.html#black.mode.Feature" title="black.mode.Feature"><span class="pre">Feature</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#standalone_comment_split"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.standalone_comment_split" title="Link to this definition"></a></dt>
+<dd><p>Split standalone comments from the rest of the line.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.linegen.normalize_invisible_parens">
+<span class="sig-prename descclassname"><span class="pre">black.linegen.</span></span><span class="sig-name descname"><span class="pre">normalize_invisible_parens</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parens_after</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.mode.html#black.mode.Feature" title="black.mode.Feature"><span class="pre">Feature</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/linegen.html#normalize_invisible_parens"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.normalize_invisible_parens" title="Link to this definition"></a></dt>
+<dd><p>Make existing optional parentheses invisible or create new ones.</p>
+<p><cite>parens_after</cite> is a set of string leaf values immediately after which parens
+should be put.</p>
+<p>Standardizes on visible parentheses for single-element tuples, and keeps
+existing visible parentheses for other tuples and generator expressions.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.linegen.remove_await_parens">
+<span class="sig-prename descclassname"><span class="pre">black.linegen.</span></span><span class="sig-name descname"><span class="pre">remove_await_parens</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.mode.html#black.mode.Feature" title="black.mode.Feature"><span class="pre">Feature</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/linegen.html#remove_await_parens"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.remove_await_parens" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.linegen.remove_with_parens">
+<span class="sig-prename descclassname"><span class="pre">black.linegen.</span></span><span class="sig-name descname"><span class="pre">remove_with_parens</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.mode.html#black.mode.Feature" title="black.mode.Feature"><span class="pre">Feature</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/linegen.html#remove_with_parens"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.remove_with_parens" title="Link to this definition"></a></dt>
+<dd><p>Recursively hide optional parens in <cite>with</cite> statements.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.linegen.maybe_make_parens_invisible_in_atom">
+<span class="sig-prename descclassname"><span class="pre">black.linegen.</span></span><span class="sig-name descname"><span class="pre">maybe_make_parens_invisible_in_atom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.mode.html#black.mode.Feature" title="black.mode.Feature"><span class="pre">Feature</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_brackets_around_comma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_star_expr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_generator_parens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/linegen.html#maybe_make_parens_invisible_in_atom"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.maybe_make_parens_invisible_in_atom" title="Link to this definition"></a></dt>
+<dd><p>If it’s safe, make the parens in the atom <cite>node</cite> invisible, recursively.
+Additionally, remove repeated, adjacent invisible parens from the atom <cite>node</cite>
+as they are redundant.</p>
+<p>Returns whether the node should itself be wrapped in invisible parentheses.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.linegen.should_split_line">
+<span class="sig-prename descclassname"><span class="pre">black.linegen.</span></span><span class="sig-name descname"><span class="pre">should_split_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">opening_bracket</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/linegen.html#should_split_line"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.should_split_line" title="Link to this definition"></a></dt>
+<dd><p>Should <cite>line</cite> be immediately split with <cite>delimiter_split()</cite> after RHS?</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.linegen.generate_trailers_to_omit">
+<span class="sig-prename descclassname"><span class="pre">black.linegen.</span></span><span class="sig-name descname"><span class="pre">generate_trailers_to_omit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#generate_trailers_to_omit"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.generate_trailers_to_omit" title="Link to this definition"></a></dt>
+<dd><p>Generate sets of closing bracket IDs that should be omitted in a RHS.</p>
+<p>Brackets can be omitted if the entire trailer up to and including
+a preceding closing bracket fits in one line.</p>
+<p>Yielded sets are cumulative (contain results of previous yields, too).  First
+set is empty, unless the line should explode, in which case bracket pairs until
+the one that needs to explode are omitted.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.linegen.run_transformer">
+<span class="sig-prename descclassname"><span class="pre">black.linegen.</span></span><span class="sig-name descname"><span class="pre">run_transformer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.mode.html#black.mode.Feature" title="black.mode.Feature"><span class="pre">Feature</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.mode.html#black.mode.Feature" title="black.mode.Feature"><span class="pre">Feature</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/linegen.html#run_transformer"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.linegen.run_transformer" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="black.handle_ipynb_magics.html" class="btn btn-neutral float-left" title="black.handle_ipynb_magics module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="black.lines.html" class="btn btn-neutral float-right" title="black.lines module" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2026, Laboratorio IE0417.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

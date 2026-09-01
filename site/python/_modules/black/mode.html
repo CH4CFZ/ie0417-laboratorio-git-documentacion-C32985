@@ -1,0 +1,480 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>black.mode &mdash; documentación de Black - 0.1 (commit 8947c48)</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=0dabe907"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/translations.js?v=f85f4cfb"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Black
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenidos:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduccion.html">Introducción a Black</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Black</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Código de módulo</a></li>
+          <li class="breadcrumb-item"><a href="../black.html">black</a></li>
+      <li class="breadcrumb-item active">black.mode</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Código fuente para black.mode</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Data structures configuring Black behavior.</span>
+
+<span class="sd">Mostly around Python language feature support per version and Black configuration</span>
+<span class="sd">chosen by the user.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hashlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">sha256</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">attrgetter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Final</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">black.const</span><span class="w"> </span><span class="kn">import</span> <span class="n">DEFAULT_LINE_LENGTH</span>
+
+
+<div class="viewcode-block" id="TargetVersion">
+<a class="viewcode-back" href="../../api/black.mode.html#black.mode.TargetVersion">[documentos]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">TargetVersion</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">PY33</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">PY34</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">PY35</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">PY36</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">PY37</span> <span class="o">=</span> <span class="mi">7</span>
+    <span class="n">PY38</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="n">PY39</span> <span class="o">=</span> <span class="mi">9</span>
+    <span class="n">PY310</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">PY311</span> <span class="o">=</span> <span class="mi">11</span>
+    <span class="n">PY312</span> <span class="o">=</span> <span class="mi">12</span>
+    <span class="n">PY313</span> <span class="o">=</span> <span class="mi">13</span>
+    <span class="n">PY314</span> <span class="o">=</span> <span class="mi">14</span>
+    <span class="n">PY315</span> <span class="o">=</span> <span class="mi">15</span>
+
+<div class="viewcode-block" id="TargetVersion.pretty">
+<a class="viewcode-back" href="../../api/black.mode.html#black.mode.TargetVersion.pretty">[documentos]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pretty</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"PY"</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"Python </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span><span class="si">}</span><span class="s2">"</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Feature">
+<a class="viewcode-back" href="../../api/black.mode.html#black.mode.Feature">[documentos]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Feature</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">F_STRINGS</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">NUMERIC_UNDERSCORES</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">TRAILING_COMMA_IN_CALL</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">TRAILING_COMMA_IN_DEF</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="c1"># The following two feature-flags are mutually exclusive, and exactly one should be</span>
+    <span class="c1"># set for every version of python.</span>
+    <span class="n">ASYNC_IDENTIFIERS</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">ASYNC_KEYWORDS</span> <span class="o">=</span> <span class="mi">7</span>
+    <span class="n">ASSIGNMENT_EXPRESSIONS</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="n">POS_ONLY_ARGUMENTS</span> <span class="o">=</span> <span class="mi">9</span>
+    <span class="n">RELAXED_DECORATORS</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">PATTERN_MATCHING</span> <span class="o">=</span> <span class="mi">11</span>
+    <span class="n">UNPACKING_ON_FLOW</span> <span class="o">=</span> <span class="mi">12</span>
+    <span class="n">ANN_ASSIGN_EXTENDED_RHS</span> <span class="o">=</span> <span class="mi">13</span>
+    <span class="n">EXCEPT_STAR</span> <span class="o">=</span> <span class="mi">14</span>
+    <span class="n">VARIADIC_GENERICS</span> <span class="o">=</span> <span class="mi">15</span>
+    <span class="n">DEBUG_F_STRINGS</span> <span class="o">=</span> <span class="mi">16</span>
+    <span class="n">PARENTHESIZED_CONTEXT_MANAGERS</span> <span class="o">=</span> <span class="mi">17</span>
+    <span class="n">TYPE_PARAMS</span> <span class="o">=</span> <span class="mi">18</span>
+    <span class="c1"># FSTRING_PARSING = 19  # unused</span>
+    <span class="n">TYPE_PARAM_DEFAULTS</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">UNPARENTHESIZED_EXCEPT_TYPES</span> <span class="o">=</span> <span class="mi">21</span>
+    <span class="n">T_STRINGS</span> <span class="o">=</span> <span class="mi">22</span>
+    <span class="n">LAZY_IMPORTS</span> <span class="o">=</span> <span class="mi">23</span>
+    <span class="n">UNPACKING_IN_COMPREHENSIONS</span> <span class="o">=</span> <span class="mi">24</span>
+    <span class="n">FORCE_OPTIONAL_PARENTHESES</span> <span class="o">=</span> <span class="mi">50</span>
+
+    <span class="c1"># __future__ flags</span>
+    <span class="n">FUTURE_ANNOTATIONS</span> <span class="o">=</span> <span class="mi">51</span></div>
+
+
+
+<span class="n">FUTURE_FLAG_TO_FEATURE</span><span class="p">:</span> <span class="n">Final</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"annotations"</span><span class="p">:</span> <span class="n">Feature</span><span class="o">.</span><span class="n">FUTURE_ANNOTATIONS</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="n">VERSION_TO_FEATURES</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">TargetVersion</span><span class="p">,</span> <span class="nb">set</span><span class="p">[</span><span class="n">Feature</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">TargetVersion</span><span class="o">.</span><span class="n">PY33</span><span class="p">:</span> <span class="p">{</span><span class="n">Feature</span><span class="o">.</span><span class="n">ASYNC_IDENTIFIERS</span><span class="p">},</span>
+    <span class="n">TargetVersion</span><span class="o">.</span><span class="n">PY34</span><span class="p">:</span> <span class="p">{</span><span class="n">Feature</span><span class="o">.</span><span class="n">ASYNC_IDENTIFIERS</span><span class="p">},</span>
+    <span class="n">TargetVersion</span><span class="o">.</span><span class="n">PY35</span><span class="p">:</span> <span class="p">{</span><span class="n">Feature</span><span class="o">.</span><span class="n">TRAILING_COMMA_IN_CALL</span><span class="p">,</span> <span class="n">Feature</span><span class="o">.</span><span class="n">ASYNC_IDENTIFIERS</span><span class="p">},</span>
+    <span class="n">TargetVersion</span><span class="o">.</span><span class="n">PY36</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">F_STRINGS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">NUMERIC_UNDERSCORES</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">TRAILING_COMMA_IN_CALL</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">TRAILING_COMMA_IN_DEF</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">ASYNC_IDENTIFIERS</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="n">TargetVersion</span><span class="o">.</span><span class="n">PY37</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">F_STRINGS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">NUMERIC_UNDERSCORES</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">TRAILING_COMMA_IN_CALL</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">TRAILING_COMMA_IN_DEF</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">ASYNC_KEYWORDS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">FUTURE_ANNOTATIONS</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="n">TargetVersion</span><span class="o">.</span><span class="n">PY38</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">F_STRINGS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">DEBUG_F_STRINGS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">NUMERIC_UNDERSCORES</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">TRAILING_COMMA_IN_CALL</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">TRAILING_COMMA_IN_DEF</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">ASYNC_KEYWORDS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">FUTURE_ANNOTATIONS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">ASSIGNMENT_EXPRESSIONS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">POS_ONLY_ARGUMENTS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">UNPACKING_ON_FLOW</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">ANN_ASSIGN_EXTENDED_RHS</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="n">TargetVersion</span><span class="o">.</span><span class="n">PY39</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">F_STRINGS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">DEBUG_F_STRINGS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">NUMERIC_UNDERSCORES</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">TRAILING_COMMA_IN_CALL</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">TRAILING_COMMA_IN_DEF</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">ASYNC_KEYWORDS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">FUTURE_ANNOTATIONS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">ASSIGNMENT_EXPRESSIONS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">RELAXED_DECORATORS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">POS_ONLY_ARGUMENTS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">UNPACKING_ON_FLOW</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">ANN_ASSIGN_EXTENDED_RHS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">PARENTHESIZED_CONTEXT_MANAGERS</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="n">TargetVersion</span><span class="o">.</span><span class="n">PY310</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">F_STRINGS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">DEBUG_F_STRINGS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">NUMERIC_UNDERSCORES</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">TRAILING_COMMA_IN_CALL</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">TRAILING_COMMA_IN_DEF</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">ASYNC_KEYWORDS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">FUTURE_ANNOTATIONS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">ASSIGNMENT_EXPRESSIONS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">RELAXED_DECORATORS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">POS_ONLY_ARGUMENTS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">UNPACKING_ON_FLOW</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">ANN_ASSIGN_EXTENDED_RHS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">PARENTHESIZED_CONTEXT_MANAGERS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">PATTERN_MATCHING</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="n">TargetVersion</span><span class="o">.</span><span class="n">PY311</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">F_STRINGS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">DEBUG_F_STRINGS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">NUMERIC_UNDERSCORES</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">TRAILING_COMMA_IN_CALL</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">TRAILING_COMMA_IN_DEF</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">ASYNC_KEYWORDS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">FUTURE_ANNOTATIONS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">ASSIGNMENT_EXPRESSIONS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">RELAXED_DECORATORS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">POS_ONLY_ARGUMENTS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">UNPACKING_ON_FLOW</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">ANN_ASSIGN_EXTENDED_RHS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">PARENTHESIZED_CONTEXT_MANAGERS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">PATTERN_MATCHING</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">EXCEPT_STAR</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">VARIADIC_GENERICS</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="n">TargetVersion</span><span class="o">.</span><span class="n">PY312</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">F_STRINGS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">DEBUG_F_STRINGS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">NUMERIC_UNDERSCORES</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">TRAILING_COMMA_IN_CALL</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">TRAILING_COMMA_IN_DEF</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">ASYNC_KEYWORDS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">FUTURE_ANNOTATIONS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">ASSIGNMENT_EXPRESSIONS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">RELAXED_DECORATORS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">POS_ONLY_ARGUMENTS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">UNPACKING_ON_FLOW</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">ANN_ASSIGN_EXTENDED_RHS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">PARENTHESIZED_CONTEXT_MANAGERS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">PATTERN_MATCHING</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">EXCEPT_STAR</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">VARIADIC_GENERICS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">TYPE_PARAMS</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="n">TargetVersion</span><span class="o">.</span><span class="n">PY313</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">F_STRINGS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">DEBUG_F_STRINGS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">NUMERIC_UNDERSCORES</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">TRAILING_COMMA_IN_CALL</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">TRAILING_COMMA_IN_DEF</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">ASYNC_KEYWORDS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">FUTURE_ANNOTATIONS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">ASSIGNMENT_EXPRESSIONS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">RELAXED_DECORATORS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">POS_ONLY_ARGUMENTS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">UNPACKING_ON_FLOW</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">ANN_ASSIGN_EXTENDED_RHS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">PARENTHESIZED_CONTEXT_MANAGERS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">PATTERN_MATCHING</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">EXCEPT_STAR</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">VARIADIC_GENERICS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">TYPE_PARAMS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">TYPE_PARAM_DEFAULTS</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="n">TargetVersion</span><span class="o">.</span><span class="n">PY314</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">F_STRINGS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">DEBUG_F_STRINGS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">NUMERIC_UNDERSCORES</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">TRAILING_COMMA_IN_CALL</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">TRAILING_COMMA_IN_DEF</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">ASYNC_KEYWORDS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">FUTURE_ANNOTATIONS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">ASSIGNMENT_EXPRESSIONS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">RELAXED_DECORATORS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">POS_ONLY_ARGUMENTS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">UNPACKING_ON_FLOW</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">ANN_ASSIGN_EXTENDED_RHS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">PARENTHESIZED_CONTEXT_MANAGERS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">PATTERN_MATCHING</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">EXCEPT_STAR</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">VARIADIC_GENERICS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">TYPE_PARAMS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">TYPE_PARAM_DEFAULTS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">UNPARENTHESIZED_EXCEPT_TYPES</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">T_STRINGS</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="n">TargetVersion</span><span class="o">.</span><span class="n">PY315</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">F_STRINGS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">DEBUG_F_STRINGS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">NUMERIC_UNDERSCORES</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">TRAILING_COMMA_IN_CALL</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">TRAILING_COMMA_IN_DEF</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">ASYNC_KEYWORDS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">FUTURE_ANNOTATIONS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">ASSIGNMENT_EXPRESSIONS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">RELAXED_DECORATORS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">POS_ONLY_ARGUMENTS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">UNPACKING_ON_FLOW</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">ANN_ASSIGN_EXTENDED_RHS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">PARENTHESIZED_CONTEXT_MANAGERS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">PATTERN_MATCHING</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">EXCEPT_STAR</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">VARIADIC_GENERICS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">TYPE_PARAMS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">TYPE_PARAM_DEFAULTS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">UNPARENTHESIZED_EXCEPT_TYPES</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">T_STRINGS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">LAZY_IMPORTS</span><span class="p">,</span>
+        <span class="n">Feature</span><span class="o">.</span><span class="n">UNPACKING_IN_COMPREHENSIONS</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="supports_feature">
+<a class="viewcode-back" href="../../api/black.mode.html#black.mode.supports_feature">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">supports_feature</span><span class="p">(</span><span class="n">target_versions</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="n">TargetVersion</span><span class="p">],</span> <span class="n">feature</span><span class="p">:</span> <span class="n">Feature</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">target_versions</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"At least one target Python version must be specified."</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">feature</span> <span class="ow">in</span> <span class="n">VERSION_TO_FEATURES</span><span class="p">[</span><span class="n">version</span><span class="p">]</span> <span class="k">for</span> <span class="n">version</span> <span class="ow">in</span> <span class="n">target_versions</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="Preview">
+<a class="viewcode-back" href="../../api/black.mode.html#black.mode.Preview">[documentos]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Preview</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Individual preview style features."""</span>
+
+    <span class="c1"># NOTE: string_processing requires wrap_long_dict_values_in_parens</span>
+    <span class="c1"># for https://github.com/psf/black/issues/3117 to be fixed.</span>
+    <span class="n">string_processing</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">hug_parens_with_braces_and_square_brackets</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">wrap_comprehension_in</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">simplify_power_operator_hugging</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">wrap_long_dict_values_in_parens</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">fix_if_guard_explosion_in_case_statement</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">pyi_overload_group_blank_lines</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">fix_unnecessary_parens_in_indexed_assignment</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">pyi_blank_line_before_decorated_class</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">pyi_blank_line_after_function_docstring</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">hug_comparator</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">parenthesize_tuple_in_yield</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">fmt_off_class_blank_lines</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">remove_redundant_generator_parentheses</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<span class="n">UNSTABLE_FEATURES</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="n">Preview</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># Many issues, see summary in https://github.com/psf/black/issues/4208</span>
+    <span class="n">Preview</span><span class="o">.</span><span class="n">string_processing</span><span class="p">,</span>
+    <span class="c1"># See issue #4036 (crash), #4098, #4099 (proposed tweaks)</span>
+    <span class="n">Preview</span><span class="o">.</span><span class="n">hug_parens_with_braces_and_square_brackets</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="n">_MAX_CACHE_KEY_PART_LENGTH</span><span class="p">:</span> <span class="n">Final</span> <span class="o">=</span> <span class="mi">32</span>
+
+
+<div class="viewcode-block" id="Mode">
+<a class="viewcode-back" href="../../api/black.mode.html#black.mode.Mode">[documentos]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Mode</span><span class="p">:</span>
+    <span class="n">target_versions</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="n">TargetVersion</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">set</span><span class="p">)</span>
+    <span class="n">line_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">DEFAULT_LINE_LENGTH</span>
+    <span class="n">string_normalization</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">is_pyi</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">is_ipynb</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">skip_source_first_line</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">magic_trailing_comma</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">python_cell_magics</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">set</span><span class="p">)</span>
+    <span class="n">preview</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">unstable</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">enabled_features</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="n">Preview</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">set</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feature</span><span class="p">:</span> <span class="n">Preview</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Provide `Preview.FEATURE in Mode` syntax that mirrors the ``preview`` flag.</span>
+
+<span class="sd">        In unstable mode, all features are enabled. In preview mode, all features</span>
+<span class="sd">        except those in UNSTABLE_FEATURES are enabled. Any features in</span>
+<span class="sd">        `self.enabled_features` are also enabled.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">unstable</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="n">feature</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled_features</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">preview</span> <span class="ow">and</span> <span class="n">feature</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">UNSTABLE_FEATURES</span>
+
+<div class="viewcode-block" id="Mode.get_cache_key">
+<a class="viewcode-back" href="../../api/black.mode.html#black.mode.Mode.get_cache_key">[documentos]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_cache_key</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_versions</span><span class="p">:</span>
+            <span class="n">version_str</span> <span class="o">=</span> <span class="s2">","</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="nb">str</span><span class="p">(</span><span class="n">version</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">version</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_versions</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">attrgetter</span><span class="p">(</span><span class="s2">"value"</span><span class="p">))</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">version_str</span> <span class="o">=</span> <span class="s2">"-"</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">version_str</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">_MAX_CACHE_KEY_PART_LENGTH</span><span class="p">:</span>
+            <span class="n">version_str</span> <span class="o">=</span> <span class="n">sha256</span><span class="p">(</span><span class="n">version_str</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[</span>
+                <span class="p">:</span><span class="n">_MAX_CACHE_KEY_PART_LENGTH</span>
+            <span class="p">]</span>
+        <span class="n">features_and_magics</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">","</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled_features</span><span class="p">))</span>
+            <span class="o">+</span> <span class="s2">"@"</span>
+            <span class="o">+</span> <span class="s2">","</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">python_cell_magics</span><span class="p">))</span>
+        <span class="p">)</span>
+        <span class="n">features_and_magics</span> <span class="o">=</span> <span class="n">sha256</span><span class="p">(</span><span class="n">features_and_magics</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[</span>
+            <span class="p">:</span><span class="n">_MAX_CACHE_KEY_PART_LENGTH</span>
+        <span class="p">]</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">version_str</span><span class="p">,</span>
+            <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line_length</span><span class="p">),</span>
+            <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">string_normalization</span><span class="p">)),</span>
+            <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">is_pyi</span><span class="p">)),</span>
+            <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">is_ipynb</span><span class="p">)),</span>
+            <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">skip_source_first_line</span><span class="p">)),</span>
+            <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">magic_trailing_comma</span><span class="p">)),</span>
+            <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preview</span><span class="p">)),</span>
+            <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">unstable</span><span class="p">)),</span>
+            <span class="n">features_and_magics</span><span class="p">,</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="s2">"."</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">((</span>
+            <span class="nb">frozenset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_versions</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">line_length</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">string_normalization</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">is_pyi</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">is_ipynb</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">skip_source_first_line</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">magic_trailing_comma</span><span class="p">,</span>
+            <span class="nb">frozenset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">python_cell_magics</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">preview</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">unstable</span><span class="p">,</span>
+            <span class="nb">frozenset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">enabled_features</span><span class="p">),</span>
+        <span class="p">))</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2026, Laboratorio IE0417.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

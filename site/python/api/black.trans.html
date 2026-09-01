@@ -1,0 +1,848 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>black.trans module &mdash; documentación de Black - 0.1 (commit 8947c48)</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=0dabe907"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=f85f4cfb"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+    <link rel="prev" title="black.strings module" href="black.strings.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Black
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenidos:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../introduccion.html">Introducción a Black</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduccion.html#que-es-black">¿Qué es Black?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduccion.html#organizacion-del-codigo-fuente">Organización del código fuente</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../introduccion.html#alcance-de-esta-documentacion">Alcance de esta documentación</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="modules.html">black</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="black.html">black package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Black</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../introduccion.html">Introducción a Black</a></li>
+          <li class="breadcrumb-item"><a href="modules.html">black</a></li>
+          <li class="breadcrumb-item"><a href="black.html">black package</a></li>
+      <li class="breadcrumb-item active">black.trans module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/black.trans.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-black.trans">
+<span id="black-trans-module"></span><h1>black.trans module<a class="headerlink" href="#module-black.trans" title="Link to this heading"></a></h1>
+<p>String transformers that can split and merge strings.</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="black.trans.CannotTransform">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">black.trans.</span></span><span class="sig-name descname"><span class="pre">CannotTransform</span></span><a class="reference internal" href="../_modules/black/trans.html#CannotTransform"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.CannotTransform" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Base class for errors raised by Transformers.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.trans.TErr">
+<span class="sig-prename descclassname"><span class="pre">black.trans.</span></span><span class="sig-name descname"><span class="pre">TErr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">err_msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="black.rusty.html#black.rusty.Err" title="black.rusty.Err"><span class="pre">Err</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#black.trans.CannotTransform" title="black.trans.CannotTransform"><span class="pre">CannotTransform</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/trans.html#TErr"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.TErr" title="Link to this definition"></a></dt>
+<dd><p>(T)ransform Err</p>
+<p>Convenience function used when working with the TResult type.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.trans.hug_power_op">
+<span class="sig-prename descclassname"><span class="pre">black.trans.</span></span><span class="sig-name descname"><span class="pre">hug_power_op</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.mode.html#black.mode.Feature" title="black.mode.Feature"><span class="pre">Feature</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/trans.html#hug_power_op"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.hug_power_op" title="Link to this definition"></a></dt>
+<dd><p>A transformer which normalizes spacing around power operators.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.trans.handle_is_simple_look_up_prev">
+<span class="sig-prename descclassname"><span class="pre">black.trans.</span></span><span class="sig-name descname"><span class="pre">handle_is_simple_look_up_prev</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disallowed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/trans.html#handle_is_simple_look_up_prev"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.handle_is_simple_look_up_prev" title="Link to this definition"></a></dt>
+<dd><p>Handling the determination of is_simple_lookup for the lines prior to the doublestar
+token. This is required because of the need to isolate the chained expression
+to determine the bracket or parenthesis belong to the single expression.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.trans.handle_is_simple_lookup_forward">
+<span class="sig-prename descclassname"><span class="pre">black.trans.</span></span><span class="sig-name descname"><span class="pre">handle_is_simple_lookup_forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disallowed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/trans.html#handle_is_simple_lookup_forward"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.handle_is_simple_lookup_forward" title="Link to this definition"></a></dt>
+<dd><p>Handling decision is_simple_lookup for the lines behind the doublestar token.
+This function is simplified to keep consistent with the prior logic and the forward
+case are more straightforward and do not need to care about chained expressions.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.trans.is_expression_chained">
+<span class="sig-prename descclassname"><span class="pre">black.trans.</span></span><span class="sig-name descname"><span class="pre">is_expression_chained</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chained_leaves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Leaf</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/trans.html#is_expression_chained"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.is_expression_chained" title="Link to this definition"></a></dt>
+<dd><p>Function to determine if the variable is a chained call.
+(e.g., foo.lookup, foo().lookup, (foo.lookup())) will be recognized as chained call)</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="black.trans.StringTransformer">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">black.trans.</span></span><span class="sig-name descname"><span class="pre">StringTransformer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize_strings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/black/trans.html#StringTransformer"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.StringTransformer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>An implementation of the Transformer protocol that relies on its
+subclasses overriding the template methods <cite>do_match(…)</cite> and
+<cite>do_transform(…)</cite>.</p>
+<p>This Transformer works exclusively on strings (for example, by merging
+or splitting them).</p>
+<p>The following sections can be found among the docstrings of each concrete
+StringTransformer subclass.</p>
+<dl class="simple">
+<dt>Requirements:</dt><dd><p>Which requirements must be met of the given Line for this
+StringTransformer to be applied?</p>
+</dd>
+<dt>Transformations:</dt><dd><p>If the given Line meets all of the above requirements, which string
+transformations can you expect to be applied to it by this
+StringTransformer?</p>
+</dd>
+<dt>Collaborations:</dt><dd><p>What contractual agreements does this StringTransformer have with other
+StringTransformers? Such collaborations should be eliminated/minimized
+as much as possible.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="black.trans.StringTransformer.do_match">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">do_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="black.rusty.html#black.rusty.Ok" title="black.rusty.Ok"><span class="pre">Ok</span></a><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="black.rusty.html#black.rusty.Err" title="black.rusty.Err"><span class="pre">Err</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#black.trans.CannotTransform" title="black.trans.CannotTransform"><span class="pre">CannotTransform</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/trans.html#StringTransformer.do_match"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.StringTransformer.do_match" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Devuelve<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>Ok(string_indices) such that for each index, <cite>line.leaves[index]</cite>
+is our target string if a match was able to be made. For
+transformers that don’t result in more lines (e.g. StringMerger,
+StringParenStripper), multiple matches and transforms are done at
+once to reduce the complexity.
+OR</p></li>
+<li><p>Err(CannotTransform), if no match could be made.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.trans.StringTransformer.do_transform">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">do_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">string_indices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.rusty.html#black.rusty.Ok" title="black.rusty.Ok"><span class="pre">Ok</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="black.rusty.html#black.rusty.Err" title="black.rusty.Err"><span class="pre">Err</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#black.trans.CannotTransform" title="black.trans.CannotTransform"><span class="pre">CannotTransform</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/trans.html#StringTransformer.do_transform"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.StringTransformer.do_transform" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Campos<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p>Ok(new_line) where new_line is the new transformed line.
+OR</p></li>
+<li><p>Err(CannotTransform) if the transformation failed for some reason. The
+<cite>do_match(…)</cite> template method should usually be used to reject
+the form of the given Line, but in some cases it is difficult to
+know whether or not a Line meets the StringTransformer’s
+requirements until the transformation is already midway.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Side Effects:</dt><dd><p>This method should NOT mutate &#64;line directly, but it MAY mutate the
+Line’s underlying Node structure. (WARNING: If the underlying Node
+structure IS altered, then this method should NOT be allowed to
+yield an CannotTransform after that point.)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="black.trans.CustomSplit">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">black.trans.</span></span><span class="sig-name descname"><span class="pre">CustomSplit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">has_prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">break_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/black/trans.html#CustomSplit"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.CustomSplit" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A custom (i.e. manual) string split.</p>
+<p>A single CustomSplit instance represents a single substring.</p>
+<p class="rubric">Ejemplos</p>
+<p>Consider the following string:
+<code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">&quot;Hi</span> <span class="pre">there</span> <span class="pre">friend.&quot;</span>
+<span class="pre">&quot;</span> <span class="pre">This</span> <span class="pre">is</span> <span class="pre">a</span> <span class="pre">custom&quot;</span>
+<span class="pre">f&quot;</span> <span class="pre">string</span> <span class="pre">{split}.&quot;</span>
+<span class="pre">`</span></code></p>
+<p>This string will correspond to the following three CustomSplit instances:
+<code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">CustomSplit(False,</span> <span class="pre">16)</span>
+<span class="pre">CustomSplit(False,</span> <span class="pre">17)</span>
+<span class="pre">CustomSplit(True,</span> <span class="pre">16)</span>
+<span class="pre">`</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.trans.CustomSplit.has_prefix">
+<span class="sig-name descname"><span class="pre">has_prefix</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#black.trans.CustomSplit.has_prefix" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.trans.CustomSplit.break_idx">
+<span class="sig-name descname"><span class="pre">break_idx</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#black.trans.CustomSplit.break_idx" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="black.trans.CustomSplitMapMixin">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">black.trans.</span></span><span class="sig-name descname"><span class="pre">CustomSplitMapMixin</span></span><a class="reference internal" href="../_modules/black/trans.html#CustomSplitMapMixin"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.CustomSplitMapMixin" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This mixin class is used to map merged strings to a sequence of
+CustomSplits, which will then be used to re-split the strings iff none of
+the resultant substrings go over the configured max line length.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="black.trans.CustomSplitMapMixin.add_custom_splits">
+<span class="sig-name descname"><span class="pre">add_custom_splits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_splits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#black.trans.CustomSplit" title="black.trans.CustomSplit"><span class="pre">CustomSplit</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/trans.html#CustomSplitMapMixin.add_custom_splits"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.CustomSplitMapMixin.add_custom_splits" title="Link to this definition"></a></dt>
+<dd><p>Custom Split Map Setter Method</p>
+<dl class="simple">
+<dt>Side Effects:</dt><dd><p>Adds a mapping from &#64;string to the custom splits &#64;custom_splits.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.trans.CustomSplitMapMixin.pop_custom_splits">
+<span class="sig-name descname"><span class="pre">pop_custom_splits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#black.trans.CustomSplit" title="black.trans.CustomSplit"><span class="pre">CustomSplit</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/trans.html#CustomSplitMapMixin.pop_custom_splits"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.CustomSplitMapMixin.pop_custom_splits" title="Link to this definition"></a></dt>
+<dd><p>Custom Split Map Getter Method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>A list of the custom splits that are mapped to &#64;string, if any
+exist.
+OR</p></li>
+<li><p>[], otherwise.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Side Effects:</dt><dd><p>Deletes the mapping between &#64;string and its associated custom
+splits (which are returned to the caller).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.trans.CustomSplitMapMixin.has_custom_splits">
+<span class="sig-name descname"><span class="pre">has_custom_splits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/trans.html#CustomSplitMapMixin.has_custom_splits"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.CustomSplitMapMixin.has_custom_splits" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Devuelve<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True iff &#64;string is associated with a set of custom splits.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="black.trans.StringMerger">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">black.trans.</span></span><span class="sig-name descname"><span class="pre">StringMerger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize_strings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/black/trans.html#StringMerger"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.StringMerger" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#black.trans.StringTransformer" title="black.trans.StringTransformer"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringTransformer</span></code></a>, <a class="reference internal" href="#black.trans.CustomSplitMapMixin" title="black.trans.CustomSplitMapMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">CustomSplitMapMixin</span></code></a></p>
+<p>StringTransformer that merges strings together.</p>
+<dl>
+<dt>Requirements:</dt><dd><p>(A) The line contains adjacent strings such that ALL of the validation checks
+listed in StringMerger._validate_msg(…)”s docstring pass.
+OR
+(B) The line contains a string which uses line continuation backslashes.</p>
+</dd>
+<dt>Transformations:</dt><dd><p>Depending on which of the two requirements above where met, either:</p>
+<p>(A) The string group associated with the target string is merged.
+OR
+(B) All line-continuation backslashes are removed from the target string.</p>
+</dd>
+<dt>Collaborations:</dt><dd><p>StringMerger provides custom split information to StringSplitter.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="black.trans.StringMerger.do_match">
+<span class="sig-name descname"><span class="pre">do_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="black.rusty.html#black.rusty.Ok" title="black.rusty.Ok"><span class="pre">Ok</span></a><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="black.rusty.html#black.rusty.Err" title="black.rusty.Err"><span class="pre">Err</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#black.trans.CannotTransform" title="black.trans.CannotTransform"><span class="pre">CannotTransform</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/trans.html#StringMerger.do_match"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.StringMerger.do_match" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Devuelve<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>Ok(string_indices) such that for each index, <cite>line.leaves[index]</cite>
+is our target string if a match was able to be made. For
+transformers that don’t result in more lines (e.g. StringMerger,
+StringParenStripper), multiple matches and transforms are done at
+once to reduce the complexity.
+OR</p></li>
+<li><p>Err(CannotTransform), if no match could be made.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.trans.StringMerger.do_transform">
+<span class="sig-name descname"><span class="pre">do_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">string_indices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.rusty.html#black.rusty.Ok" title="black.rusty.Ok"><span class="pre">Ok</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="black.rusty.html#black.rusty.Err" title="black.rusty.Err"><span class="pre">Err</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#black.trans.CannotTransform" title="black.trans.CannotTransform"><span class="pre">CannotTransform</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/trans.html#StringMerger.do_transform"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.StringMerger.do_transform" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Campos<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p>Ok(new_line) where new_line is the new transformed line.
+OR</p></li>
+<li><p>Err(CannotTransform) if the transformation failed for some reason. The
+<cite>do_match(…)</cite> template method should usually be used to reject
+the form of the given Line, but in some cases it is difficult to
+know whether or not a Line meets the StringTransformer’s
+requirements until the transformation is already midway.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Side Effects:</dt><dd><p>This method should NOT mutate &#64;line directly, but it MAY mutate the
+Line’s underlying Node structure. (WARNING: If the underlying Node
+structure IS altered, then this method should NOT be allowed to
+yield an CannotTransform after that point.)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="black.trans.StringParenStripper">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">black.trans.</span></span><span class="sig-name descname"><span class="pre">StringParenStripper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize_strings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/black/trans.html#StringParenStripper"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.StringParenStripper" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#black.trans.StringTransformer" title="black.trans.StringTransformer"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringTransformer</span></code></a></p>
+<p>StringTransformer that strips surrounding parentheses from strings.</p>
+<dl class="simple">
+<dt>Requirements:</dt><dd><dl class="simple">
+<dt>The line contains a string which is surrounded by parentheses and:</dt><dd><ul class="simple">
+<li><p>The target string is NOT the only argument to a function call.</p></li>
+<li><p>The target string is NOT a «pointless» string.</p></li>
+<li><p>The target string is NOT a dictionary value.</p></li>
+<li><p>If the target string contains a PERCENT, the brackets are not
+preceded or followed by an operator with higher precedence than
+PERCENT.</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+<dt>Transformations:</dt><dd><p>The parentheses mentioned in the “Requirements” section are stripped.</p>
+</dd>
+<dt>Collaborations:</dt><dd><p>StringParenStripper has its own inherent usefulness, but it is also
+relied on to clean up the parentheses created by StringParenWrapper (in
+the event that they are no longer needed).</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="black.trans.StringParenStripper.do_match">
+<span class="sig-name descname"><span class="pre">do_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="black.rusty.html#black.rusty.Ok" title="black.rusty.Ok"><span class="pre">Ok</span></a><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="black.rusty.html#black.rusty.Err" title="black.rusty.Err"><span class="pre">Err</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#black.trans.CannotTransform" title="black.trans.CannotTransform"><span class="pre">CannotTransform</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/trans.html#StringParenStripper.do_match"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.StringParenStripper.do_match" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Devuelve<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>Ok(string_indices) such that for each index, <cite>line.leaves[index]</cite>
+is our target string if a match was able to be made. For
+transformers that don’t result in more lines (e.g. StringMerger,
+StringParenStripper), multiple matches and transforms are done at
+once to reduce the complexity.
+OR</p></li>
+<li><p>Err(CannotTransform), if no match could be made.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.trans.StringParenStripper.do_transform">
+<span class="sig-name descname"><span class="pre">do_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">string_indices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.rusty.html#black.rusty.Ok" title="black.rusty.Ok"><span class="pre">Ok</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="black.rusty.html#black.rusty.Err" title="black.rusty.Err"><span class="pre">Err</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#black.trans.CannotTransform" title="black.trans.CannotTransform"><span class="pre">CannotTransform</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/trans.html#StringParenStripper.do_transform"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.StringParenStripper.do_transform" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Campos<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p>Ok(new_line) where new_line is the new transformed line.
+OR</p></li>
+<li><p>Err(CannotTransform) if the transformation failed for some reason. The
+<cite>do_match(…)</cite> template method should usually be used to reject
+the form of the given Line, but in some cases it is difficult to
+know whether or not a Line meets the StringTransformer’s
+requirements until the transformation is already midway.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Side Effects:</dt><dd><p>This method should NOT mutate &#64;line directly, but it MAY mutate the
+Line’s underlying Node structure. (WARNING: If the underlying Node
+structure IS altered, then this method should NOT be allowed to
+yield an CannotTransform after that point.)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="black.trans.BaseStringSplitter">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">black.trans.</span></span><span class="sig-name descname"><span class="pre">BaseStringSplitter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize_strings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/black/trans.html#BaseStringSplitter"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.BaseStringSplitter" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#black.trans.StringTransformer" title="black.trans.StringTransformer"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringTransformer</span></code></a></p>
+<p>Abstract class for StringTransformers which transform a Line’s strings by splitting
+them or placing them on their own lines where necessary to avoid going over
+the configured line length.</p>
+<dl class="simple">
+<dt>Requirements:</dt><dd><ul class="simple">
+<li><p>The target string value is responsible for the line going over the
+line length limit. It follows that after all of black’s other line
+split methods have been exhausted, this line (or one of the resulting
+lines after all line splits are performed) would still be over the
+line_length limit unless we split this string.
+AND</p></li>
+<li><p>The target string is NOT a «pointless» string (i.e. a string that has
+no parent or siblings).
+AND</p></li>
+<li><p>The target string is not followed by an inline comment that appears
+to be a pragma.
+AND</p></li>
+<li><p>The target string is not a multiline (i.e. triple-quote) string.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.trans.BaseStringSplitter.STRING_OPERATORS">
+<span class="sig-name descname"><span class="pre">STRING_OPERATORS</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Final</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[28,</span> <span class="pre">21,</span> <span class="pre">31,</span> <span class="pre">20,</span> <span class="pre">30,</span> <span class="pre">29,</span> <span class="pre">24,</span> <span class="pre">14,</span> <span class="pre">16]</span></span><a class="headerlink" href="#black.trans.BaseStringSplitter.STRING_OPERATORS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.trans.BaseStringSplitter.do_splitter_match">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">do_splitter_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="black.rusty.html#black.rusty.Ok" title="black.rusty.Ok"><span class="pre">Ok</span></a><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="black.rusty.html#black.rusty.Err" title="black.rusty.Err"><span class="pre">Err</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#black.trans.CannotTransform" title="black.trans.CannotTransform"><span class="pre">CannotTransform</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/trans.html#BaseStringSplitter.do_splitter_match"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.BaseStringSplitter.do_splitter_match" title="Link to this definition"></a></dt>
+<dd><p>BaseStringSplitter asks its clients to override this method instead of
+<cite>StringTransformer.do_match(…)</cite>.</p>
+<p>Follows the same protocol as <cite>StringTransformer.do_match(…)</cite>.</p>
+<p>Refer to <cite>help(StringTransformer.do_match)</cite> for more information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.trans.BaseStringSplitter.do_match">
+<span class="sig-name descname"><span class="pre">do_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="black.rusty.html#black.rusty.Ok" title="black.rusty.Ok"><span class="pre">Ok</span></a><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="black.rusty.html#black.rusty.Err" title="black.rusty.Err"><span class="pre">Err</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#black.trans.CannotTransform" title="black.trans.CannotTransform"><span class="pre">CannotTransform</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/trans.html#BaseStringSplitter.do_match"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.BaseStringSplitter.do_match" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Devuelve<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>Ok(string_indices) such that for each index, <cite>line.leaves[index]</cite>
+is our target string if a match was able to be made. For
+transformers that don’t result in more lines (e.g. StringMerger,
+StringParenStripper), multiple matches and transforms are done at
+once to reduce the complexity.
+OR</p></li>
+<li><p>Err(CannotTransform), if no match could be made.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.trans.iter_fexpr_spans">
+<span class="sig-prename descclassname"><span class="pre">black.trans.</span></span><span class="sig-name descname"><span class="pre">iter_fexpr_spans</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/trans.html#iter_fexpr_spans"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.iter_fexpr_spans" title="Link to this definition"></a></dt>
+<dd><p>Yields spans corresponding to expressions in a given f-string.
+Spans are half-open ranges (left inclusive, right exclusive).
+Assumes the input string is a valid f-string, but will not crash if the input
+string is invalid.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.trans.fstring_contains_expr">
+<span class="sig-prename descclassname"><span class="pre">black.trans.</span></span><span class="sig-name descname"><span class="pre">fstring_contains_expr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/trans.html#fstring_contains_expr"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.fstring_contains_expr" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="black.trans.StringSplitter">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">black.trans.</span></span><span class="sig-name descname"><span class="pre">StringSplitter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize_strings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/black/trans.html#StringSplitter"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.StringSplitter" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#black.trans.BaseStringSplitter" title="black.trans.BaseStringSplitter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseStringSplitter</span></code></a>, <a class="reference internal" href="#black.trans.CustomSplitMapMixin" title="black.trans.CustomSplitMapMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">CustomSplitMapMixin</span></code></a></p>
+<p>StringTransformer that splits «atom» strings (i.e. strings which exist on
+lines by themselves).</p>
+<dl>
+<dt>Requirements:</dt><dd><ul class="simple">
+<li><p>The line consists ONLY of a single string (possibly prefixed by a
+string operator [e.g. “+” or “==”]), MAYBE a string trailer, and MAYBE
+a trailing comma.
+AND</p></li>
+<li><p>All of the requirements listed in BaseStringSplitter’s docstring.</p></li>
+</ul>
+</dd>
+<dt>Transformations:</dt><dd><p>The string mentioned in the “Requirements” section is split into as
+many substrings as necessary to adhere to the configured line length.</p>
+<p>In the final set of substrings, no substring should be smaller than
+MIN_SUBSTR_SIZE characters.</p>
+<p>The string will ONLY be split on spaces (i.e. each new substring should
+start with a space). Note that the string will NOT be split on a space
+which is escaped with a backslash.</p>
+<p>If the string is an f-string, it will NOT be split in the middle of an
+f-expression (e.g. in f»FooBar: {foo() if x else bar()}», {foo() if x
+else bar()} is an f-expression).</p>
+<p>If the string that is being split has an associated set of custom split
+records and those custom splits will NOT result in any line going over
+the configured line length, those custom splits are used. Otherwise the
+string is split as late as possible (from left-to-right) while still
+adhering to the transformation rules listed above.</p>
+</dd>
+<dt>Collaborations:</dt><dd><p>StringSplitter relies on StringMerger to construct the appropriate
+CustomSplit objects and add them to the custom split map.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.trans.StringSplitter.MIN_SUBSTR_SIZE">
+<span class="sig-name descname"><span class="pre">MIN_SUBSTR_SIZE</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Final</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></span><a class="headerlink" href="#black.trans.StringSplitter.MIN_SUBSTR_SIZE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.trans.StringSplitter.do_splitter_match">
+<span class="sig-name descname"><span class="pre">do_splitter_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="black.rusty.html#black.rusty.Ok" title="black.rusty.Ok"><span class="pre">Ok</span></a><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="black.rusty.html#black.rusty.Err" title="black.rusty.Err"><span class="pre">Err</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#black.trans.CannotTransform" title="black.trans.CannotTransform"><span class="pre">CannotTransform</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/trans.html#StringSplitter.do_splitter_match"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.StringSplitter.do_splitter_match" title="Link to this definition"></a></dt>
+<dd><p>BaseStringSplitter asks its clients to override this method instead of
+<cite>StringTransformer.do_match(…)</cite>.</p>
+<p>Follows the same protocol as <cite>StringTransformer.do_match(…)</cite>.</p>
+<p>Refer to <cite>help(StringTransformer.do_match)</cite> for more information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.trans.StringSplitter.do_transform">
+<span class="sig-name descname"><span class="pre">do_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">string_indices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.rusty.html#black.rusty.Ok" title="black.rusty.Ok"><span class="pre">Ok</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="black.rusty.html#black.rusty.Err" title="black.rusty.Err"><span class="pre">Err</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#black.trans.CannotTransform" title="black.trans.CannotTransform"><span class="pre">CannotTransform</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/trans.html#StringSplitter.do_transform"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.StringSplitter.do_transform" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Campos<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p>Ok(new_line) where new_line is the new transformed line.
+OR</p></li>
+<li><p>Err(CannotTransform) if the transformation failed for some reason. The
+<cite>do_match(…)</cite> template method should usually be used to reject
+the form of the given Line, but in some cases it is difficult to
+know whether or not a Line meets the StringTransformer’s
+requirements until the transformation is already midway.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Side Effects:</dt><dd><p>This method should NOT mutate &#64;line directly, but it MAY mutate the
+Line’s underlying Node structure. (WARNING: If the underlying Node
+structure IS altered, then this method should NOT be allowed to
+yield an CannotTransform after that point.)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="black.trans.StringParenWrapper">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">black.trans.</span></span><span class="sig-name descname"><span class="pre">StringParenWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize_strings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/black/trans.html#StringParenWrapper"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.StringParenWrapper" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#black.trans.BaseStringSplitter" title="black.trans.BaseStringSplitter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseStringSplitter</span></code></a>, <a class="reference internal" href="#black.trans.CustomSplitMapMixin" title="black.trans.CustomSplitMapMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">CustomSplitMapMixin</span></code></a></p>
+<p>StringTransformer that wraps strings in parens and then splits at the LPAR.</p>
+<dl>
+<dt>Requirements:</dt><dd><p>All of the requirements listed in BaseStringSplitter’s docstring in
+addition to the requirements listed below:</p>
+<ul class="simple">
+<li><p>The line is a return/yield statement, which returns/yields a string.
+OR</p></li>
+<li><p>The line is part of a ternary expression (e.g. <cite>x = y if cond else
+z</cite>) such that the line starts with <cite>else &lt;string&gt;</cite>, where &lt;string&gt; is
+some string.
+OR</p></li>
+<li><p>The line is an assert statement, which ends with a string.
+OR</p></li>
+<li><p>The line is an assignment statement (e.g. <cite>x = &lt;string&gt;</cite> or <cite>x +=
+&lt;string&gt;</cite>) such that the variable is being assigned the value of some
+string.
+OR</p></li>
+<li><p>The line is a dictionary key assignment where some valid key is being
+assigned the value of some string.
+OR</p></li>
+<li><p>The line is a lambda expression and the value is a string.
+OR</p></li>
+<li><p>The line starts with an «atom» string that prefers to be wrapped in
+parens. It’s preferred to be wrapped when it’s is an immediate child of
+a list/set/tuple literal, AND the string is surrounded by commas (or is
+the first/last child).</p></li>
+</ul>
+</dd>
+<dt>Transformations:</dt><dd><p>The chosen string is wrapped in parentheses and then split at the LPAR.</p>
+<p>We then have one line which ends with an LPAR and another line that
+starts with the chosen string. The latter line is then split again at
+the RPAR. This results in the RPAR (and possibly a trailing comma)
+being placed on its own line.</p>
+<p>NOTE: If any leaves exist to the right of the chosen string (except
+for a trailing comma, which would be placed after the RPAR), those
+leaves are placed inside the parentheses.  In effect, the chosen
+string is not necessarily being «wrapped» by parentheses. We can,
+however, count on the LPAR being placed directly before the chosen
+string.</p>
+<p>In other words, StringParenWrapper creates «atom» strings. These
+can then be split again by StringSplitter, if necessary.</p>
+</dd>
+<dt>Collaborations:</dt><dd><p>In the event that a string line split by StringParenWrapper is
+changed such that it no longer needs to be given its own line,
+StringParenWrapper relies on StringParenStripper to clean up the
+parentheses it created.</p>
+<p>For «atom» strings that prefers to be wrapped in parens, it requires
+StringSplitter to hold the split until the string is wrapped in parens.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="black.trans.StringParenWrapper.do_splitter_match">
+<span class="sig-name descname"><span class="pre">do_splitter_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="black.rusty.html#black.rusty.Ok" title="black.rusty.Ok"><span class="pre">Ok</span></a><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="black.rusty.html#black.rusty.Err" title="black.rusty.Err"><span class="pre">Err</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#black.trans.CannotTransform" title="black.trans.CannotTransform"><span class="pre">CannotTransform</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/trans.html#StringParenWrapper.do_splitter_match"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.StringParenWrapper.do_splitter_match" title="Link to this definition"></a></dt>
+<dd><p>BaseStringSplitter asks its clients to override this method instead of
+<cite>StringTransformer.do_match(…)</cite>.</p>
+<p>Follows the same protocol as <cite>StringTransformer.do_match(…)</cite>.</p>
+<p>Refer to <cite>help(StringTransformer.do_match)</cite> for more information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.trans.StringParenWrapper.do_transform">
+<span class="sig-name descname"><span class="pre">do_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">string_indices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.rusty.html#black.rusty.Ok" title="black.rusty.Ok"><span class="pre">Ok</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.lines.html#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="black.rusty.html#black.rusty.Err" title="black.rusty.Err"><span class="pre">Err</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#black.trans.CannotTransform" title="black.trans.CannotTransform"><span class="pre">CannotTransform</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/trans.html#StringParenWrapper.do_transform"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.StringParenWrapper.do_transform" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Campos<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p>Ok(new_line) where new_line is the new transformed line.
+OR</p></li>
+<li><p>Err(CannotTransform) if the transformation failed for some reason. The
+<cite>do_match(…)</cite> template method should usually be used to reject
+the form of the given Line, but in some cases it is difficult to
+know whether or not a Line meets the StringTransformer’s
+requirements until the transformation is already midway.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Side Effects:</dt><dd><p>This method should NOT mutate &#64;line directly, but it MAY mutate the
+Line’s underlying Node structure. (WARNING: If the underlying Node
+structure IS altered, then this method should NOT be allowed to
+yield an CannotTransform after that point.)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="black.trans.StringParser">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">black.trans.</span></span><span class="sig-name descname"><span class="pre">StringParser</span></span><a class="reference internal" href="../_modules/black/trans.html#StringParser"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.StringParser" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A state machine that aids in parsing a string’s «trailer», which can be
+either non-existent, an old-style formatting sequence (e.g. <cite>% varX</cite> or <cite>%
+(varX, varY)</cite>), or a method-call / attribute access (e.g. <cite>.format(varX,
+varY)</cite>).</p>
+<p>NOTE: A new StringParser object MUST be instantiated for each string
+trailer we need to parse.</p>
+<p class="rubric">Ejemplos</p>
+<p>We shall assume that <cite>line</cite> equals the <cite>Line</cite> object that corresponds
+to the following line of python code:
+<code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">x</span> <span class="pre">=</span> <span class="pre">&quot;Some</span> <span class="pre">{}.&quot;.format(&quot;String&quot;)</span> <span class="pre">+</span> <span class="pre">some_other_string</span>
+<span class="pre">`</span></code></p>
+<p>Furthermore, we will assume that <cite>string_idx</cite> is some index such that:
+<code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">assert</span> <span class="pre">line.leaves[string_idx].value</span> <span class="pre">==</span> <span class="pre">&quot;Some</span> <span class="pre">{}.&quot;</span>
+<span class="pre">`</span></code></p>
+<p>The following code snippet then holds:
+<code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">string_parser</span> <span class="pre">=</span> <span class="pre">StringParser()</span>
+<span class="pre">idx</span> <span class="pre">=</span> <span class="pre">string_parser.parse(line.leaves,</span> <span class="pre">string_idx)</span>
+<span class="pre">assert</span> <span class="pre">line.leaves[idx].type</span> <span class="pre">==</span> <span class="pre">token.PLUS</span>
+<span class="pre">`</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.trans.StringParser.DEFAULT_TOKEN">
+<span class="sig-name descname"><span class="pre">DEFAULT_TOKEN</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Final</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">20210605</span></span><a class="headerlink" href="#black.trans.StringParser.DEFAULT_TOKEN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.trans.StringParser.START">
+<span class="sig-name descname"><span class="pre">START</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Final</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></span><a class="headerlink" href="#black.trans.StringParser.START" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.trans.StringParser.DOT">
+<span class="sig-name descname"><span class="pre">DOT</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Final</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></span><a class="headerlink" href="#black.trans.StringParser.DOT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.trans.StringParser.NAME">
+<span class="sig-name descname"><span class="pre">NAME</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Final</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></span><a class="headerlink" href="#black.trans.StringParser.NAME" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.trans.StringParser.PERCENT">
+<span class="sig-name descname"><span class="pre">PERCENT</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Final</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></span><a class="headerlink" href="#black.trans.StringParser.PERCENT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.trans.StringParser.SINGLE_FMT_ARG">
+<span class="sig-name descname"><span class="pre">SINGLE_FMT_ARG</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Final</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></span><a class="headerlink" href="#black.trans.StringParser.SINGLE_FMT_ARG" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.trans.StringParser.LPAR">
+<span class="sig-name descname"><span class="pre">LPAR</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Final</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></span><a class="headerlink" href="#black.trans.StringParser.LPAR" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.trans.StringParser.RPAR">
+<span class="sig-name descname"><span class="pre">RPAR</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Final</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">7</span></span><a class="headerlink" href="#black.trans.StringParser.RPAR" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.trans.StringParser.DONE">
+<span class="sig-name descname"><span class="pre">DONE</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Final</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">8</span></span><a class="headerlink" href="#black.trans.StringParser.DONE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.trans.StringParser.parse">
+<span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Leaf</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">string_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../_modules/black/trans.html#StringParser.parse"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.StringParser.parse" title="Link to this definition"></a></dt>
+<dd><dl class="simple">
+<dt>Pre-conditions:</dt><dd><ul class="simple">
+<li><p>&#64;leaves[&#64;string_idx].type == token.STRING</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The index directly after the last leaf which is a part of the string
+trailer, if a «trailer» exists.
+OR
+&#64;string_idx + 1, if no string «trailer» exists.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.trans.insert_str_child_factory">
+<span class="sig-prename descclassname"><span class="pre">black.trans.</span></span><span class="sig-name descname"><span class="pre">insert_str_child_factory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string_leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/trans.html#insert_str_child_factory"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.insert_str_child_factory" title="Link to this definition"></a></dt>
+<dd><p>Factory for a convenience function that is used to orphan &#64;string_leaf
+and then insert multiple new leaves into the same part of the node
+structure that &#64;string_leaf had originally occupied.</p>
+<p class="rubric">Ejemplos</p>
+<p>Let <cite>string_leaf = Leaf(token.STRING, “«foo»”)</cite> and <cite>N =
+string_leaf.parent</cite>. Assume the node <cite>N</cite> has the following
+original structure:</p>
+<dl>
+<dt>Node(</dt><dd><dl class="simple">
+<dt>expr_stmt, [</dt><dd><p>Leaf(NAME, “x”),
+Leaf(EQUAL, “=”),
+Leaf(STRING, “«foo»”),</p>
+</dd>
+</dl>
+<p>]</p>
+</dd>
+</dl>
+<p>)</p>
+<p>We then run the code snippet shown below.
+<a href="#id1"><span class="problematic" id="id2">``</span></a>`
+insert_str_child = insert_str_child_factory(string_leaf)</p>
+<p>lpar = Leaf(token.LPAR, “(“)
+insert_str_child(lpar)</p>
+<p>bar = Leaf(token.STRING, “«bar»”)
+insert_str_child(bar)</p>
+<p>rpar = Leaf(token.RPAR, “)”)
+insert_str_child(rpar)
+<a href="#id3"><span class="problematic" id="id4">``</span></a><a href="#id5"><span class="problematic" id="id6">`</span></a></p>
+<p>After which point, it follows that <cite>string_leaf.parent is None</cite> and
+the node <cite>N</cite> now has the following structure:</p>
+<dl>
+<dt>Node(</dt><dd><dl class="simple">
+<dt>expr_stmt, [</dt><dd><p>Leaf(NAME, “x”),
+Leaf(EQUAL, “=”),
+Leaf(LPAR, “(“),
+Leaf(STRING, “«bar»”),
+Leaf(RPAR, “)”),</p>
+</dd>
+</dl>
+<p>]</p>
+</dd>
+</dl>
+<p>)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.trans.is_valid_index_factory">
+<span class="sig-prename descclassname"><span class="pre">black.trans.</span></span><span class="sig-name descname"><span class="pre">is_valid_index_factory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/trans.html#is_valid_index_factory"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.trans.is_valid_index_factory" title="Link to this definition"></a></dt>
+<dd><p class="rubric">Ejemplos</p>
+<p><a href="#id7"><span class="problematic" id="id8">``</span></a>`
+my_list = [1, 2, 3]</p>
+<p>is_valid_index = is_valid_index_factory(my_list)</p>
+<p>assert is_valid_index(0)
+assert is_valid_index(2)</p>
+<p>assert not is_valid_index(3)
+assert not is_valid_index(-1)
+<a href="#id9"><span class="problematic" id="id10">``</span></a><a href="#id11"><span class="problematic" id="id12">`</span></a></p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="black.strings.html" class="btn btn-neutral float-left" title="black.strings module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2026, Laboratorio IE0417.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

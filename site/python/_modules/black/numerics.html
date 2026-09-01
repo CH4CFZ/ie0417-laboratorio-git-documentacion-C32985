@@ -1,0 +1,181 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>black.numerics &mdash; documentación de Black - 0.1 (commit 8947c48)</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=0dabe907"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/translations.js?v=f85f4cfb"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Black
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenidos:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduccion.html">Introducción a Black</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Black</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Código de módulo</a></li>
+          <li class="breadcrumb-item"><a href="../black.html">black</a></li>
+      <li class="breadcrumb-item active">black.numerics</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Código fuente para black.numerics</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""</span>
+<span class="sd">Formatting numeric literals.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">blib2to3.pytree</span><span class="w"> </span><span class="kn">import</span> <span class="n">Leaf</span>
+
+
+<div class="viewcode-block" id="format_hex">
+<a class="viewcode-back" href="../../api/black.numerics.html#black.numerics.format_hex">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">format_hex</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Formats a hexadecimal string like "0x12B3"</span>
+<span class="sd">    """</span>
+    <span class="n">before</span><span class="p">,</span> <span class="n">after</span> <span class="o">=</span> <span class="n">text</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span> <span class="n">text</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">before</span><span class="si">}{</span><span class="n">after</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span></div>
+
+
+
+<div class="viewcode-block" id="format_scientific_notation">
+<a class="viewcode-back" href="../../api/black.numerics.html#black.numerics.format_scientific_notation">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">format_scientific_notation</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Formats a numeric string utilizing scientific notation"""</span>
+    <span class="n">before</span><span class="p">,</span> <span class="n">after</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"e"</span><span class="p">)</span>
+    <span class="n">sign</span> <span class="o">=</span> <span class="s2">""</span>
+    <span class="k">if</span> <span class="n">after</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"-"</span><span class="p">):</span>
+        <span class="n">after</span> <span class="o">=</span> <span class="n">after</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="n">sign</span> <span class="o">=</span> <span class="s2">"-"</span>
+    <span class="k">elif</span> <span class="n">after</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"+"</span><span class="p">):</span>
+        <span class="n">after</span> <span class="o">=</span> <span class="n">after</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="n">before</span> <span class="o">=</span> <span class="n">format_float_or_int_string</span><span class="p">(</span><span class="n">before</span><span class="p">)</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">before</span><span class="si">}</span><span class="s2">e</span><span class="si">{</span><span class="n">sign</span><span class="si">}{</span><span class="n">after</span><span class="si">}</span><span class="s2">"</span></div>
+
+
+
+<div class="viewcode-block" id="format_complex_number">
+<a class="viewcode-back" href="../../api/black.numerics.html#black.numerics.format_complex_number">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">format_complex_number</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Formats a complex string like `10j`"""</span>
+    <span class="n">number</span> <span class="o">=</span> <span class="n">text</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">suffix</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">format_float_or_int_string</span><span class="p">(</span><span class="n">number</span><span class="p">)</span><span class="si">}{</span><span class="n">suffix</span><span class="si">}</span><span class="s2">"</span></div>
+
+
+
+<div class="viewcode-block" id="format_float_or_int_string">
+<a class="viewcode-back" href="../../api/black.numerics.html#black.numerics.format_float_or_int_string">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">format_float_or_int_string</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Formats a float string like "1.0"."""</span>
+    <span class="k">if</span> <span class="s2">"."</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">text</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">text</span>
+
+    <span class="n">before</span><span class="p">,</span> <span class="n">after</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"."</span><span class="p">)</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">before</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="mi">0</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">after</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="mi">0</span><span class="si">}</span><span class="s2">"</span></div>
+
+
+
+<div class="viewcode-block" id="normalize_numeric_literal">
+<a class="viewcode-back" href="../../api/black.numerics.html#black.numerics.normalize_numeric_literal">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">normalize_numeric_literal</span><span class="p">(</span><span class="n">leaf</span><span class="p">:</span> <span class="n">Leaf</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Normalizes numeric (float, int, and complex) literals.</span>
+
+<span class="sd">    All letters used in the representation are normalized to lowercase,</span>
+<span class="sd">    except for hexadecimal literals, which are normalized to uppercase</span>
+<span class="sd">    after the `0x` prefix."""</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">leaf</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">((</span><span class="s2">"0o"</span><span class="p">,</span> <span class="s2">"0b"</span><span class="p">)):</span>
+        <span class="c1"># Leave octal and binary literals alone.</span>
+        <span class="k">pass</span>
+    <span class="k">elif</span> <span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"0x"</span><span class="p">):</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">format_hex</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="s2">"e"</span> <span class="ow">in</span> <span class="n">text</span><span class="p">:</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">format_scientific_notation</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">text</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">"j"</span><span class="p">):</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">format_complex_number</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">format_float_or_int_string</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">leaf</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">text</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2026, Laboratorio IE0417.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

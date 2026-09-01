@@ -1,0 +1,755 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>black.ranges &mdash; documentación de Black - 0.1 (commit 8947c48)</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=0dabe907"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/translations.js?v=f85f4cfb"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Black
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenidos:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduccion.html">Introducción a Black</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Black</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Código de módulo</a></li>
+          <li class="breadcrumb-item"><a href="../black.html">black</a></li>
+      <li class="breadcrumb-item active">black.ranges</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Código fuente para black.ranges</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Functions related to Black's formatting by line ranges feature."""</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">difflib</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Collection</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Sequence</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">black.nodes</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">LN</span><span class="p">,</span>
+    <span class="n">STANDALONE_COMMENT</span><span class="p">,</span>
+    <span class="n">Leaf</span><span class="p">,</span>
+    <span class="n">Node</span><span class="p">,</span>
+    <span class="n">Visitor</span><span class="p">,</span>
+    <span class="n">first_leaf</span><span class="p">,</span>
+    <span class="n">furthest_ancestor_with_last_leaf</span><span class="p">,</span>
+    <span class="n">last_leaf</span><span class="p">,</span>
+    <span class="n">syms</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">blib2to3.pgen2.token</span><span class="w"> </span><span class="kn">import</span> <span class="n">ASYNC</span><span class="p">,</span> <span class="n">NEWLINE</span>
+
+
+<div class="viewcode-block" id="parse_line_ranges">
+<a class="viewcode-back" href="../../api/black.ranges.html#black.ranges.parse_line_ranges">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_line_ranges</span><span class="p">(</span><span class="n">line_ranges</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
+    <span class="n">lines</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">lines_str</span> <span class="ow">in</span> <span class="n">line_ranges</span><span class="p">:</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="n">lines_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"-"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">"Incorrect --line-ranges format, expect 'START-END', found"</span>
+                <span class="sa">f</span><span class="s2">" </span><span class="si">{</span><span class="n">lines_str</span><span class="si">!r}</span><span class="s2">"</span>
+            <span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">"Incorrect --line-ranges value, expect integer ranges, found"</span>
+                <span class="sa">f</span><span class="s2">" </span><span class="si">{</span><span class="n">lines_str</span><span class="si">!r}</span><span class="s2">"</span>
+            <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">start</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">end</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">"Incorrect --line-ranges value, "</span>
+                    <span class="sa">f</span><span class="s2">"expect positive integers, found </span><span class="si">{</span><span class="n">lines_str</span><span class="si">!r}</span><span class="s2">"</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="n">start</span> <span class="o">&gt;</span> <span class="n">end</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">"Incorrect --line-ranges value, expect START &lt;= END, "</span>
+                    <span class="sa">f</span><span class="s2">"found </span><span class="si">{</span><span class="n">lines_str</span><span class="si">!r}</span><span class="s2">"</span>
+                <span class="p">)</span>
+            <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">lines</span></div>
+
+
+
+<div class="viewcode-block" id="is_valid_line_range">
+<a class="viewcode-back" href="../../api/black.ranges.html#black.ranges.is_valid_line_range">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_valid_line_range</span><span class="p">(</span><span class="n">lines</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Returns whether the line range is valid."""</span>
+    <span class="k">return</span> <span class="ow">not</span> <span class="n">lines</span> <span class="ow">or</span> <span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="sanitized_lines">
+<a class="viewcode-back" href="../../api/black.ranges.html#black.ranges.sanitized_lines">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">sanitized_lines</span><span class="p">(</span>
+    <span class="n">lines</span><span class="p">:</span> <span class="n">Collection</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span> <span class="n">src_contents</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Collection</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">"""Returns the valid line ranges for the given source.</span>
+
+<span class="sd">    This removes ranges that are entirely outside the valid lines.</span>
+
+<span class="sd">    Other ranges are normalized so that the start values are at least 1 and the</span>
+<span class="sd">    end values are at most the (1-based) index of the last source line.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">src_contents</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+    <span class="n">good_lines</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">src_line_count</span> <span class="o">=</span> <span class="n">src_contents</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">src_contents</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">):</span>
+        <span class="n">src_line_count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">start</span> <span class="o">&gt;</span> <span class="n">src_line_count</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="c1"># line-ranges are 1-based</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">end</span> <span class="o">&lt;</span> <span class="n">start</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">end</span><span class="p">,</span> <span class="n">src_line_count</span><span class="p">)</span>
+        <span class="n">good_lines</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">good_lines</span></div>
+
+
+
+<div class="viewcode-block" id="adjusted_lines">
+<a class="viewcode-back" href="../../api/black.ranges.html#black.ranges.adjusted_lines">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">adjusted_lines</span><span class="p">(</span>
+    <span class="n">lines</span><span class="p">:</span> <span class="n">Collection</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span>
+    <span class="n">original_source</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">modified_source</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">"""Returns the adjusted line ranges based on edits from the original code.</span>
+
+<span class="sd">    This computes the new line ranges by diffing original_source and</span>
+<span class="sd">    modified_source, and adjust each range based on how the range overlaps with</span>
+<span class="sd">    the diffs.</span>
+
+<span class="sd">    Note the diff can contain lines outside of the original line ranges. This can</span>
+<span class="sd">    happen when the formatting has to be done in adjacent to maintain consistent</span>
+<span class="sd">    local results. For example:</span>
+
+<span class="sd">    1. def my_func(arg1, arg2,</span>
+<span class="sd">    2.             arg3,):</span>
+<span class="sd">    3.   pass</span>
+
+<span class="sd">    If it restricts to line 2-2, it can't simply reformat line 2, it also has</span>
+<span class="sd">    to reformat line 1:</span>
+
+<span class="sd">    1. def my_func(</span>
+<span class="sd">    2.     arg1,</span>
+<span class="sd">    3.     arg2,</span>
+<span class="sd">    4.     arg3,</span>
+<span class="sd">    5. ):</span>
+<span class="sd">    6.   pass</span>
+
+<span class="sd">    In this case, we will expand the line ranges to also include the whole diff</span>
+<span class="sd">    block.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      lines: a collection of line ranges.</span>
+<span class="sd">      original_source: the original source.</span>
+<span class="sd">      modified_source: the modified source.</span>
+<span class="sd">    """</span>
+    <span class="n">lines_mappings</span> <span class="o">=</span> <span class="n">_calculate_lines_mappings</span><span class="p">(</span><span class="n">original_source</span><span class="p">,</span> <span class="n">modified_source</span><span class="p">)</span>
+
+    <span class="n">new_lines</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># Keep an index of the current search. Since the lines and lines_mappings are</span>
+    <span class="c1"># sorted, this makes the search complexity linear.</span>
+    <span class="n">current_mapping_index</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+        <span class="n">start_mapping_index</span> <span class="o">=</span> <span class="n">_find_lines_mapping_index</span><span class="p">(</span>
+            <span class="n">start</span><span class="p">,</span>
+            <span class="n">lines_mappings</span><span class="p">,</span>
+            <span class="n">current_mapping_index</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">end_mapping_index</span> <span class="o">=</span> <span class="n">_find_lines_mapping_index</span><span class="p">(</span>
+            <span class="n">end</span><span class="p">,</span>
+            <span class="n">lines_mappings</span><span class="p">,</span>
+            <span class="n">start_mapping_index</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">current_mapping_index</span> <span class="o">=</span> <span class="n">start_mapping_index</span>
+        <span class="k">if</span> <span class="n">start_mapping_index</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines_mappings</span><span class="p">)</span> <span class="ow">or</span> <span class="n">end_mapping_index</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span>
+            <span class="n">lines_mappings</span>
+        <span class="p">):</span>
+            <span class="c1"># Protect against invalid inputs.</span>
+            <span class="k">continue</span>
+        <span class="n">start_mapping</span> <span class="o">=</span> <span class="n">lines_mappings</span><span class="p">[</span><span class="n">start_mapping_index</span><span class="p">]</span>
+        <span class="n">end_mapping</span> <span class="o">=</span> <span class="n">lines_mappings</span><span class="p">[</span><span class="n">end_mapping_index</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">start_mapping</span><span class="o">.</span><span class="n">is_changed_block</span><span class="p">:</span>
+            <span class="c1"># When the line falls into a changed block, expands to the whole block.</span>
+            <span class="n">new_start</span> <span class="o">=</span> <span class="n">start_mapping</span><span class="o">.</span><span class="n">modified_start</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_start</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">start</span> <span class="o">-</span> <span class="n">start_mapping</span><span class="o">.</span><span class="n">original_start</span> <span class="o">+</span> <span class="n">start_mapping</span><span class="o">.</span><span class="n">modified_start</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">end_mapping</span><span class="o">.</span><span class="n">is_changed_block</span><span class="p">:</span>
+            <span class="c1"># When the line falls into a changed block, expands to the whole block.</span>
+            <span class="n">new_end</span> <span class="o">=</span> <span class="n">end_mapping</span><span class="o">.</span><span class="n">modified_end</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_end</span> <span class="o">=</span> <span class="n">end</span> <span class="o">-</span> <span class="n">end_mapping</span><span class="o">.</span><span class="n">original_start</span> <span class="o">+</span> <span class="n">end_mapping</span><span class="o">.</span><span class="n">modified_start</span>
+        <span class="n">new_range</span> <span class="o">=</span> <span class="p">(</span><span class="n">new_start</span><span class="p">,</span> <span class="n">new_end</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_valid_line_range</span><span class="p">(</span><span class="n">new_range</span><span class="p">):</span>
+            <span class="n">new_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_range</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_lines</span></div>
+
+
+
+<div class="viewcode-block" id="convert_unchanged_lines">
+<a class="viewcode-back" href="../../api/black.ranges.html#black.ranges.convert_unchanged_lines">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">convert_unchanged_lines</span><span class="p">(</span><span class="n">src_node</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span> <span class="n">lines</span><span class="p">:</span> <span class="n">Collection</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Converts unchanged lines to STANDALONE_COMMENT.</span>
+
+<span class="sd">    The idea is similar to how `# fmt: on/off` is implemented. It also converts the</span>
+<span class="sd">    nodes between those markers as a single `STANDALONE_COMMENT` leaf node with</span>
+<span class="sd">    the unformatted code as its value. `STANDALONE_COMMENT` is a "fake" token</span>
+<span class="sd">    that will be formatted as-is with its prefix normalized.</span>
+
+<span class="sd">    Here we perform two passes:</span>
+
+<span class="sd">    1. Visit the top-level statements, and convert them to a single</span>
+<span class="sd">       `STANDALONE_COMMENT` when unchanged. This speeds up formatting when some</span>
+<span class="sd">       of the top-level statements aren't changed.</span>
+<span class="sd">    2. Convert unchanged "unwrapped lines" to `STANDALONE_COMMENT` nodes line by</span>
+<span class="sd">       line. "unwrapped lines" are divided by the `NEWLINE` token. e.g. a</span>
+<span class="sd">       multi-line statement is *one* "unwrapped line" that ends with `NEWLINE`,</span>
+<span class="sd">       even though this statement itself can span multiple lines, and the</span>
+<span class="sd">       tokenizer only sees the last '\n' as the `NEWLINE` token.</span>
+
+<span class="sd">    NOTE: During pass (2), comment prefixes and indentations are ALWAYS</span>
+<span class="sd">    normalized even when the lines aren't changed. This is fixable by moving</span>
+<span class="sd">    more formatting to pass (1). However, it's hard to get it correct when</span>
+<span class="sd">    incorrect indentations are used. So we defer this to future optimizations.</span>
+<span class="sd">    """</span>
+    <span class="n">lines_set</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="n">lines_set</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">replacements</span> <span class="o">=</span> <span class="n">_NodeReplacements</span><span class="p">()</span>
+    <span class="n">visitor</span> <span class="o">=</span> <span class="n">_TopLevelStatementsVisitor</span><span class="p">(</span><span class="n">lines_set</span><span class="p">,</span> <span class="n">replacements</span><span class="p">)</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">visitor</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">src_node</span><span class="p">))</span>  <span class="c1"># Consume all results.</span>
+    <span class="n">replacements</span><span class="o">.</span><span class="n">apply</span><span class="p">()</span>
+    <span class="n">_convert_unchanged_line_by_line</span><span class="p">(</span><span class="n">src_node</span><span class="p">,</span> <span class="n">lines_set</span><span class="p">)</span></div>
+
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">_NodeReplacements</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Collects STANDALONE_COMMENT conversions and applies them per parent.</span>
+
+<span class="sd">    Converting a node splices a `STANDALONE_COMMENT` leaf in place of a run of</span>
+<span class="sd">    sibling nodes. Doing that one node at a time with `Base.remove` /</span>
+<span class="sd">    `insert_child` scans and shifts the parent's children list on every call, so</span>
+<span class="sd">    converting the many sibling blocks of one parent (a long if/elif chain, a</span>
+<span class="sd">    match with many cases, a module with many top-level statements) is O(n^2).</span>
+<span class="sd">    Recording the conversions and rewriting each parent's children in a single</span>
+<span class="sd">    pass makes it O(n).</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># id(parent) -&gt; (parent, {id(child): standalone to splice in}, {ids to drop})</span>
+        <span class="c1"># A run's nodes can live under more than one parent (an `async` statement</span>
+        <span class="c1"># keeps the `ASYNC` leaf on the grandparent), so the standalone replaces</span>
+        <span class="c1"># the run's first node under its own parent while the remaining nodes are</span>
+        <span class="c1"># just dropped from wherever they sit.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_by_parent</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Node</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Leaf</span><span class="p">],</span> <span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1"># NEWLINE leaves already inside a recorded run, so the line-by-line pass</span>
+        <span class="c1"># doesn't record an overlapping conversion for them.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">covered_newlines</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="c1"># Nodes already scheduled for removal. When conversions immediately</span>
+        <span class="c1"># mutated the tree, a second conversion touching an already-removed node</span>
+        <span class="c1"># was a no-op (`Base.remove` returned None); recording defers the</span>
+        <span class="c1"># mutation, so we skip such nodes explicitly to keep that behaviour.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_recorded</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="c1"># A leaf's prefix (indentation, blank lines, comments) moves onto its</span>
+        <span class="c1"># STANDALONE_COMMENT. When an inner and an outer node that share the same</span>
+        <span class="c1"># first leaf are both converted (a decorator inside a decorated block),</span>
+        <span class="c1"># the earlier conversion clears the prefix off the leaf, so the later one</span>
+        <span class="c1"># would see an empty prefix. Remember the taken prefix keyed by the leaf</span>
+        <span class="c1"># so both conversions reuse the original.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_taken_prefixes</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_entry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Node</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Node</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Leaf</span><span class="p">],</span> <span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_by_parent</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">parent</span><span class="p">),</span> <span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="p">{},</span> <span class="nb">set</span><span class="p">()))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">take_prefix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">:</span> <span class="n">Leaf</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">cached</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_taken_prefixes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">first</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">cached</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">cached</span>
+        <span class="n">prefix</span> <span class="o">=</span> <span class="n">first</span><span class="o">.</span><span class="n">prefix</span>
+        <span class="n">first</span><span class="o">.</span><span class="n">prefix</span> <span class="o">=</span> <span class="s2">""</span>
+        <span class="c1"># Immediate conversion replaced the whole run with a freshly built</span>
+        <span class="c1"># STANDALONE_COMMENT leaf, whose synthesized position is line 0. Recording</span>
+        <span class="c1"># the conversion leaves the original leaf in place, so mirror that line 0</span>
+        <span class="c1"># here: when a later, enclosing node shares this first leaf (a decorated</span>
+        <span class="c1"># block over an already-recorded decorator), _get_line_range sees the run</span>
+        <span class="c1"># as starting at line 0, matching the immediate behaviour.</span>
+        <span class="n">first</span><span class="o">.</span><span class="n">lineno</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_taken_prefixes</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="n">first</span><span class="p">)]</span> <span class="o">=</span> <span class="n">prefix</span>
+        <span class="k">return</span> <span class="n">prefix</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_recorded</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">LN</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">id</span><span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recorded</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">run</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">LN</span><span class="p">],</span> <span class="n">standalone</span><span class="p">:</span> <span class="n">Leaf</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">first</span> <span class="o">=</span> <span class="n">run</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">first_parent</span> <span class="o">=</span> <span class="n">first</span><span class="o">.</span><span class="n">parent</span>
+        <span class="k">if</span> <span class="n">first_parent</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">id</span><span class="p">(</span><span class="n">first</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recorded</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">run</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_recorded</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">node</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">leaves</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">leaf</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">NEWLINE</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">covered_newlines</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">leaf</span><span class="p">))</span>
+            <span class="n">parent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span>
+            <span class="k">if</span> <span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span><span class="p">(</span><span class="n">parent</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">node</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span><span class="p">(</span><span class="n">first_parent</span><span class="p">)[</span><span class="mi">1</span><span class="p">][</span><span class="nb">id</span><span class="p">(</span><span class="n">first</span><span class="p">)]</span> <span class="o">=</span> <span class="n">standalone</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">parent</span><span class="p">,</span> <span class="n">replaced</span><span class="p">,</span> <span class="n">removed</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_by_parent</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">new_children</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">LN</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">parent</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+                <span class="n">standalone</span> <span class="o">=</span> <span class="n">replaced</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">child</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">standalone</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">standalone</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
+                    <span class="n">new_children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">standalone</span><span class="p">)</span>
+                    <span class="n">child</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">elif</span> <span class="nb">id</span><span class="p">(</span><span class="n">child</span><span class="p">)</span> <span class="ow">in</span> <span class="n">removed</span><span class="p">:</span>
+                    <span class="n">child</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">new_children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+            <span class="n">parent</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="n">new_children</span>
+            <span class="n">parent</span><span class="o">.</span><span class="n">changed</span><span class="p">()</span>
+            <span class="n">parent</span><span class="o">.</span><span class="n">invalidate_sibling_maps</span><span class="p">()</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_contains_standalone_comment</span><span class="p">(</span><span class="n">node</span><span class="p">:</span> <span class="n">LN</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">Leaf</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">STANDALONE_COMMENT</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">_contains_standalone_comment</span><span class="p">(</span><span class="n">child</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">_TopLevelStatementsVisitor</span><span class="p">(</span><span class="n">Visitor</span><span class="p">[</span><span class="kc">None</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    A node visitor that converts unchanged top-level statements to</span>
+<span class="sd">    STANDALONE_COMMENT.</span>
+
+<span class="sd">    This is used in addition to _convert_unchanged_line_by_line, to</span>
+<span class="sd">    speed up formatting when there are unchanged top-level</span>
+<span class="sd">    classes/functions/statements.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines_set</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">replacements</span><span class="p">:</span> <span class="s2">"_NodeReplacements"</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lines_set</span> <span class="o">=</span> <span class="n">lines_set</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_replacements</span> <span class="o">=</span> <span class="n">replacements</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_simple_stmt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Node</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="kc">None</span><span class="p">]:</span>
+        <span class="c1"># This is only called for top-level statements, since `visit_suite`</span>
+        <span class="c1"># won't visit its children nodes.</span>
+        <span class="k">yield from</span> <span class="p">[]</span>
+        <span class="n">newline_leaf</span> <span class="o">=</span> <span class="n">last_leaf</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">newline_leaf</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="n">newline_leaf</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">NEWLINE</span>
+        <span class="p">),</span> <span class="sa">f</span><span class="s2">"Unexpectedly found leaf.type=</span><span class="si">{</span><span class="n">newline_leaf</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">"</span>
+        <span class="c1"># We need to find the furthest ancestor with the NEWLINE as the last</span>
+        <span class="c1"># leaf, since a `suite` can simply be a `simple_stmt` when it puts</span>
+        <span class="c1"># its body on the same line. Example: `if cond: pass`.</span>
+        <span class="n">ancestor</span> <span class="o">=</span> <span class="n">furthest_ancestor_with_last_leaf</span><span class="p">(</span><span class="n">newline_leaf</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">_get_line_range</span><span class="p">(</span><span class="n">ancestor</span><span class="p">)</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lines_set</span><span class="p">):</span>
+            <span class="n">_convert_node_to_standalone_comment</span><span class="p">(</span><span class="n">ancestor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_replacements</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_suite</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Node</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="kc">None</span><span class="p">]:</span>
+        <span class="k">yield from</span> <span class="p">[]</span>
+        <span class="c1"># If there is a STANDALONE_COMMENT node, it means parts of the node tree</span>
+        <span class="c1"># have fmt on/off/skip markers. Those STANDALONE_COMMENT nodes can't</span>
+        <span class="c1"># be simply converted by calling str(node). So we just don't convert</span>
+        <span class="c1"># here.</span>
+        <span class="k">if</span> <span class="n">_contains_standalone_comment</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+            <span class="k">return</span>
+        <span class="c1"># Find the semantic parent of this suite. For `async_stmt` and</span>
+        <span class="c1"># `async_funcdef`, the ASYNC token is defined on a separate level by the</span>
+        <span class="c1"># grammar.</span>
+        <span class="n">semantic_parent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span>
+        <span class="k">if</span> <span class="n">semantic_parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">semantic_parent</span><span class="o">.</span><span class="n">prev_sibling</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="ow">and</span> <span class="n">semantic_parent</span><span class="o">.</span><span class="n">prev_sibling</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">ASYNC</span>
+            <span class="p">):</span>
+                <span class="n">semantic_parent</span> <span class="o">=</span> <span class="n">semantic_parent</span><span class="o">.</span><span class="n">parent</span>
+        <span class="k">if</span> <span class="n">semantic_parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">_get_line_range</span><span class="p">(</span>
+            <span class="n">semantic_parent</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lines_set</span><span class="p">):</span>
+            <span class="n">_convert_node_to_standalone_comment</span><span class="p">(</span><span class="n">semantic_parent</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_replacements</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_convert_unchanged_line_by_line</span><span class="p">(</span><span class="n">node</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span> <span class="n">lines_set</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Converts unchanged to STANDALONE_COMMENT line by line."""</span>
+    <span class="n">replacements</span> <span class="o">=</span> <span class="n">_NodeReplacements</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">leaves</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">leaf</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="n">NEWLINE</span><span class="p">:</span>
+            <span class="c1"># We only consider "unwrapped lines", which are divided by the NEWLINE</span>
+            <span class="c1"># token.</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="nb">id</span><span class="p">(</span><span class="n">leaf</span><span class="p">)</span> <span class="ow">in</span> <span class="n">replacements</span><span class="o">.</span><span class="n">covered_newlines</span><span class="p">:</span>
+            <span class="c1"># This NEWLINE is inside a run already scheduled for conversion (e.g.</span>
+            <span class="c1"># a second decorator on a stacked decorator block).</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span> <span class="ow">and</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">syms</span><span class="o">.</span><span class="n">match_stmt</span><span class="p">:</span>
+            <span class="c1"># The `suite` node is defined as:</span>
+            <span class="c1">#   match_stmt: "match" subject_expr ':' NEWLINE INDENT case_block+ DEDENT</span>
+            <span class="c1"># Here we need to check `subject_expr`. The `case_block+` will be</span>
+            <span class="c1"># checked by their own NEWLINEs.</span>
+            <span class="n">nodes_to_ignore</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">LN</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">prev_sibling</span> <span class="o">=</span> <span class="n">leaf</span><span class="o">.</span><span class="n">prev_sibling</span>
+            <span class="k">while</span> <span class="n">prev_sibling</span><span class="p">:</span>
+                <span class="n">nodes_to_ignore</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">prev_sibling</span><span class="p">)</span>
+                <span class="n">prev_sibling</span> <span class="o">=</span> <span class="n">prev_sibling</span><span class="o">.</span><span class="n">prev_sibling</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">_get_line_range</span><span class="p">(</span><span class="n">nodes_to_ignore</span><span class="p">)</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">lines_set</span><span class="p">):</span>
+                <span class="n">_convert_nodes_to_standalone_comment</span><span class="p">(</span>
+                    <span class="n">nodes_to_ignore</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="n">leaf</span><span class="p">,</span> <span class="n">replacements</span><span class="o">=</span><span class="n">replacements</span>
+                <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span> <span class="ow">and</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">syms</span><span class="o">.</span><span class="n">suite</span><span class="p">:</span>
+            <span class="c1"># The `suite` node is defined as:</span>
+            <span class="c1">#   suite: simple_stmt | NEWLINE INDENT stmt+ DEDENT</span>
+            <span class="c1"># We will check `simple_stmt` and `stmt+` separately against the lines set</span>
+            <span class="n">parent_sibling</span> <span class="o">=</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">prev_sibling</span>
+            <span class="n">nodes_to_ignore</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">while</span> <span class="n">parent_sibling</span> <span class="ow">and</span> <span class="n">parent_sibling</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="n">syms</span><span class="o">.</span><span class="n">suite</span><span class="p">:</span>
+                <span class="c1"># NOTE: Multiple suite nodes can exist as siblings in e.g. `if_stmt`.</span>
+                <span class="n">nodes_to_ignore</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">parent_sibling</span><span class="p">)</span>
+                <span class="n">parent_sibling</span> <span class="o">=</span> <span class="n">parent_sibling</span><span class="o">.</span><span class="n">prev_sibling</span>
+            <span class="c1"># Special case for `async_stmt` and `async_funcdef` where the ASYNC</span>
+            <span class="c1"># token is on the grandparent node.</span>
+            <span class="n">grandparent</span> <span class="o">=</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">grandparent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="ow">and</span> <span class="n">grandparent</span><span class="o">.</span><span class="n">prev_sibling</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="ow">and</span> <span class="n">grandparent</span><span class="o">.</span><span class="n">prev_sibling</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">ASYNC</span>
+            <span class="p">):</span>
+                <span class="n">nodes_to_ignore</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">grandparent</span><span class="o">.</span><span class="n">prev_sibling</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">_get_line_range</span><span class="p">(</span><span class="n">nodes_to_ignore</span><span class="p">)</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">lines_set</span><span class="p">):</span>
+                <span class="n">_convert_nodes_to_standalone_comment</span><span class="p">(</span>
+                    <span class="n">nodes_to_ignore</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="n">leaf</span><span class="p">,</span> <span class="n">replacements</span><span class="o">=</span><span class="n">replacements</span>
+                <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ancestor</span> <span class="o">=</span> <span class="n">furthest_ancestor_with_last_leaf</span><span class="p">(</span><span class="n">leaf</span><span class="p">)</span>
+            <span class="c1"># Consider multiple decorators as a whole block, as their</span>
+            <span class="c1"># newlines have different behaviors than the rest of the grammar.</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">ancestor</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">syms</span><span class="o">.</span><span class="n">decorator</span>
+                <span class="ow">and</span> <span class="n">ancestor</span><span class="o">.</span><span class="n">parent</span>
+                <span class="ow">and</span> <span class="n">ancestor</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">syms</span><span class="o">.</span><span class="n">decorators</span>
+            <span class="p">):</span>
+                <span class="n">ancestor</span> <span class="o">=</span> <span class="n">ancestor</span><span class="o">.</span><span class="n">parent</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">_get_line_range</span><span class="p">(</span><span class="n">ancestor</span><span class="p">)</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">lines_set</span><span class="p">):</span>
+                <span class="n">_convert_node_to_standalone_comment</span><span class="p">(</span><span class="n">ancestor</span><span class="p">,</span> <span class="n">replacements</span><span class="p">)</span>
+    <span class="n">replacements</span><span class="o">.</span><span class="n">apply</span><span class="p">()</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_convert_node_to_standalone_comment</span><span class="p">(</span>
+    <span class="n">node</span><span class="p">:</span> <span class="n">LN</span><span class="p">,</span> <span class="n">replacements</span><span class="p">:</span> <span class="s2">"_NodeReplacements"</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Convert node to STANDALONE_COMMENT by modifying the tree inline."""</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">parent</span> <span class="ow">or</span> <span class="n">replacements</span><span class="o">.</span><span class="n">is_recorded</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+        <span class="k">return</span>
+    <span class="n">first</span> <span class="o">=</span> <span class="n">first_leaf</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+    <span class="n">last</span> <span class="o">=</span> <span class="n">last_leaf</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">first</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">last</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="k">if</span> <span class="n">first</span> <span class="ow">is</span> <span class="n">last</span><span class="p">:</span>
+        <span class="c1"># This can happen on the following edge cases:</span>
+        <span class="c1"># 1. A block of `# fmt: off/on` code except the `# fmt: on` is placed</span>
+        <span class="c1">#    on the end of the last line instead of on a new line.</span>
+        <span class="c1"># 2. A single backslash on its own line followed by a comment line.</span>
+        <span class="c1"># Ideally we don't want to format them when not requested, but fixing</span>
+        <span class="c1"># isn't easy. These cases are also badly formatted code, so it isn't</span>
+        <span class="c1"># too bad we reformat them.</span>
+        <span class="k">return</span>
+    <span class="c1"># The prefix contains comments and indentation whitespaces. They are</span>
+    <span class="c1"># reformatted accordingly to the correct indentation level.</span>
+    <span class="c1"># This also means the indentation will be changed on the unchanged lines, and</span>
+    <span class="c1"># this is actually required to not break incremental reformatting.</span>
+    <span class="n">prefix</span> <span class="o">=</span> <span class="n">replacements</span><span class="o">.</span><span class="n">take_prefix</span><span class="p">(</span><span class="n">first</span><span class="p">)</span>
+    <span class="c1"># For a single-line decorated item the decorator and the item need a newline</span>
+    <span class="c1"># between them. The conversions are recorded and applied in a single pass</span>
+    <span class="c1"># instead of mutating the tree per node, so the decorator here is still its</span>
+    <span class="c1"># own child node carrying its trailing NEWLINE, which already separates it</span>
+    <span class="c1"># from the item; there's nothing to add back. (A decorated item spanning</span>
+    <span class="c1"># multiple lines is handled by the earlier suite case in</span>
+    <span class="c1"># _convert_unchanged_line_by_line, which manages the newlines itself.)</span>
+    <span class="c1"># Remove the '\n', as STANDALONE_COMMENT will have '\n' appended when</span>
+    <span class="c1"># generating the formatted code.</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">replacements</span><span class="o">.</span><span class="n">record</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">node</span><span class="p">],</span>
+        <span class="n">Leaf</span><span class="p">(</span>
+            <span class="n">STANDALONE_COMMENT</span><span class="p">,</span>
+            <span class="n">value</span><span class="p">,</span>
+            <span class="n">prefix</span><span class="o">=</span><span class="n">prefix</span><span class="p">,</span>
+            <span class="n">fmt_pass_converted_first_leaf</span><span class="o">=</span><span class="n">first</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_convert_nodes_to_standalone_comment</span><span class="p">(</span>
+    <span class="n">nodes</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">LN</span><span class="p">],</span> <span class="o">*</span><span class="p">,</span> <span class="n">newline</span><span class="p">:</span> <span class="n">Leaf</span><span class="p">,</span> <span class="n">replacements</span><span class="p">:</span> <span class="s2">"_NodeReplacements"</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Convert nodes to STANDALONE_COMMENT by modifying the tree inline."""</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">nodes</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">parent</span>
+    <span class="n">first</span> <span class="o">=</span> <span class="n">first_leaf</span><span class="p">(</span><span class="n">nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">parent</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">first</span> <span class="ow">or</span> <span class="n">replacements</span><span class="o">.</span><span class="n">is_recorded</span><span class="p">(</span><span class="n">nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">return</span>
+    <span class="n">prefix</span> <span class="o">=</span> <span class="n">replacements</span><span class="o">.</span><span class="n">take_prefix</span><span class="p">(</span><span class="n">first</span><span class="p">)</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">)</span>
+    <span class="c1"># The prefix comment on the NEWLINE leaf is the trailing comment of the statement.</span>
+    <span class="k">if</span> <span class="n">newline</span><span class="o">.</span><span class="n">prefix</span><span class="p">:</span>
+        <span class="n">value</span> <span class="o">+=</span> <span class="n">newline</span><span class="o">.</span><span class="n">prefix</span>
+        <span class="n">newline</span><span class="o">.</span><span class="n">prefix</span> <span class="o">=</span> <span class="s2">""</span>
+    <span class="n">replacements</span><span class="o">.</span><span class="n">record</span><span class="p">(</span>
+        <span class="nb">list</span><span class="p">(</span><span class="n">nodes</span><span class="p">),</span>
+        <span class="n">Leaf</span><span class="p">(</span>
+            <span class="n">STANDALONE_COMMENT</span><span class="p">,</span>
+            <span class="n">value</span><span class="p">,</span>
+            <span class="n">prefix</span><span class="o">=</span><span class="n">prefix</span><span class="p">,</span>
+            <span class="n">fmt_pass_converted_first_leaf</span><span class="o">=</span><span class="n">first</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_leaf_line_end</span><span class="p">(</span><span class="n">leaf</span><span class="p">:</span> <span class="n">Leaf</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Returns the line number of the leaf node's last line."""</span>
+    <span class="k">if</span> <span class="n">leaf</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">NEWLINE</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">leaf</span><span class="o">.</span><span class="n">lineno</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Leaf nodes like multiline strings can occupy multiple lines.</span>
+        <span class="k">return</span> <span class="n">leaf</span><span class="o">.</span><span class="n">lineno</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">leaf</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_line_range</span><span class="p">(</span><span class="n">node_or_nodes</span><span class="p">:</span> <span class="n">LN</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">LN</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Returns the line range of this node or list of nodes."""</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node_or_nodes</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">nodes</span> <span class="o">=</span> <span class="n">node_or_nodes</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">nodes</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">first</span> <span class="o">=</span> <span class="n">first_leaf</span><span class="p">(</span><span class="n">nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">last</span> <span class="o">=</span> <span class="n">last_leaf</span><span class="p">(</span><span class="n">nodes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">first</span> <span class="ow">and</span> <span class="n">last</span><span class="p">:</span>
+            <span class="n">line_start</span> <span class="o">=</span> <span class="n">first</span><span class="o">.</span><span class="n">lineno</span>
+            <span class="n">line_end</span> <span class="o">=</span> <span class="n">_leaf_line_end</span><span class="p">(</span><span class="n">last</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">line_start</span><span class="p">,</span> <span class="n">line_end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">node_or_nodes</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">Leaf</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">lineno</span><span class="p">,</span> <span class="n">_leaf_line_end</span><span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">first</span> <span class="o">=</span> <span class="n">first_leaf</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+            <span class="n">last</span> <span class="o">=</span> <span class="n">last_leaf</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">first</span> <span class="ow">and</span> <span class="n">last</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">first</span><span class="o">.</span><span class="n">lineno</span><span class="p">,</span> <span class="n">_leaf_line_end</span><span class="p">(</span><span class="n">last</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">set</span><span class="p">()</span>
+
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">_LinesMapping</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""1-based lines mapping from original source to modified source.</span>
+
+<span class="sd">    Lines [original_start, original_end] from original source</span>
+<span class="sd">    are mapped to [modified_start, modified_end].</span>
+
+<span class="sd">    The ranges are inclusive on both ends.</span>
+<span class="sd">    """</span>
+
+    <span class="n">original_start</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">original_end</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">modified_start</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">modified_end</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="c1"># Whether this range corresponds to a changed block, or an unchanged block.</span>
+    <span class="n">is_changed_block</span><span class="p">:</span> <span class="nb">bool</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_calculate_lines_mappings</span><span class="p">(</span>
+    <span class="n">original_source</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">modified_source</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">_LinesMapping</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Returns a sequence of _LinesMapping by diffing the sources.</span>
+
+<span class="sd">    For example, given the following diff:</span>
+<span class="sd">        import re</span>
+<span class="sd">      - def func(arg1,</span>
+<span class="sd">      -   arg2, arg3):</span>
+<span class="sd">      + def func(arg1, arg2, arg3):</span>
+<span class="sd">          pass</span>
+<span class="sd">    It returns the following mappings:</span>
+<span class="sd">      original -&gt; modified</span>
+<span class="sd">       (1, 1)  -&gt;  (1, 1), is_changed_block=False (the "import re" line)</span>
+<span class="sd">       (2, 3)  -&gt;  (2, 2), is_changed_block=True (the diff)</span>
+<span class="sd">       (4, 4)  -&gt;  (3, 3), is_changed_block=False (the "pass" line)</span>
+
+<span class="sd">    You can think of this visually as if it brings up a side-by-side diff, and tries</span>
+<span class="sd">    to map the line ranges from the left side to the right side:</span>
+
+<span class="sd">      (1, 1)-&gt;(1, 1)    1. import re          1. import re</span>
+<span class="sd">      (2, 3)-&gt;(2, 2)    2. def func(arg1,     2. def func(arg1, arg2, arg3):</span>
+<span class="sd">                        3.   arg2, arg3):</span>
+<span class="sd">      (4, 4)-&gt;(3, 3)    4.   pass             3.   pass</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      original_source: the original source.</span>
+<span class="sd">      modified_source: the modified source.</span>
+<span class="sd">    """</span>
+    <span class="n">matcher</span> <span class="o">=</span> <span class="n">difflib</span><span class="o">.</span><span class="n">SequenceMatcher</span><span class="p">(</span>
+        <span class="kc">None</span><span class="p">,</span>
+        <span class="n">original_source</span><span class="o">.</span><span class="n">splitlines</span><span class="p">(</span><span class="n">keepends</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+        <span class="n">modified_source</span><span class="o">.</span><span class="n">splitlines</span><span class="p">(</span><span class="n">keepends</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">matching_blocks</span> <span class="o">=</span> <span class="n">matcher</span><span class="o">.</span><span class="n">get_matching_blocks</span><span class="p">()</span>
+    <span class="n">lines_mappings</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">_LinesMapping</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># matching_blocks is a sequence of "same block of code ranges", see</span>
+    <span class="c1"># https://docs.python.org/3/library/difflib.html#difflib.SequenceMatcher.get_matching_blocks</span>
+    <span class="c1"># Each block corresponds to a _LinesMapping with is_changed_block=False,</span>
+    <span class="c1"># and the ranges between two blocks corresponds to a _LinesMapping with</span>
+    <span class="c1"># is_changed_block=True,</span>
+    <span class="c1"># NOTE: matching_blocks is 0-based, but _LinesMapping is 1-based.</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">block</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">matching_blocks</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">block</span><span class="o">.</span><span class="n">a</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">block</span><span class="o">.</span><span class="n">b</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">lines_mappings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">_LinesMapping</span><span class="p">(</span>
+                        <span class="n">original_start</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                        <span class="n">original_end</span><span class="o">=</span><span class="n">block</span><span class="o">.</span><span class="n">a</span><span class="p">,</span>
+                        <span class="n">modified_start</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                        <span class="n">modified_end</span><span class="o">=</span><span class="n">block</span><span class="o">.</span><span class="n">b</span><span class="p">,</span>
+                        <span class="n">is_changed_block</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">previous_block</span> <span class="o">=</span> <span class="n">matching_blocks</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">lines_mappings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">_LinesMapping</span><span class="p">(</span>
+                    <span class="n">original_start</span><span class="o">=</span><span class="n">previous_block</span><span class="o">.</span><span class="n">a</span> <span class="o">+</span> <span class="n">previous_block</span><span class="o">.</span><span class="n">size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="n">original_end</span><span class="o">=</span><span class="n">block</span><span class="o">.</span><span class="n">a</span><span class="p">,</span>
+                    <span class="n">modified_start</span><span class="o">=</span><span class="n">previous_block</span><span class="o">.</span><span class="n">b</span> <span class="o">+</span> <span class="n">previous_block</span><span class="o">.</span><span class="n">size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="n">modified_end</span><span class="o">=</span><span class="n">block</span><span class="o">.</span><span class="n">b</span><span class="p">,</span>
+                    <span class="n">is_changed_block</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">matching_blocks</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">lines_mappings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">_LinesMapping</span><span class="p">(</span>
+                    <span class="n">original_start</span><span class="o">=</span><span class="n">block</span><span class="o">.</span><span class="n">a</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="n">original_end</span><span class="o">=</span><span class="n">block</span><span class="o">.</span><span class="n">a</span> <span class="o">+</span> <span class="n">block</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
+                    <span class="n">modified_start</span><span class="o">=</span><span class="n">block</span><span class="o">.</span><span class="n">b</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="n">modified_end</span><span class="o">=</span><span class="n">block</span><span class="o">.</span><span class="n">b</span> <span class="o">+</span> <span class="n">block</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
+                    <span class="n">is_changed_block</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+    <span class="k">return</span> <span class="n">lines_mappings</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_find_lines_mapping_index</span><span class="p">(</span>
+    <span class="n">original_line</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">lines_mappings</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">_LinesMapping</span><span class="p">],</span>
+    <span class="n">start_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Returns the original index of the lines mappings for the original line."""</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">start_index</span>
+    <span class="k">while</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines_mappings</span><span class="p">):</span>
+        <span class="n">mapping</span> <span class="o">=</span> <span class="n">lines_mappings</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">mapping</span><span class="o">.</span><span class="n">original_start</span> <span class="o">&lt;=</span> <span class="n">original_line</span> <span class="o">&lt;=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">original_end</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">index</span>
+        <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">index</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2026, Laboratorio IE0417.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

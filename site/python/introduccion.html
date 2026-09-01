@@ -20,6 +20,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Índice" href="genindex.html" />
     <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="black" href="api/modules.html" />
     <link rel="prev" title="Documentación de Black" href="index.html" /> 
 </head>
 
@@ -47,7 +48,8 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Introducción a Black</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#que-es-black">¿Qué es Black?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#organizacion-del-codigo-fuente">Organización del código fuente</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#alcance-de-esta-documentacion">Alcance de esta documentación</a><ul class="simple">
+<li class="toctree-l2"><a class="reference internal" href="#alcance-de-esta-documentacion">Alcance de esta documentación</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/modules.html">black</a></li>
 </ul>
 </li>
 </ul>
@@ -100,23 +102,23 @@ su integración continua.</p>
 <p>El paquete principal vive en <code class="docutils literal notranslate"><span class="pre">src/black/</span></code> y se organiza, a grandes rasgos,
 en los siguientes grupos de módulos:</p>
 <ul class="simple">
-<li><p><strong>Punto de entrada y orquestación:</strong> <code class="xref py py-mod docutils literal notranslate"><span class="pre">black</span></code> (<code class="docutils literal notranslate"><span class="pre">__init__.py</span></code>) reúne
+<li><p><strong>Punto de entrada y orquestación:</strong> <a class="reference internal" href="api/black.html#module-black" title="black"><code class="xref py py-mod docutils literal notranslate"><span class="pre">black</span></code></a> (<code class="docutils literal notranslate"><span class="pre">__init__.py</span></code>) reúne
 la lógica principal de la herramienta de línea de comandos y coordina el
 resto de los módulos.</p></li>
-<li><p><strong>Análisis sintáctico:</strong> <code class="xref py py-mod docutils literal notranslate"><span class="pre">black.parsing</span></code> y el paquete <code class="docutils literal notranslate"><span class="pre">blib2to3</span></code>
+<li><p><strong>Análisis sintáctico:</strong> <a class="reference internal" href="api/black.parsing.html#module-black.parsing" title="black.parsing"><code class="xref py py-mod docutils literal notranslate"><span class="pre">black.parsing</span></code></a> y el paquete <code class="docutils literal notranslate"><span class="pre">blib2to3</span></code>
 (no documentado en esta entrega por estar fuera del umbral analizado) se
 encargan de convertir el código fuente en un árbol de sintaxis.</p></li>
-<li><p><strong>Generación de líneas formateadas:</strong> <code class="xref py py-mod docutils literal notranslate"><span class="pre">black.linegen</span></code>,
-<code class="xref py py-mod docutils literal notranslate"><span class="pre">black.lines</span></code> y <code class="xref py py-mod docutils literal notranslate"><span class="pre">black.brackets</span></code> construyen y organizan las
+<li><p><strong>Generación de líneas formateadas:</strong> <a class="reference internal" href="api/black.linegen.html#module-black.linegen" title="black.linegen"><code class="xref py py-mod docutils literal notranslate"><span class="pre">black.linegen</span></code></a>,
+<a class="reference internal" href="api/black.lines.html#module-black.lines" title="black.lines"><code class="xref py py-mod docutils literal notranslate"><span class="pre">black.lines</span></code></a> y <a class="reference internal" href="api/black.brackets.html#module-black.brackets" title="black.brackets"><code class="xref py py-mod docutils literal notranslate"><span class="pre">black.brackets</span></code></a> construyen y organizan las
 líneas de salida ya formateadas.</p></li>
-<li><p><strong>Utilidades de dominio específico:</strong> módulos como <code class="xref py py-mod docutils literal notranslate"><span class="pre">black.strings</span></code>,
-<code class="xref py py-mod docutils literal notranslate"><span class="pre">black.numerics</span></code>, <code class="xref py py-mod docutils literal notranslate"><span class="pre">black.comments</span></code> y <code class="xref py py-mod docutils literal notranslate"><span class="pre">black.trans</span></code> aplican
+<li><p><strong>Utilidades de dominio específico:</strong> módulos como <a class="reference internal" href="api/black.strings.html#module-black.strings" title="black.strings"><code class="xref py py-mod docutils literal notranslate"><span class="pre">black.strings</span></code></a>,
+<a class="reference internal" href="api/black.numerics.html#module-black.numerics" title="black.numerics"><code class="xref py py-mod docutils literal notranslate"><span class="pre">black.numerics</span></code></a>, <a class="reference internal" href="api/black.comments.html#module-black.comments" title="black.comments"><code class="xref py py-mod docutils literal notranslate"><span class="pre">black.comments</span></code></a> y <a class="reference internal" href="api/black.trans.html#module-black.trans" title="black.trans"><code class="xref py py-mod docutils literal notranslate"><span class="pre">black.trans</span></code></a> aplican
 reglas de formato sobre literales, comentarios y transformaciones
 puntuales del código.</p></li>
-<li><p><strong>Configuración y modos:</strong> <code class="xref py py-mod docutils literal notranslate"><span class="pre">black.mode</span></code> define las opciones de
+<li><p><strong>Configuración y modos:</strong> <a class="reference internal" href="api/black.mode.html#module-black.mode" title="black.mode"><code class="xref py py-mod docutils literal notranslate"><span class="pre">black.mode</span></code></a> define las opciones de
 formato disponibles (longitud de línea, versión de destino, etc.).</p></li>
-<li><p><strong>Soporte adicional:</strong> <code class="xref py py-mod docutils literal notranslate"><span class="pre">black.cache</span></code>, <code class="xref py py-mod docutils literal notranslate"><span class="pre">black.concurrency</span></code>,
-<code class="xref py py-mod docutils literal notranslate"><span class="pre">black.report</span></code> y <code class="xref py py-mod docutils literal notranslate"><span class="pre">black.output</span></code> cubren aspectos de
+<li><p><strong>Soporte adicional:</strong> <a class="reference internal" href="api/black.cache.html#module-black.cache" title="black.cache"><code class="xref py py-mod docutils literal notranslate"><span class="pre">black.cache</span></code></a>, <a class="reference internal" href="api/black.concurrency.html#module-black.concurrency" title="black.concurrency"><code class="xref py py-mod docutils literal notranslate"><span class="pre">black.concurrency</span></code></a>,
+<a class="reference internal" href="api/black.report.html#module-black.report" title="black.report"><code class="xref py py-mod docutils literal notranslate"><span class="pre">black.report</span></code></a> y <a class="reference internal" href="api/black.output.html#module-black.output" title="black.output"><code class="xref py py-mod docutils literal notranslate"><span class="pre">black.output</span></code></a> cubren aspectos de
 infraestructura (caché de archivos ya formateados, procesamiento en
 paralelo y salida de resultados).</p></li>
 </ul>
@@ -130,6 +132,9 @@ requiere la dependencia <code class="docutils literal notranslate"><span class="
 adaptada de la biblioteca estándar), ya que quedan fuera del subsistema
 analizado para este laboratorio.</p>
 <div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">black</a></li>
+</ul>
 </div>
 </section>
 </section>
@@ -139,6 +144,7 @@ analizado para este laboratorio.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
         <a href="index.html" class="btn btn-neutral float-left" title="Documentación de Black" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="api/modules.html" class="btn btn-neutral float-right" title="black" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

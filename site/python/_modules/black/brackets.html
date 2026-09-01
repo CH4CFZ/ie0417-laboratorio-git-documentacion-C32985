@@ -1,0 +1,580 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>black.brackets &mdash; documentación de Black - 0.1 (commit 8947c48)</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=0dabe907"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/translations.js?v=f85f4cfb"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Black
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenidos:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduccion.html">Introducción a Black</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Black</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Código de módulo</a></li>
+          <li class="breadcrumb-item"><a href="../black.html">black</a></li>
+      <li class="breadcrumb-item active">black.brackets</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Código fuente para black.brackets</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Builds on top of nodes.py to track brackets."""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Sequence</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Final</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">black.nodes</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">BRACKET</span><span class="p">,</span>
+    <span class="n">CLOSING_BRACKETS</span><span class="p">,</span>
+    <span class="n">COMPARATORS</span><span class="p">,</span>
+    <span class="n">LOGIC_OPERATORS</span><span class="p">,</span>
+    <span class="n">MATH_OPERATORS</span><span class="p">,</span>
+    <span class="n">OPENING_BRACKETS</span><span class="p">,</span>
+    <span class="n">UNPACKING_PARENTS</span><span class="p">,</span>
+    <span class="n">VARARGS_PARENTS</span><span class="p">,</span>
+    <span class="n">is_vararg</span><span class="p">,</span>
+    <span class="n">syms</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">blib2to3.pgen2</span><span class="w"> </span><span class="kn">import</span> <span class="n">token</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">blib2to3.pytree</span><span class="w"> </span><span class="kn">import</span> <span class="n">Leaf</span><span class="p">,</span> <span class="n">Node</span>
+
+<span class="c1"># types</span>
+<span class="n">LN</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">Leaf</span><span class="p">,</span> <span class="n">Node</span><span class="p">]</span>
+<span class="n">Depth</span> <span class="o">=</span> <span class="nb">int</span>
+<span class="n">LeafID</span> <span class="o">=</span> <span class="nb">int</span>
+<span class="n">NodeType</span> <span class="o">=</span> <span class="nb">int</span>
+<span class="n">Priority</span> <span class="o">=</span> <span class="nb">int</span>
+
+
+<span class="n">COMPREHENSION_PRIORITY</span><span class="p">:</span> <span class="n">Final</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">COMMA_PRIORITY</span><span class="p">:</span> <span class="n">Final</span> <span class="o">=</span> <span class="mi">18</span>
+<span class="n">TERNARY_PRIORITY</span><span class="p">:</span> <span class="n">Final</span> <span class="o">=</span> <span class="mi">16</span>
+<span class="n">LOGIC_PRIORITY</span><span class="p">:</span> <span class="n">Final</span> <span class="o">=</span> <span class="mi">14</span>
+<span class="n">STRING_PRIORITY</span><span class="p">:</span> <span class="n">Final</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">COMPARATOR_PRIORITY</span><span class="p">:</span> <span class="n">Final</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">MATH_PRIORITIES</span><span class="p">:</span> <span class="n">Final</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">token</span><span class="o">.</span><span class="n">VBAR</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span>
+    <span class="n">token</span><span class="o">.</span><span class="n">CIRCUMFLEX</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+    <span class="n">token</span><span class="o">.</span><span class="n">AMPER</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+    <span class="n">token</span><span class="o">.</span><span class="n">LEFTSHIFT</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+    <span class="n">token</span><span class="o">.</span><span class="n">RIGHTSHIFT</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+    <span class="n">token</span><span class="o">.</span><span class="n">PLUS</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="n">token</span><span class="o">.</span><span class="n">MINUS</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="n">token</span><span class="o">.</span><span class="n">STAR</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="n">token</span><span class="o">.</span><span class="n">SLASH</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="n">token</span><span class="o">.</span><span class="n">DOUBLESLASH</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="n">token</span><span class="o">.</span><span class="n">PERCENT</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="n">token</span><span class="o">.</span><span class="n">AT</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="n">token</span><span class="o">.</span><span class="n">TILDE</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">token</span><span class="o">.</span><span class="n">DOUBLESTAR</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">DOT_PRIORITY</span><span class="p">:</span> <span class="n">Final</span> <span class="o">=</span> <span class="mi">1</span>
+
+
+<div class="viewcode-block" id="BracketMatchError">
+<a class="viewcode-back" href="../../api/black.brackets.html#black.brackets.BracketMatchError">[documentos]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">BracketMatchError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Raised when an opening bracket is unable to be matched to a closing bracket."""</span></div>
+
+
+
+<div class="viewcode-block" id="BracketTracker">
+<a class="viewcode-back" href="../../api/black.brackets.html#black.brackets.BracketTracker">[documentos]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">BracketTracker</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Keeps track of brackets on a line."""</span>
+
+    <span class="n">depth</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">bracket_match</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Depth</span><span class="p">,</span> <span class="n">NodeType</span><span class="p">],</span> <span class="n">Leaf</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">delimiters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">LeafID</span><span class="p">,</span> <span class="n">Priority</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">previous</span><span class="p">:</span> <span class="n">Leaf</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_for_loop_depths</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">_lambda_argument_depths</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">invisible</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Leaf</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+
+<div class="viewcode-block" id="BracketTracker.mark">
+<a class="viewcode-back" href="../../api/black.brackets.html#black.brackets.BracketTracker.mark">[documentos]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mark</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">leaf</span><span class="p">:</span> <span class="n">Leaf</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Mark `leaf` with bracket-related metadata. Keep track of delimiters.</span>
+
+<span class="sd">        All leaves receive an int `bracket_depth` field that stores how deep</span>
+<span class="sd">        within brackets a given leaf is. 0 means there are no enclosing brackets</span>
+<span class="sd">        that started on this line.</span>
+
+<span class="sd">        If a leaf is itself a closing bracket and there is a matching opening</span>
+<span class="sd">        bracket earlier, it receives an `opening_bracket` field with which it forms a</span>
+<span class="sd">        pair. This is a one-directional link to avoid reference cycles. Closing</span>
+<span class="sd">        bracket without opening happens on lines continued from previous</span>
+<span class="sd">        breaks, e.g. `) -&gt; "ReturnType":` as part of a funcdef where we place</span>
+<span class="sd">        the return type annotation on its own line of the previous closing RPAR.</span>
+
+<span class="sd">        If a leaf is a delimiter (a token on which Black can split the line if</span>
+<span class="sd">        needed) and it's on depth 0, its `id()` is stored in the tracker's</span>
+<span class="sd">        `delimiters` field.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">leaf</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">token</span><span class="o">.</span><span class="n">COMMENT</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">depth</span> <span class="o">==</span> <span class="mi">0</span>
+            <span class="ow">and</span> <span class="n">leaf</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="n">CLOSING_BRACKETS</span>
+            <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">depth</span><span class="p">,</span> <span class="n">leaf</span><span class="o">.</span><span class="n">type</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">bracket_match</span>
+        <span class="p">):</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">maybe_decrement_after_for_loop_variable</span><span class="p">(</span><span class="n">leaf</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maybe_decrement_after_lambda_arguments</span><span class="p">(</span><span class="n">leaf</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">leaf</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="n">CLOSING_BRACKETS</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">depth</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">opening_bracket</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bracket_match</span><span class="o">.</span><span class="n">pop</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">depth</span><span class="p">,</span> <span class="n">leaf</span><span class="o">.</span><span class="n">type</span><span class="p">))</span>
+            <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">BracketMatchError</span><span class="p">(</span>
+                    <span class="s2">"Unable to match a closing bracket to the following opening"</span>
+                    <span class="sa">f</span><span class="s2">" bracket: </span><span class="si">{</span><span class="n">leaf</span><span class="si">}</span><span class="s2">"</span>
+                <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+            <span class="n">leaf</span><span class="o">.</span><span class="n">opening_bracket</span> <span class="o">=</span> <span class="n">opening_bracket</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">leaf</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">invisible</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">leaf</span><span class="p">)</span>
+        <span class="n">leaf</span><span class="o">.</span><span class="n">bracket_depth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">delim</span> <span class="o">=</span> <span class="n">is_split_before_delimiter</span><span class="p">(</span><span class="n">leaf</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">previous</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">delim</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">previous</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">delimiters</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">previous</span><span class="p">)]</span> <span class="o">=</span> <span class="n">delim</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">delim</span> <span class="o">=</span> <span class="n">is_split_after_delimiter</span><span class="p">(</span><span class="n">leaf</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">delim</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">delimiters</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="n">leaf</span><span class="p">)]</span> <span class="o">=</span> <span class="n">delim</span>
+        <span class="k">if</span> <span class="n">leaf</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="n">OPENING_BRACKETS</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bracket_match</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">depth</span><span class="p">,</span> <span class="n">BRACKET</span><span class="p">[</span><span class="n">leaf</span><span class="o">.</span><span class="n">type</span><span class="p">]]</span> <span class="o">=</span> <span class="n">leaf</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">depth</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">leaf</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">invisible</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">leaf</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">previous</span> <span class="o">=</span> <span class="n">leaf</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maybe_increment_lambda_arguments</span><span class="p">(</span><span class="n">leaf</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maybe_increment_for_loop_variable</span><span class="p">(</span><span class="n">leaf</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BracketTracker.any_open_for_or_lambda">
+<a class="viewcode-back" href="../../api/black.brackets.html#black.brackets.BracketTracker.any_open_for_or_lambda">[documentos]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">any_open_for_or_lambda</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Return True if there is an open for or lambda expression on the line.</span>
+
+<span class="sd">        See maybe_increment_for_loop_variable and maybe_increment_lambda_arguments</span>
+<span class="sd">        for details."""</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_for_loop_depths</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lambda_argument_depths</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BracketTracker.any_open_brackets">
+<a class="viewcode-back" href="../../api/black.brackets.html#black.brackets.BracketTracker.any_open_brackets">[documentos]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">any_open_brackets</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Return True if there is an yet unmatched open bracket on the line."""</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bracket_match</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BracketTracker.max_delimiter_priority">
+<a class="viewcode-back" href="../../api/black.brackets.html#black.brackets.BracketTracker.max_delimiter_priority">[documentos]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">max_delimiter_priority</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exclude</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">LeafID</span><span class="p">]</span> <span class="o">=</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="n">Priority</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Return the highest priority of a delimiter found on the line.</span>
+
+<span class="sd">        Values are consistent with what `is_split_*_delimiter()` return.</span>
+<span class="sd">        Raises ValueError on no delimiters.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">delimiters</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">exclude</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BracketTracker.delimiter_count_with_priority">
+<a class="viewcode-back" href="../../api/black.brackets.html#black.brackets.BracketTracker.delimiter_count_with_priority">[documentos]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">delimiter_count_with_priority</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">priority</span><span class="p">:</span> <span class="n">Priority</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Return the number of delimiters with the given `priority`.</span>
+
+<span class="sd">        If no `priority` is passed, defaults to max priority on the line.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">delimiters</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+
+        <span class="n">priority</span> <span class="o">=</span> <span class="n">priority</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_delimiter_priority</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">delimiters</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">if</span> <span class="n">p</span> <span class="o">==</span> <span class="n">priority</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BracketTracker.maybe_increment_for_loop_variable">
+<a class="viewcode-back" href="../../api/black.brackets.html#black.brackets.BracketTracker.maybe_increment_for_loop_variable">[documentos]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">maybe_increment_for_loop_variable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">leaf</span><span class="p">:</span> <span class="n">Leaf</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""In a for loop, or comprehension, the variables are often unpacks.</span>
+
+<span class="sd">        To avoid splitting on the comma in this situation, increase the depth of</span>
+<span class="sd">        tokens between `for` and `in`.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">leaf</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">token</span><span class="o">.</span><span class="n">NAME</span> <span class="ow">and</span> <span class="n">leaf</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s2">"for"</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">depth</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_for_loop_depths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">depth</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="BracketTracker.maybe_decrement_after_for_loop_variable">
+<a class="viewcode-back" href="../../api/black.brackets.html#black.brackets.BracketTracker.maybe_decrement_after_for_loop_variable">[documentos]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">maybe_decrement_after_for_loop_variable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">leaf</span><span class="p">:</span> <span class="n">Leaf</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""See `maybe_increment_for_loop_variable` above for explanation."""</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_for_loop_depths</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_for_loop_depths</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth</span>
+            <span class="ow">and</span> <span class="n">leaf</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">token</span><span class="o">.</span><span class="n">NAME</span>
+            <span class="ow">and</span> <span class="n">leaf</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s2">"in"</span>
+        <span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">depth</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_for_loop_depths</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="BracketTracker.maybe_increment_lambda_arguments">
+<a class="viewcode-back" href="../../api/black.brackets.html#black.brackets.BracketTracker.maybe_increment_lambda_arguments">[documentos]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">maybe_increment_lambda_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">leaf</span><span class="p">:</span> <span class="n">Leaf</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""In a lambda expression, there might be more than one argument.</span>
+
+<span class="sd">        To avoid splitting on the comma in this situation, increase the depth of</span>
+<span class="sd">        tokens between `lambda` and `:`.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">leaf</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">token</span><span class="o">.</span><span class="n">NAME</span> <span class="ow">and</span> <span class="n">leaf</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s2">"lambda"</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">depth</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_lambda_argument_depths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">depth</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="BracketTracker.maybe_decrement_after_lambda_arguments">
+<a class="viewcode-back" href="../../api/black.brackets.html#black.brackets.BracketTracker.maybe_decrement_after_lambda_arguments">[documentos]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">maybe_decrement_after_lambda_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">leaf</span><span class="p">:</span> <span class="n">Leaf</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""See `maybe_increment_lambda_arguments` above for explanation."""</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_lambda_argument_depths</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lambda_argument_depths</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth</span>
+            <span class="ow">and</span> <span class="n">leaf</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">token</span><span class="o">.</span><span class="n">COLON</span>
+        <span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">depth</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_lambda_argument_depths</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="BracketTracker.get_open_lsqb">
+<a class="viewcode-back" href="../../api/black.brackets.html#black.brackets.BracketTracker.get_open_lsqb">[documentos]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_open_lsqb</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Leaf</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Return the most recent opening square bracket (if any)."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bracket_match</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">depth</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">RSQB</span><span class="p">))</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="is_split_after_delimiter">
+<a class="viewcode-back" href="../../api/black.brackets.html#black.brackets.is_split_after_delimiter">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_split_after_delimiter</span><span class="p">(</span><span class="n">leaf</span><span class="p">:</span> <span class="n">Leaf</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Priority</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Return the priority of the `leaf` delimiter, given a line break after it.</span>
+
+<span class="sd">    The delimiter priorities returned here are from those delimiters that would</span>
+<span class="sd">    cause a line break after themselves.</span>
+
+<span class="sd">    Higher numbers are higher priority.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">leaf</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">token</span><span class="o">.</span><span class="n">COMMA</span><span class="p">:</span>
+        <span class="c1"># For-target commas are tuple-packing, not list delimiters; splitting</span>
+        <span class="c1"># on them produces invalid Python if `for` lands on another line (#4296).</span>
+        <span class="n">parent</span> <span class="o">=</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span>
+        <span class="k">if</span> <span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">parent</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">syms</span><span class="o">.</span><span class="n">exprlist</span><span class="p">:</span>
+            <span class="n">grandparent</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">parent</span>
+            <span class="k">if</span> <span class="n">grandparent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">grandparent</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="p">{</span>
+                <span class="n">syms</span><span class="o">.</span><span class="n">comp_for</span><span class="p">,</span>
+                <span class="n">syms</span><span class="o">.</span><span class="n">old_comp_for</span><span class="p">,</span>
+                <span class="n">syms</span><span class="o">.</span><span class="n">for_stmt</span><span class="p">,</span>
+            <span class="p">}:</span>
+                <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">COMMA_PRIORITY</span>
+
+    <span class="k">return</span> <span class="mi">0</span></div>
+
+
+
+<div class="viewcode-block" id="is_split_before_delimiter">
+<a class="viewcode-back" href="../../api/black.brackets.html#black.brackets.is_split_before_delimiter">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_split_before_delimiter</span><span class="p">(</span><span class="n">leaf</span><span class="p">:</span> <span class="n">Leaf</span><span class="p">,</span> <span class="n">previous</span><span class="p">:</span> <span class="n">Leaf</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Priority</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Return the priority of the `leaf` delimiter, given a line break before it.</span>
+
+<span class="sd">    The delimiter priorities returned here are from those delimiters that would</span>
+<span class="sd">    cause a line break before themselves.</span>
+
+<span class="sd">    Higher numbers are higher priority.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">is_vararg</span><span class="p">(</span><span class="n">leaf</span><span class="p">,</span> <span class="n">within</span><span class="o">=</span><span class="n">VARARGS_PARENTS</span> <span class="o">|</span> <span class="n">UNPACKING_PARENTS</span><span class="p">):</span>
+        <span class="c1"># * and ** might also be MATH_OPERATORS but in this case they are not.</span>
+        <span class="c1"># Don't treat them as a delimiter.</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="n">leaf</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">token</span><span class="o">.</span><span class="n">DOT</span>
+        <span class="ow">and</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span>
+        <span class="ow">and</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="n">syms</span><span class="o">.</span><span class="n">import_from</span><span class="p">,</span> <span class="n">syms</span><span class="o">.</span><span class="n">dotted_name</span><span class="p">}</span>
+        <span class="ow">and</span> <span class="p">(</span><span class="n">previous</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">previous</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="n">CLOSING_BRACKETS</span><span class="p">)</span>
+    <span class="p">):</span>
+        <span class="k">return</span> <span class="n">DOT_PRIORITY</span>
+
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="n">leaf</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="n">MATH_OPERATORS</span>
+        <span class="ow">and</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span>
+        <span class="ow">and</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="n">syms</span><span class="o">.</span><span class="n">factor</span><span class="p">,</span> <span class="n">syms</span><span class="o">.</span><span class="n">star_expr</span><span class="p">}</span>
+    <span class="p">):</span>
+        <span class="k">return</span> <span class="n">MATH_PRIORITIES</span><span class="p">[</span><span class="n">leaf</span><span class="o">.</span><span class="n">type</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">leaf</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="n">COMPARATORS</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">COMPARATOR_PRIORITY</span>
+
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="n">leaf</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">token</span><span class="o">.</span><span class="n">STRING</span>
+        <span class="ow">and</span> <span class="n">previous</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="ow">and</span> <span class="n">previous</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">token</span><span class="o">.</span><span class="n">STRING</span>
+    <span class="p">):</span>
+        <span class="k">return</span> <span class="n">STRING_PRIORITY</span>
+
+    <span class="k">if</span> <span class="n">leaf</span><span class="o">.</span><span class="n">type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="n">token</span><span class="o">.</span><span class="n">NAME</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">ASYNC</span><span class="p">}:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="n">leaf</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s2">"for"</span>
+        <span class="ow">and</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span>
+        <span class="ow">and</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="p">{</span><span class="n">syms</span><span class="o">.</span><span class="n">comp_for</span><span class="p">,</span> <span class="n">syms</span><span class="o">.</span><span class="n">old_comp_for</span><span class="p">}</span>
+        <span class="ow">or</span> <span class="n">leaf</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">token</span><span class="o">.</span><span class="n">ASYNC</span>
+    <span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">leaf</span><span class="o">.</span><span class="n">prev_sibling</span><span class="p">,</span> <span class="n">Leaf</span><span class="p">)</span>
+            <span class="ow">or</span> <span class="n">leaf</span><span class="o">.</span><span class="n">prev_sibling</span><span class="o">.</span><span class="n">value</span> <span class="o">!=</span> <span class="s2">"async"</span>
+        <span class="p">):</span>
+            <span class="k">return</span> <span class="n">COMPREHENSION_PRIORITY</span>
+
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="n">leaf</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s2">"if"</span>
+        <span class="ow">and</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span>
+        <span class="ow">and</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="p">{</span><span class="n">syms</span><span class="o">.</span><span class="n">comp_if</span><span class="p">,</span> <span class="n">syms</span><span class="o">.</span><span class="n">old_comp_if</span><span class="p">}</span>
+    <span class="p">):</span>
+        <span class="k">return</span> <span class="n">COMPREHENSION_PRIORITY</span>
+
+    <span class="k">if</span> <span class="n">leaf</span><span class="o">.</span><span class="n">value</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">"if"</span><span class="p">,</span> <span class="s2">"else"</span><span class="p">}</span> <span class="ow">and</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span> <span class="ow">and</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">syms</span><span class="o">.</span><span class="n">test</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">TERNARY_PRIORITY</span>
+
+    <span class="k">if</span> <span class="n">leaf</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s2">"is"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">COMPARATOR_PRIORITY</span>
+
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="n">leaf</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s2">"in"</span>
+        <span class="ow">and</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span>
+        <span class="ow">and</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="p">{</span><span class="n">syms</span><span class="o">.</span><span class="n">comp_op</span><span class="p">,</span> <span class="n">syms</span><span class="o">.</span><span class="n">comparison</span><span class="p">}</span>
+        <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span>
+            <span class="n">previous</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="ow">and</span> <span class="n">previous</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">token</span><span class="o">.</span><span class="n">NAME</span>
+            <span class="ow">and</span> <span class="n">previous</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s2">"not"</span>
+        <span class="p">)</span>
+    <span class="p">):</span>
+        <span class="k">return</span> <span class="n">COMPARATOR_PRIORITY</span>
+
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="n">leaf</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s2">"not"</span>
+        <span class="ow">and</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span>
+        <span class="ow">and</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">syms</span><span class="o">.</span><span class="n">comp_op</span>
+        <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span>
+            <span class="n">previous</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="ow">and</span> <span class="n">previous</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">token</span><span class="o">.</span><span class="n">NAME</span>
+            <span class="ow">and</span> <span class="n">previous</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s2">"is"</span>
+        <span class="p">)</span>
+    <span class="p">):</span>
+        <span class="k">return</span> <span class="n">COMPARATOR_PRIORITY</span>
+
+    <span class="k">if</span> <span class="n">leaf</span><span class="o">.</span><span class="n">value</span> <span class="ow">in</span> <span class="n">LOGIC_OPERATORS</span> <span class="ow">and</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">LOGIC_PRIORITY</span>
+
+    <span class="k">return</span> <span class="mi">0</span></div>
+
+
+
+<div class="viewcode-block" id="max_delimiter_priority_in_atom">
+<a class="viewcode-back" href="../../api/black.brackets.html#black.brackets.max_delimiter_priority_in_atom">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">max_delimiter_priority_in_atom</span><span class="p">(</span><span class="n">node</span><span class="p">:</span> <span class="n">LN</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Priority</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Return maximum delimiter priority inside `node`.</span>
+
+<span class="sd">    This is specific to atoms with contents contained in a pair of parentheses.</span>
+<span class="sd">    If `node` isn't an atom or there are no enclosing parentheses, returns 0.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="n">syms</span><span class="o">.</span><span class="n">atom</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="n">first</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">last</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">first</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">token</span><span class="o">.</span><span class="n">LPAR</span> <span class="ow">and</span> <span class="n">last</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">token</span><span class="o">.</span><span class="n">RPAR</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="n">bt</span> <span class="o">=</span> <span class="n">BracketTracker</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="n">_top_level_leaves</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="n">bt</span><span class="o">.</span><span class="n">mark</span><span class="p">(</span><span class="n">leaf</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">bt</span><span class="o">.</span><span class="n">max_delimiter_priority</span><span class="p">()</span>
+
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_top_level_leaves</span><span class="p">(</span><span class="n">children</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">LN</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Leaf</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Yield the leaves that can be top-level (depth 0) delimiters of an atom.</span>
+
+<span class="sd">    Anything inside a nested bracket pair is at depth &gt;= 1 and therefore cannot</span>
+<span class="sd">    be a top-level delimiter, so only the pair's brackets are kept (to balance</span>
+<span class="sd">    the depth tracker) and its interior is skipped. This keeps the scan</span>
+<span class="sd">    proportional to the atom's own length instead of re-walking every descendant</span>
+<span class="sd">    on every call, which matters for deeply nested expressions like</span>
+<span class="sd">    ``((((...))))``.</span>
+<span class="sd">    """</span>
+    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">children</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">Leaf</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">child</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">child</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">first</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">last</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">Leaf</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">last</span><span class="p">,</span> <span class="n">Leaf</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="n">first</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="n">OPENING_BRACKETS</span>
+            <span class="ow">and</span> <span class="n">last</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="n">CLOSING_BRACKETS</span>
+        <span class="p">):</span>
+            <span class="k">yield</span> <span class="n">first</span>
+            <span class="k">yield</span> <span class="n">last</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">yield from</span> <span class="n">_top_level_leaves</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">children</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="get_leaves_inside_matching_brackets">
+<a class="viewcode-back" href="../../api/black.brackets.html#black.brackets.get_leaves_inside_matching_brackets">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_leaves_inside_matching_brackets</span><span class="p">(</span><span class="n">leaves</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Leaf</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">[</span><span class="n">LeafID</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Return leaves that are inside matching brackets.</span>
+
+<span class="sd">    The input `leaves` can have non-matching brackets at the head or tail parts.</span>
+<span class="sd">    Matching brackets are included.</span>
+<span class="sd">    """</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Start with the first opening bracket and ignore closing brackets before.</span>
+        <span class="n">start_index</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span>
+            <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">leaves</span><span class="p">)</span> <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="n">OPENING_BRACKETS</span>
+        <span class="p">)</span>
+    <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="c1"># Each open bracket collects the ids of the leaves at its own nesting level.</span>
+    <span class="c1"># When the matching closing bracket is reached the pair is confirmed as inside</span>
+    <span class="c1"># matching brackets, so those ids are kept (the ids of any nested pair are</span>
+    <span class="c1"># already kept, having been flushed when that inner pair closed). Unmatched</span>
+    <span class="c1"># opening brackets are dropped along with the ids they collected. Collecting</span>
+    <span class="c1"># each leaf under a single level keeps this linear instead of re-adding every</span>
+    <span class="c1"># enclosed leaf once per surrounding bracket.</span>
+    <span class="n">ids</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="n">LeafID</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">bracket_stack</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">LeafID</span><span class="p">]]]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_index</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">leaves</span><span class="p">)):</span>
+        <span class="n">leaf</span> <span class="o">=</span> <span class="n">leaves</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">leaf</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="n">OPENING_BRACKETS</span><span class="p">:</span>
+            <span class="n">bracket_stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">BRACKET</span><span class="p">[</span><span class="n">leaf</span><span class="o">.</span><span class="n">type</span><span class="p">],</span> <span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="n">leaf</span><span class="p">)]))</span>
+        <span class="k">elif</span> <span class="n">leaf</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="n">CLOSING_BRACKETS</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">bracket_stack</span> <span class="ow">and</span> <span class="n">leaf</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">bracket_stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
+                <span class="n">_</span><span class="p">,</span> <span class="n">level_ids</span> <span class="o">=</span> <span class="n">bracket_stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="n">level_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">leaf</span><span class="p">))</span>
+                <span class="n">ids</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">level_ids</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="k">elif</span> <span class="n">bracket_stack</span><span class="p">:</span>
+            <span class="n">bracket_stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">leaf</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">ids</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2026, Laboratorio IE0417.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

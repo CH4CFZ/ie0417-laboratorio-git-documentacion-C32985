@@ -1,0 +1,993 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>black package &mdash; documentación de Black - 0.1 (commit 8947c48)</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=0dabe907"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=f85f4cfb"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+    <link rel="next" title="black.resources package" href="black.resources.html" />
+    <link rel="prev" title="black" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Black
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenidos:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../introduccion.html">Introducción a Black</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduccion.html#que-es-black">¿Qué es Black?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduccion.html#organizacion-del-codigo-fuente">Organización del código fuente</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../introduccion.html#alcance-de-esta-documentacion">Alcance de esta documentación</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="modules.html">black</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">black package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Black</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../introduccion.html">Introducción a Black</a></li>
+          <li class="breadcrumb-item"><a href="modules.html">black</a></li>
+      <li class="breadcrumb-item active">black package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/black.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-black">
+<span id="black-package"></span><h1>black package<a class="headerlink" href="#module-black" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="black.WriteBack">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">black.</span></span><span class="sig-name descname"><span class="pre">WriteBack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/black.html#WriteBack"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.WriteBack" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.WriteBack.NO">
+<span class="sig-name descname"><span class="pre">NO</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#black.WriteBack.NO" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.WriteBack.YES">
+<span class="sig-name descname"><span class="pre">YES</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></span><a class="headerlink" href="#black.WriteBack.YES" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.WriteBack.DIFF">
+<span class="sig-name descname"><span class="pre">DIFF</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></span><a class="headerlink" href="#black.WriteBack.DIFF" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.WriteBack.CHECK">
+<span class="sig-name descname"><span class="pre">CHECK</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></span><a class="headerlink" href="#black.WriteBack.CHECK" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.WriteBack.COLOR_DIFF">
+<span class="sig-name descname"><span class="pre">COLOR_DIFF</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></span><a class="headerlink" href="#black.WriteBack.COLOR_DIFF" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.WriteBack.from_configuration">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_configuration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diff</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#black.WriteBack" title="black.WriteBack"><span class="pre">WriteBack</span></a></span></span><a class="reference internal" href="../_modules/black.html#WriteBack.from_configuration"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.WriteBack.from_configuration" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.read_pyproject_toml">
+<span class="sig-prename descclassname"><span class="pre">black.</span></span><span class="sig-name descname"><span class="pre">read_pyproject_toml</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Parameter</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black.html#read_pyproject_toml"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.read_pyproject_toml" title="Link to this definition"></a></dt>
+<dd><p>Inject Black configuration from «pyproject.toml» into defaults in <cite>ctx</cite>.</p>
+<p>Returns the path to a successfully found and read configuration file, None
+otherwise.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.spellcheck_pyproject_toml_keys">
+<span class="sig-prename descclassname"><span class="pre">black.</span></span><span class="sig-name descname"><span class="pre">spellcheck_pyproject_toml_keys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_keys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black.html#spellcheck_pyproject_toml_keys"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.spellcheck_pyproject_toml_keys" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.target_version_option_callback">
+<span class="sig-prename descclassname"><span class="pre">black.</span></span><span class="sig-name descname"><span class="pre">target_version_option_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Option</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Parameter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.mode.html#black.mode.TargetVersion" title="black.mode.TargetVersion"><span class="pre">TargetVersion</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black.html#target_version_option_callback"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.target_version_option_callback" title="Link to this definition"></a></dt>
+<dd><p>Compute the target versions from a –target-version flag.</p>
+<p>This is its own function because mypy couldn’t infer the type correctly
+when it was a lambda, causing mypyc trouble.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.enable_unstable_feature_callback">
+<span class="sig-prename descclassname"><span class="pre">black.</span></span><span class="sig-name descname"><span class="pre">enable_unstable_feature_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Option</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Parameter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.mode.html#black.mode.Preview" title="black.mode.Preview"><span class="pre">Preview</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black.html#enable_unstable_feature_callback"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.enable_unstable_feature_callback" title="Link to this definition"></a></dt>
+<dd><p>Compute the features from an –enable-unstable-feature flag.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.re_compile_maybe_verbose">
+<span class="sig-prename descclassname"><span class="pre">black.</span></span><span class="sig-name descname"><span class="pre">re_compile_maybe_verbose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Pattern</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black.html#re_compile_maybe_verbose"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.re_compile_maybe_verbose" title="Link to this definition"></a></dt>
+<dd><p>Compile a regular expression string in <cite>regex</cite>.</p>
+<p>If it contains newlines, use verbose mode.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.validate_regex">
+<span class="sig-prename descclassname"><span class="pre">black.</span></span><span class="sig-name descname"><span class="pre">validate_regex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Parameter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Pattern</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black.html#validate_regex"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.validate_regex" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.get_sources">
+<span class="sig-prename descclassname"><span class="pre">black.</span></span><span class="sig-name descname"><span class="pre">get_sources</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quiet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Pattern</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Pattern</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extend_exclude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Pattern</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_exclude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Pattern</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">report</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.report.html#black.report.Report" title="black.report.Report"><span class="pre">Report</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdin_filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black.html#get_sources"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.get_sources" title="Link to this definition"></a></dt>
+<dd><p>Compute the set of files to be formatted.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.reformat_code">
+<span class="sig-prename descclassname"><span class="pre">black.</span></span><span class="sig-name descname"><span class="pre">reformat_code</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fast</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_back</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#black.WriteBack" title="black.WriteBack"><span class="pre">WriteBack</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">report</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.report.html#black.report.Report" title="black.report.Report"><span class="pre">Report</span></a></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">lines</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black.html#reformat_code"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.reformat_code" title="Link to this definition"></a></dt>
+<dd><p>Reformat and print out <cite>content</cite> without spawning child processes.
+Similar to <cite>reformat_one</cite>, but for string content.</p>
+<p><cite>fast</cite>, <cite>write_back</cite>, and <cite>mode</cite> options are passed to
+<a class="reference internal" href="#black.format_file_in_place" title="black.format_file_in_place"><code class="xref py py-func docutils literal notranslate"><span class="pre">format_file_in_place()</span></code></a> or <a class="reference internal" href="#black.format_stdin_to_stdout" title="black.format_stdin_to_stdout"><code class="xref py py-func docutils literal notranslate"><span class="pre">format_stdin_to_stdout()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.reformat_one">
+<span class="sig-prename descclassname"><span class="pre">black.</span></span><span class="sig-name descname"><span class="pre">reformat_one</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fast</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_back</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#black.WriteBack" title="black.WriteBack"><span class="pre">WriteBack</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">report</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.report.html#black.report.Report" title="black.report.Report"><span class="pre">Report</span></a></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">lines</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_cache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black.html#reformat_one"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.reformat_one" title="Link to this definition"></a></dt>
+<dd><p>Reformat a single file under <cite>src</cite> without spawning child processes.</p>
+<p><cite>fast</cite>, <cite>write_back</cite>, and <cite>mode</cite> options are passed to
+<a class="reference internal" href="#black.format_file_in_place" title="black.format_file_in_place"><code class="xref py py-func docutils literal notranslate"><span class="pre">format_file_in_place()</span></code></a> or <a class="reference internal" href="#black.format_stdin_to_stdout" title="black.format_stdin_to_stdout"><code class="xref py py-func docutils literal notranslate"><span class="pre">format_stdin_to_stdout()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.format_file_in_place">
+<span class="sig-prename descclassname"><span class="pre">black.</span></span><span class="sig-name descname"><span class="pre">format_file_in_place</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fast</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_back</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#black.WriteBack" title="black.WriteBack"><span class="pre">WriteBack</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">WriteBack.NO</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lock</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">lines</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black.html#format_file_in_place"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.format_file_in_place" title="Link to this definition"></a></dt>
+<dd><p>Format file under <cite>src</cite> path. Return True if changed.</p>
+<p>If <cite>write_back</cite> is DIFF, write a diff to stdout. If it is YES, write reformatted
+code to the file.
+<cite>mode</cite> and <cite>fast</cite> options are passed to <a class="reference internal" href="#black.format_file_contents" title="black.format_file_contents"><code class="xref py py-func docutils literal notranslate"><span class="pre">format_file_contents()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.format_stdin_to_stdout">
+<span class="sig-prename descclassname"><span class="pre">black.</span></span><span class="sig-name descname"><span class="pre">format_stdin_to_stdout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fast</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_back</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#black.WriteBack" title="black.WriteBack"><span class="pre">WriteBack</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">WriteBack.NO</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">lines</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black.html#format_stdin_to_stdout"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.format_stdin_to_stdout" title="Link to this definition"></a></dt>
+<dd><p>Format file on stdin. Return True if changed.</p>
+<p>If content is None, it’s read from sys.stdin.</p>
+<p>If <cite>write_back</cite> is YES, write reformatted code back to stdout. If it is DIFF,
+write a diff to stdout. The <cite>mode</cite> argument is passed to
+<a class="reference internal" href="#black.format_file_contents" title="black.format_file_contents"><code class="xref py py-func docutils literal notranslate"><span class="pre">format_file_contents()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.check_stability_and_equivalence">
+<span class="sig-prename descclassname"><span class="pre">black.</span></span><span class="sig-name descname"><span class="pre">check_stability_and_equivalence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src_contents</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst_contents</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">lines</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black.html#check_stability_and_equivalence"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.check_stability_and_equivalence" title="Link to this definition"></a></dt>
+<dd><p>Perform stability and equivalence checks.</p>
+<p>Raise AssertionError if source and destination contents are not
+equivalent, or if a second pass of the formatter would format the
+content differently.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.format_file_contents">
+<span class="sig-prename descclassname"><span class="pre">black.</span></span><span class="sig-name descname"><span class="pre">format_file_contents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src_contents</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">fast</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">lines</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/black.html#format_file_contents"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.format_file_contents" title="Link to this definition"></a></dt>
+<dd><p>Reformat contents of a file and return new contents.</p>
+<p>If <cite>fast</cite> is False, additionally confirm that the reformatted code is
+valid by calling <a class="reference internal" href="#black.assert_equivalent" title="black.assert_equivalent"><code class="xref py py-func docutils literal notranslate"><span class="pre">assert_equivalent()</span></code></a> and <a class="reference internal" href="#black.assert_stable" title="black.assert_stable"><code class="xref py py-func docutils literal notranslate"><span class="pre">assert_stable()</span></code></a> on it.
+<cite>mode</cite> is passed to <a class="reference internal" href="#black.format_str" title="black.format_str"><code class="xref py py-func docutils literal notranslate"><span class="pre">format_str()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.format_cell">
+<span class="sig-prename descclassname"><span class="pre">black.</span></span><span class="sig-name descname"><span class="pre">format_cell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">fast</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/black.html#format_cell"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.format_cell" title="Link to this definition"></a></dt>
+<dd><p>Format code in given cell of Jupyter notebook.</p>
+<p>General idea is:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>if cell has trailing semicolon, remove it;</p></li>
+<li><p>if cell has IPython magics, mask them;</p></li>
+<li><p>format cell;</p></li>
+<li><p>reinstate IPython magics;</p></li>
+<li><p>reinstate trailing semicolon (if originally present);</p></li>
+<li><p>strip trailing newlines.</p></li>
+</ul>
+</div></blockquote>
+<p>Cells with syntax errors will not be processed, as they
+could potentially be automagics or multi-line magics, which
+are currently not supported.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.validate_metadata">
+<span class="sig-prename descclassname"><span class="pre">black.</span></span><span class="sig-name descname"><span class="pre">validate_metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">MutableMapping</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black.html#validate_metadata"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.validate_metadata" title="Link to this definition"></a></dt>
+<dd><p>If notebook is marked as non-Python, don’t format it.</p>
+<p>All notebook metadata fields are optional, see
+<a class="reference external" href="https://nbformat.readthedocs.io/en/stable/format_description.html">https://nbformat.readthedocs.io/en/stable/format_description.html</a>. So
+if a notebook has empty metadata, we will try to parse it anyway.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.format_ipynb_string">
+<span class="sig-prename descclassname"><span class="pre">black.</span></span><span class="sig-name descname"><span class="pre">format_ipynb_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src_contents</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">fast</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/black.html#format_ipynb_string"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.format_ipynb_string" title="Link to this definition"></a></dt>
+<dd><p>Format Jupyter notebook.</p>
+<p>Operate cell-by-cell, only on code cells, only for Python notebooks.
+If the <code class="docutils literal notranslate"><span class="pre">.ipynb</span></code> originally had a trailing newline, it’ll be preserved.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.format_str">
+<span class="sig-prename descclassname"><span class="pre">black.</span></span><span class="sig-name descname"><span class="pre">format_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src_contents</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">lines</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/black.html#format_str"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.format_str" title="Link to this definition"></a></dt>
+<dd><p>Reformat a string and return new contents.</p>
+<p><cite>mode</cite> determines formatting options, such as how many characters per line are
+allowed.  Example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">black</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">black</span><span class="o">.</span><span class="n">format_str</span><span class="p">(</span><span class="s2">"def f(arg:str='')-&gt;None:..."</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">black</span><span class="o">.</span><span class="n">Mode</span><span class="p">()))</span>
+<span class="go">def f(arg: str = "") -&gt; None:</span>
+<span class="go">    ...</span>
+</pre></div>
+</div>
+<p>A more complex example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span>
+<span class="gp">... </span>  <span class="n">black</span><span class="o">.</span><span class="n">format_str</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="s2">"def f(arg:str='')-&gt;None: hey"</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">mode</span><span class="o">=</span><span class="n">black</span><span class="o">.</span><span class="n">Mode</span><span class="p">(</span>
+<span class="gp">... </span>      <span class="n">target_versions</span><span class="o">=</span><span class="p">{</span><span class="n">black</span><span class="o">.</span><span class="n">TargetVersion</span><span class="o">.</span><span class="n">PY36</span><span class="p">},</span>
+<span class="gp">... </span>      <span class="n">line_length</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+<span class="gp">... </span>      <span class="n">string_normalization</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="gp">... </span>      <span class="n">is_pyi</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">),</span>
+<span class="gp">... </span>  <span class="p">),</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="go">def f(</span>
+<span class="go">    arg: str = '',</span>
+<span class="go">) -&gt; None:</span>
+<span class="go">    hey</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.decode_bytes">
+<span class="sig-prename descclassname"><span class="pre">black.</span></span><span class="sig-name descname"><span class="pre">decode_bytes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding_overwrite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black.html#decode_bytes"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.decode_bytes" title="Link to this definition"></a></dt>
+<dd><p>Return a tuple of (decoded_contents, encoding, newline).</p>
+<p><cite>newline</cite> is either CRLF, LF, or CR, but <cite>decoded_contents</cite> is decoded with
+universal newlines (i.e. only contains LF).</p>
+<p>Use the keyword only encoding_overwrite argument if the bytes are encoded
+differently to their possible encoding magic comment.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.get_features_used">
+<span class="sig-prename descclassname"><span class="pre">black.</span></span><span class="sig-name descname"><span class="pre">get_features_used</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">future_imports</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">set</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.mode.html#black.mode.Feature" title="black.mode.Feature"><span class="pre">Feature</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black.html#get_features_used"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.get_features_used" title="Link to this definition"></a></dt>
+<dd><p>Return a set of (relatively) new Python features used in this file.</p>
+<p>Currently looking for:
+- f-strings;
+- self-documenting expressions in f-strings (f»{x=}»);
+- underscores in numeric literals;
+- trailing commas after * or ** in function signatures and calls;
+- positional only arguments in function signatures and lambdas;
+- assignment expression;
+- relaxed decorator syntax;
+- usage of __future__ flags (annotations);
+- print / exec statements;
+- parenthesized context managers;
+- match statements;
+- except* clause;
+- variadic generics;
+- lazy imports;
+- starred or double-starred comprehensions.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.is_unpacking_comprehension">
+<span class="sig-prename descclassname"><span class="pre">black.</span></span><span class="sig-name descname"><span class="pre">is_unpacking_comprehension</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black.html#is_unpacking_comprehension"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.is_unpacking_comprehension" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.detect_target_versions">
+<span class="sig-prename descclassname"><span class="pre">black.</span></span><span class="sig-name descname"><span class="pre">detect_target_versions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">future_imports</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">set</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.mode.html#black.mode.TargetVersion" title="black.mode.TargetVersion"><span class="pre">TargetVersion</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black.html#detect_target_versions"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.detect_target_versions" title="Link to this definition"></a></dt>
+<dd><p>Detect the version to target based on the nodes used.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.get_future_imports">
+<span class="sig-prename descclassname"><span class="pre">black.</span></span><span class="sig-name descname"><span class="pre">get_future_imports</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black.html#get_future_imports"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.get_future_imports" title="Link to this definition"></a></dt>
+<dd><p>Return a set of __future__ imports in the file.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.assert_equivalent">
+<span class="sig-prename descclassname"><span class="pre">black.</span></span><span class="sig-name descname"><span class="pre">assert_equivalent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black.html#assert_equivalent"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.assert_equivalent" title="Link to this definition"></a></dt>
+<dd><p>Raise AssertionError if <cite>src</cite> and <cite>dst</cite> aren’t equivalent.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.assert_stable">
+<span class="sig-prename descclassname"><span class="pre">black.</span></span><span class="sig-name descname"><span class="pre">assert_stable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">lines</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black.html#assert_stable"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.assert_stable" title="Link to this definition"></a></dt>
+<dd><p>Raise AssertionError if <cite>dst</cite> reformats differently the second time.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.patched_main">
+<span class="sig-prename descclassname"><span class="pre">black.</span></span><span class="sig-name descname"><span class="pre">patched_main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black.html#patched_main"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.patched_main" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="black.resources.html">black.resources package</a></li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="black.brackets.html">black.brackets module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="black.brackets.html#black.brackets.BracketMatchError"><code class="docutils literal notranslate"><span class="pre">BracketMatchError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.brackets.html#black.brackets.BracketTracker"><code class="docutils literal notranslate"><span class="pre">BracketTracker</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.brackets.html#black.brackets.BracketTracker.depth"><code class="docutils literal notranslate"><span class="pre">BracketTracker.depth</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.brackets.html#black.brackets.BracketTracker.bracket_match"><code class="docutils literal notranslate"><span class="pre">BracketTracker.bracket_match</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.brackets.html#black.brackets.BracketTracker.delimiters"><code class="docutils literal notranslate"><span class="pre">BracketTracker.delimiters</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.brackets.html#black.brackets.BracketTracker.previous"><code class="docutils literal notranslate"><span class="pre">BracketTracker.previous</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.brackets.html#black.brackets.BracketTracker.invisible"><code class="docutils literal notranslate"><span class="pre">BracketTracker.invisible</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.brackets.html#black.brackets.BracketTracker.mark"><code class="docutils literal notranslate"><span class="pre">BracketTracker.mark()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.brackets.html#black.brackets.BracketTracker.any_open_for_or_lambda"><code class="docutils literal notranslate"><span class="pre">BracketTracker.any_open_for_or_lambda()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.brackets.html#black.brackets.BracketTracker.any_open_brackets"><code class="docutils literal notranslate"><span class="pre">BracketTracker.any_open_brackets()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.brackets.html#black.brackets.BracketTracker.max_delimiter_priority"><code class="docutils literal notranslate"><span class="pre">BracketTracker.max_delimiter_priority()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.brackets.html#black.brackets.BracketTracker.delimiter_count_with_priority"><code class="docutils literal notranslate"><span class="pre">BracketTracker.delimiter_count_with_priority()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.brackets.html#black.brackets.BracketTracker.maybe_increment_for_loop_variable"><code class="docutils literal notranslate"><span class="pre">BracketTracker.maybe_increment_for_loop_variable()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.brackets.html#black.brackets.BracketTracker.maybe_decrement_after_for_loop_variable"><code class="docutils literal notranslate"><span class="pre">BracketTracker.maybe_decrement_after_for_loop_variable()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.brackets.html#black.brackets.BracketTracker.maybe_increment_lambda_arguments"><code class="docutils literal notranslate"><span class="pre">BracketTracker.maybe_increment_lambda_arguments()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.brackets.html#black.brackets.BracketTracker.maybe_decrement_after_lambda_arguments"><code class="docutils literal notranslate"><span class="pre">BracketTracker.maybe_decrement_after_lambda_arguments()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.brackets.html#black.brackets.BracketTracker.get_open_lsqb"><code class="docutils literal notranslate"><span class="pre">BracketTracker.get_open_lsqb()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="black.brackets.html#black.brackets.is_split_after_delimiter"><code class="docutils literal notranslate"><span class="pre">is_split_after_delimiter()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.brackets.html#black.brackets.is_split_before_delimiter"><code class="docutils literal notranslate"><span class="pre">is_split_before_delimiter()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.brackets.html#black.brackets.max_delimiter_priority_in_atom"><code class="docutils literal notranslate"><span class="pre">max_delimiter_priority_in_atom()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.brackets.html#black.brackets.get_leaves_inside_matching_brackets"><code class="docutils literal notranslate"><span class="pre">get_leaves_inside_matching_brackets()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="black.cache.html">black.cache module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="black.cache.html#black.cache.FileData"><code class="docutils literal notranslate"><span class="pre">FileData</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.cache.html#black.cache.FileData.st_mtime"><code class="docutils literal notranslate"><span class="pre">FileData.st_mtime</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.cache.html#black.cache.FileData.st_size"><code class="docutils literal notranslate"><span class="pre">FileData.st_size</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.cache.html#black.cache.FileData.hash"><code class="docutils literal notranslate"><span class="pre">FileData.hash</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="black.cache.html#black.cache.get_cache_dir"><code class="docutils literal notranslate"><span class="pre">get_cache_dir()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.cache.html#black.cache.get_cache_file"><code class="docutils literal notranslate"><span class="pre">get_cache_file()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.cache.html#black.cache.Cache"><code class="docutils literal notranslate"><span class="pre">Cache</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.cache.html#black.cache.Cache.mode"><code class="docutils literal notranslate"><span class="pre">Cache.mode</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.cache.html#black.cache.Cache.cache_file"><code class="docutils literal notranslate"><span class="pre">Cache.cache_file</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.cache.html#black.cache.Cache.file_data"><code class="docutils literal notranslate"><span class="pre">Cache.file_data</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.cache.html#black.cache.Cache.read"><code class="docutils literal notranslate"><span class="pre">Cache.read()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.cache.html#black.cache.Cache.hash_digest"><code class="docutils literal notranslate"><span class="pre">Cache.hash_digest()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.cache.html#black.cache.Cache.get_file_data"><code class="docutils literal notranslate"><span class="pre">Cache.get_file_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.cache.html#black.cache.Cache.is_changed"><code class="docutils literal notranslate"><span class="pre">Cache.is_changed()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.cache.html#black.cache.Cache.filtered_cached"><code class="docutils literal notranslate"><span class="pre">Cache.filtered_cached()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.cache.html#black.cache.Cache.write"><code class="docutils literal notranslate"><span class="pre">Cache.write()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="black.comments.html">black.comments module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="black.comments.html#black.comments.ProtoComment"><code class="docutils literal notranslate"><span class="pre">ProtoComment</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.comments.html#black.comments.ProtoComment.type"><code class="docutils literal notranslate"><span class="pre">ProtoComment.type</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.comments.html#black.comments.ProtoComment.value"><code class="docutils literal notranslate"><span class="pre">ProtoComment.value</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.comments.html#black.comments.ProtoComment.newlines"><code class="docutils literal notranslate"><span class="pre">ProtoComment.newlines</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.comments.html#black.comments.ProtoComment.consumed"><code class="docutils literal notranslate"><span class="pre">ProtoComment.consumed</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.comments.html#black.comments.ProtoComment.form_feed"><code class="docutils literal notranslate"><span class="pre">ProtoComment.form_feed</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.comments.html#black.comments.ProtoComment.leading_whitespace"><code class="docutils literal notranslate"><span class="pre">ProtoComment.leading_whitespace</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="black.comments.html#black.comments.generate_comments"><code class="docutils literal notranslate"><span class="pre">generate_comments()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.comments.html#black.comments.list_comments"><code class="docutils literal notranslate"><span class="pre">list_comments()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.comments.html#black.comments.normalize_trailing_prefix"><code class="docutils literal notranslate"><span class="pre">normalize_trailing_prefix()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.comments.html#black.comments.make_comment"><code class="docutils literal notranslate"><span class="pre">make_comment()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.comments.html#black.comments.normalize_fmt_off"><code class="docutils literal notranslate"><span class="pre">normalize_fmt_off()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.comments.html#black.comments.convert_one_fmt_off_pair"><code class="docutils literal notranslate"><span class="pre">convert_one_fmt_off_pair()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.comments.html#black.comments.generate_ignored_nodes"><code class="docutils literal notranslate"><span class="pre">generate_ignored_nodes()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.comments.html#black.comments.is_fmt_on"><code class="docutils literal notranslate"><span class="pre">is_fmt_on()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.comments.html#black.comments.children_contains_fmt_on"><code class="docutils literal notranslate"><span class="pre">children_contains_fmt_on()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.comments.html#black.comments.contains_pragma_comment"><code class="docutils literal notranslate"><span class="pre">contains_pragma_comment()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.comments.html#black.comments.contains_fmt_directive"><code class="docutils literal notranslate"><span class="pre">contains_fmt_directive()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="black.concurrency.html">black.concurrency module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="black.concurrency.html#black.concurrency.maybe_use_uvloop"><code class="docutils literal notranslate"><span class="pre">maybe_use_uvloop()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.concurrency.html#black.concurrency.cancel"><code class="docutils literal notranslate"><span class="pre">cancel()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.concurrency.html#black.concurrency.shutdown"><code class="docutils literal notranslate"><span class="pre">shutdown()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.concurrency.html#black.concurrency.reformat_many"><code class="docutils literal notranslate"><span class="pre">reformat_many()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.concurrency.html#black.concurrency.schedule_formatting"><code class="docutils literal notranslate"><span class="pre">schedule_formatting()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="black.const.html">black.const module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="black.debug.html">black.debug module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="black.debug.html#black.debug.DebugVisitor"><code class="docutils literal notranslate"><span class="pre">DebugVisitor</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.debug.html#black.debug.DebugVisitor.tree_depth"><code class="docutils literal notranslate"><span class="pre">DebugVisitor.tree_depth</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.debug.html#black.debug.DebugVisitor.list_output"><code class="docutils literal notranslate"><span class="pre">DebugVisitor.list_output</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.debug.html#black.debug.DebugVisitor.print_output"><code class="docutils literal notranslate"><span class="pre">DebugVisitor.print_output</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.debug.html#black.debug.DebugVisitor.out"><code class="docutils literal notranslate"><span class="pre">DebugVisitor.out()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.debug.html#black.debug.DebugVisitor.visit_default"><code class="docutils literal notranslate"><span class="pre">DebugVisitor.visit_default()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.debug.html#black.debug.DebugVisitor.show"><code class="docutils literal notranslate"><span class="pre">DebugVisitor.show()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="black.files.html">black.files module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="black.files.html#black.files.find_project_root"><code class="docutils literal notranslate"><span class="pre">find_project_root()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.files.html#black.files.find_pyproject_toml"><code class="docutils literal notranslate"><span class="pre">find_pyproject_toml()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.files.html#black.files.parse_pyproject_toml"><code class="docutils literal notranslate"><span class="pre">parse_pyproject_toml()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.files.html#black.files.infer_target_version"><code class="docutils literal notranslate"><span class="pre">infer_target_version()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.files.html#black.files.parse_req_python_version"><code class="docutils literal notranslate"><span class="pre">parse_req_python_version()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.files.html#black.files.parse_req_python_specifier"><code class="docutils literal notranslate"><span class="pre">parse_req_python_specifier()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.files.html#black.files.strip_specifier_set"><code class="docutils literal notranslate"><span class="pre">strip_specifier_set()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.files.html#black.files.find_user_pyproject_toml"><code class="docutils literal notranslate"><span class="pre">find_user_pyproject_toml()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.files.html#black.files.get_gitignore"><code class="docutils literal notranslate"><span class="pre">get_gitignore()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.files.html#black.files.resolves_outside_root_or_cannot_stat"><code class="docutils literal notranslate"><span class="pre">resolves_outside_root_or_cannot_stat()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.files.html#black.files.best_effort_relative_path"><code class="docutils literal notranslate"><span class="pre">best_effort_relative_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.files.html#black.files.path_is_excluded"><code class="docutils literal notranslate"><span class="pre">path_is_excluded()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.files.html#black.files.gen_python_files"><code class="docutils literal notranslate"><span class="pre">gen_python_files()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.files.html#black.files.wrap_stream_for_windows"><code class="docutils literal notranslate"><span class="pre">wrap_stream_for_windows()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="black.handle_ipynb_magics.html">black.handle_ipynb_magics module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.Replacement"><code class="docutils literal notranslate"><span class="pre">Replacement</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.Replacement.mask"><code class="docutils literal notranslate"><span class="pre">Replacement.mask</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.Replacement.src"><code class="docutils literal notranslate"><span class="pre">Replacement.src</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.jupyter_dependencies_are_installed"><code class="docutils literal notranslate"><span class="pre">jupyter_dependencies_are_installed()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.validate_cell"><code class="docutils literal notranslate"><span class="pre">validate_cell()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.remove_trailing_semicolon"><code class="docutils literal notranslate"><span class="pre">remove_trailing_semicolon()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.put_trailing_semicolon_back"><code class="docutils literal notranslate"><span class="pre">put_trailing_semicolon_back()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.mask_cell"><code class="docutils literal notranslate"><span class="pre">mask_cell()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.create_token"><code class="docutils literal notranslate"><span class="pre">create_token()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.get_token"><code class="docutils literal notranslate"><span class="pre">get_token()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.replace_cell_magics"><code class="docutils literal notranslate"><span class="pre">replace_cell_magics()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.replace_magics"><code class="docutils literal notranslate"><span class="pre">replace_magics()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.unmask_cell"><code class="docutils literal notranslate"><span class="pre">unmask_cell()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.CellMagic"><code class="docutils literal notranslate"><span class="pre">CellMagic</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.CellMagic.name"><code class="docutils literal notranslate"><span class="pre">CellMagic.name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.CellMagic.params"><code class="docutils literal notranslate"><span class="pre">CellMagic.params</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.CellMagic.body"><code class="docutils literal notranslate"><span class="pre">CellMagic.body</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.CellMagic.header"><code class="docutils literal notranslate"><span class="pre">CellMagic.header</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.CellMagicFinder"><code class="docutils literal notranslate"><span class="pre">CellMagicFinder</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.CellMagicFinder.visit_Expr"><code class="docutils literal notranslate"><span class="pre">CellMagicFinder.visit_Expr()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.OffsetAndMagic"><code class="docutils literal notranslate"><span class="pre">OffsetAndMagic</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.OffsetAndMagic.col_offset"><code class="docutils literal notranslate"><span class="pre">OffsetAndMagic.col_offset</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.OffsetAndMagic.magic"><code class="docutils literal notranslate"><span class="pre">OffsetAndMagic.magic</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.MagicFinder"><code class="docutils literal notranslate"><span class="pre">MagicFinder</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.MagicFinder.magics"><code class="docutils literal notranslate"><span class="pre">MagicFinder.magics</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.MagicFinder.visit_Assign"><code class="docutils literal notranslate"><span class="pre">MagicFinder.visit_Assign()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.MagicFinder.visit_Expr"><code class="docutils literal notranslate"><span class="pre">MagicFinder.visit_Expr()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="black.linegen.html">black.linegen module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="black.linegen.html#black.linegen.CannotSplit"><code class="docutils literal notranslate"><span class="pre">CannotSplit</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.linegen.html#black.linegen.LineGenerator"><code class="docutils literal notranslate"><span class="pre">LineGenerator</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.linegen.html#black.linegen.LineGenerator.line"><code class="docutils literal notranslate"><span class="pre">LineGenerator.line()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.linegen.html#black.linegen.LineGenerator.visit_default"><code class="docutils literal notranslate"><span class="pre">LineGenerator.visit_default()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.linegen.html#black.linegen.LineGenerator.visit_test"><code class="docutils literal notranslate"><span class="pre">LineGenerator.visit_test()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.linegen.html#black.linegen.LineGenerator.visit_INDENT"><code class="docutils literal notranslate"><span class="pre">LineGenerator.visit_INDENT()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.linegen.html#black.linegen.LineGenerator.visit_DEDENT"><code class="docutils literal notranslate"><span class="pre">LineGenerator.visit_DEDENT()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.linegen.html#black.linegen.LineGenerator.visit_stmt"><code class="docutils literal notranslate"><span class="pre">LineGenerator.visit_stmt()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.linegen.html#black.linegen.LineGenerator.visit_typeparams"><code class="docutils literal notranslate"><span class="pre">LineGenerator.visit_typeparams()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.linegen.html#black.linegen.LineGenerator.visit_typevartuple"><code class="docutils literal notranslate"><span class="pre">LineGenerator.visit_typevartuple()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.linegen.html#black.linegen.LineGenerator.visit_paramspec"><code class="docutils literal notranslate"><span class="pre">LineGenerator.visit_paramspec()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.linegen.html#black.linegen.LineGenerator.visit_dictsetmaker"><code class="docutils literal notranslate"><span class="pre">LineGenerator.visit_dictsetmaker()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.linegen.html#black.linegen.LineGenerator.visit_funcdef"><code class="docutils literal notranslate"><span class="pre">LineGenerator.visit_funcdef()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.linegen.html#black.linegen.LineGenerator.visit_match_case"><code class="docutils literal notranslate"><span class="pre">LineGenerator.visit_match_case()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.linegen.html#black.linegen.LineGenerator.visit_suite"><code class="docutils literal notranslate"><span class="pre">LineGenerator.visit_suite()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.linegen.html#black.linegen.LineGenerator.visit_simple_stmt"><code class="docutils literal notranslate"><span class="pre">LineGenerator.visit_simple_stmt()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.linegen.html#black.linegen.LineGenerator.visit_async_stmt"><code class="docutils literal notranslate"><span class="pre">LineGenerator.visit_async_stmt()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.linegen.html#black.linegen.LineGenerator.visit_decorators"><code class="docutils literal notranslate"><span class="pre">LineGenerator.visit_decorators()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.linegen.html#black.linegen.LineGenerator.visit_power"><code class="docutils literal notranslate"><span class="pre">LineGenerator.visit_power()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.linegen.html#black.linegen.LineGenerator.visit_SEMI"><code class="docutils literal notranslate"><span class="pre">LineGenerator.visit_SEMI()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.linegen.html#black.linegen.LineGenerator.visit_ENDMARKER"><code class="docutils literal notranslate"><span class="pre">LineGenerator.visit_ENDMARKER()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.linegen.html#black.linegen.LineGenerator.visit_STANDALONE_COMMENT"><code class="docutils literal notranslate"><span class="pre">LineGenerator.visit_STANDALONE_COMMENT()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.linegen.html#black.linegen.LineGenerator.visit_factor"><code class="docutils literal notranslate"><span class="pre">LineGenerator.visit_factor()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.linegen.html#black.linegen.LineGenerator.visit_tname"><code class="docutils literal notranslate"><span class="pre">LineGenerator.visit_tname()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.linegen.html#black.linegen.LineGenerator.visit_STRING"><code class="docutils literal notranslate"><span class="pre">LineGenerator.visit_STRING()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.linegen.html#black.linegen.LineGenerator.visit_NUMBER"><code class="docutils literal notranslate"><span class="pre">LineGenerator.visit_NUMBER()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.linegen.html#black.linegen.LineGenerator.visit_atom"><code class="docutils literal notranslate"><span class="pre">LineGenerator.visit_atom()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.linegen.html#black.linegen.LineGenerator.visit_fstring"><code class="docutils literal notranslate"><span class="pre">LineGenerator.visit_fstring()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.linegen.html#black.linegen.LineGenerator.visit_tstring"><code class="docutils literal notranslate"><span class="pre">LineGenerator.visit_tstring()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.linegen.html#black.linegen.LineGenerator.visit_comp_for"><code class="docutils literal notranslate"><span class="pre">LineGenerator.visit_comp_for()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.linegen.html#black.linegen.LineGenerator.visit_old_comp_for"><code class="docutils literal notranslate"><span class="pre">LineGenerator.visit_old_comp_for()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="black.linegen.html#black.linegen.transform_line"><code class="docutils literal notranslate"><span class="pre">transform_line()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.linegen.html#black.linegen.should_split_funcdef_with_rhs"><code class="docutils literal notranslate"><span class="pre">should_split_funcdef_with_rhs()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.linegen.html#black.linegen.left_hand_split"><code class="docutils literal notranslate"><span class="pre">left_hand_split()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.linegen.html#black.linegen.right_hand_split"><code class="docutils literal notranslate"><span class="pre">right_hand_split()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.linegen.html#black.linegen.bracket_split_succeeded_or_raise"><code class="docutils literal notranslate"><span class="pre">bracket_split_succeeded_or_raise()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.linegen.html#black.linegen.bracket_split_build_line"><code class="docutils literal notranslate"><span class="pre">bracket_split_build_line()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.linegen.html#black.linegen.dont_increase_indentation"><code class="docutils literal notranslate"><span class="pre">dont_increase_indentation()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.linegen.html#black.linegen.delimiter_split"><code class="docutils literal notranslate"><span class="pre">delimiter_split()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.linegen.html#black.linegen.standalone_comment_split"><code class="docutils literal notranslate"><span class="pre">standalone_comment_split()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.linegen.html#black.linegen.normalize_invisible_parens"><code class="docutils literal notranslate"><span class="pre">normalize_invisible_parens()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.linegen.html#black.linegen.remove_await_parens"><code class="docutils literal notranslate"><span class="pre">remove_await_parens()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.linegen.html#black.linegen.remove_with_parens"><code class="docutils literal notranslate"><span class="pre">remove_with_parens()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.linegen.html#black.linegen.maybe_make_parens_invisible_in_atom"><code class="docutils literal notranslate"><span class="pre">maybe_make_parens_invisible_in_atom()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.linegen.html#black.linegen.should_split_line"><code class="docutils literal notranslate"><span class="pre">should_split_line()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.linegen.html#black.linegen.generate_trailers_to_omit"><code class="docutils literal notranslate"><span class="pre">generate_trailers_to_omit()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.linegen.html#black.linegen.run_transformer"><code class="docutils literal notranslate"><span class="pre">run_transformer()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="black.lines.html">black.lines module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="black.lines.html#black.lines.Line"><code class="docutils literal notranslate"><span class="pre">Line</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.mode"><code class="docutils literal notranslate"><span class="pre">Line.mode</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.depth"><code class="docutils literal notranslate"><span class="pre">Line.depth</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.leaves"><code class="docutils literal notranslate"><span class="pre">Line.leaves</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.comments"><code class="docutils literal notranslate"><span class="pre">Line.comments</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.bracket_tracker"><code class="docutils literal notranslate"><span class="pre">Line.bracket_tracker</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.inside_brackets"><code class="docutils literal notranslate"><span class="pre">Line.inside_brackets</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.should_split_rhs"><code class="docutils literal notranslate"><span class="pre">Line.should_split_rhs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.magic_trailing_comma"><code class="docutils literal notranslate"><span class="pre">Line.magic_trailing_comma</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.append"><code class="docutils literal notranslate"><span class="pre">Line.append()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.append_safe"><code class="docutils literal notranslate"><span class="pre">Line.append_safe()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.is_comment"><code class="docutils literal notranslate"><span class="pre">Line.is_comment</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.is_decorator"><code class="docutils literal notranslate"><span class="pre">Line.is_decorator</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.is_import"><code class="docutils literal notranslate"><span class="pre">Line.is_import</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.is_with_or_async_with_stmt"><code class="docutils literal notranslate"><span class="pre">Line.is_with_or_async_with_stmt</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.is_class"><code class="docutils literal notranslate"><span class="pre">Line.is_class</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.is_stub_class"><code class="docutils literal notranslate"><span class="pre">Line.is_stub_class</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.is_def"><code class="docutils literal notranslate"><span class="pre">Line.is_def</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.is_stub_def"><code class="docutils literal notranslate"><span class="pre">Line.is_stub_def</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.is_class_paren_empty"><code class="docutils literal notranslate"><span class="pre">Line.is_class_paren_empty</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.is_docstring"><code class="docutils literal notranslate"><span class="pre">Line.is_docstring</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.is_chained_assignment"><code class="docutils literal notranslate"><span class="pre">Line.is_chained_assignment</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.opens_block"><code class="docutils literal notranslate"><span class="pre">Line.opens_block</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.is_fmt_pass_converted"><code class="docutils literal notranslate"><span class="pre">Line.is_fmt_pass_converted()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.contains_standalone_comments"><code class="docutils literal notranslate"><span class="pre">Line.contains_standalone_comments()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.contains_implicit_multiline_string_with_comments"><code class="docutils literal notranslate"><span class="pre">Line.contains_implicit_multiline_string_with_comments()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.contains_uncollapsable_type_comments"><code class="docutils literal notranslate"><span class="pre">Line.contains_uncollapsable_type_comments()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.contains_unsplittable_type_ignore"><code class="docutils literal notranslate"><span class="pre">Line.contains_unsplittable_type_ignore()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.contains_multiline_strings"><code class="docutils literal notranslate"><span class="pre">Line.contains_multiline_strings()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.has_magic_trailing_comma"><code class="docutils literal notranslate"><span class="pre">Line.has_magic_trailing_comma()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.append_comment"><code class="docutils literal notranslate"><span class="pre">Line.append_comment()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.comments_after"><code class="docutils literal notranslate"><span class="pre">Line.comments_after()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.remove_trailing_comma"><code class="docutils literal notranslate"><span class="pre">Line.remove_trailing_comma()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.is_complex_subscript"><code class="docutils literal notranslate"><span class="pre">Line.is_complex_subscript()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.enumerate_with_length"><code class="docutils literal notranslate"><span class="pre">Line.enumerate_with_length()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.Line.clone"><code class="docutils literal notranslate"><span class="pre">Line.clone()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="black.lines.html#black.lines.RHSResult"><code class="docutils literal notranslate"><span class="pre">RHSResult</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.RHSResult.head"><code class="docutils literal notranslate"><span class="pre">RHSResult.head</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.RHSResult.body"><code class="docutils literal notranslate"><span class="pre">RHSResult.body</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.RHSResult.tail"><code class="docutils literal notranslate"><span class="pre">RHSResult.tail</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.RHSResult.opening_bracket"><code class="docutils literal notranslate"><span class="pre">RHSResult.opening_bracket</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.RHSResult.closing_bracket"><code class="docutils literal notranslate"><span class="pre">RHSResult.closing_bracket</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="black.lines.html#black.lines.LinesBlock"><code class="docutils literal notranslate"><span class="pre">LinesBlock</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.LinesBlock.mode"><code class="docutils literal notranslate"><span class="pre">LinesBlock.mode</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.LinesBlock.previous_block"><code class="docutils literal notranslate"><span class="pre">LinesBlock.previous_block</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.LinesBlock.original_line"><code class="docutils literal notranslate"><span class="pre">LinesBlock.original_line</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.LinesBlock.before"><code class="docutils literal notranslate"><span class="pre">LinesBlock.before</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.LinesBlock.content_lines"><code class="docutils literal notranslate"><span class="pre">LinesBlock.content_lines</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.LinesBlock.after"><code class="docutils literal notranslate"><span class="pre">LinesBlock.after</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.LinesBlock.form_feed"><code class="docutils literal notranslate"><span class="pre">LinesBlock.form_feed</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.LinesBlock.all_lines"><code class="docutils literal notranslate"><span class="pre">LinesBlock.all_lines()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="black.lines.html#black.lines.EmptyLineTracker"><code class="docutils literal notranslate"><span class="pre">EmptyLineTracker</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.EmptyLineTracker.mode"><code class="docutils literal notranslate"><span class="pre">EmptyLineTracker.mode</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.EmptyLineTracker.previous_line"><code class="docutils literal notranslate"><span class="pre">EmptyLineTracker.previous_line</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.EmptyLineTracker.previous_block"><code class="docutils literal notranslate"><span class="pre">EmptyLineTracker.previous_block</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.EmptyLineTracker.previous_defs"><code class="docutils literal notranslate"><span class="pre">EmptyLineTracker.previous_defs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.EmptyLineTracker.semantic_leading_comment"><code class="docutils literal notranslate"><span class="pre">EmptyLineTracker.semantic_leading_comment</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html#black.lines.EmptyLineTracker.maybe_empty_lines"><code class="docutils literal notranslate"><span class="pre">EmptyLineTracker.maybe_empty_lines()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="black.lines.html#black.lines.enumerate_reversed"><code class="docutils literal notranslate"><span class="pre">enumerate_reversed()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.lines.html#black.lines.append_leaves"><code class="docutils literal notranslate"><span class="pre">append_leaves()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.lines.html#black.lines.is_line_short_enough"><code class="docutils literal notranslate"><span class="pre">is_line_short_enough()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.lines.html#black.lines.can_be_split"><code class="docutils literal notranslate"><span class="pre">can_be_split()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.lines.html#black.lines.can_omit_invisible_parens"><code class="docutils literal notranslate"><span class="pre">can_omit_invisible_parens()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.lines.html#black.lines.line_to_string"><code class="docutils literal notranslate"><span class="pre">line_to_string()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="black.mode.html">black.mode module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="black.mode.html#black.mode.TargetVersion"><code class="docutils literal notranslate"><span class="pre">TargetVersion</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.TargetVersion.PY33"><code class="docutils literal notranslate"><span class="pre">TargetVersion.PY33</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.TargetVersion.PY34"><code class="docutils literal notranslate"><span class="pre">TargetVersion.PY34</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.TargetVersion.PY35"><code class="docutils literal notranslate"><span class="pre">TargetVersion.PY35</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.TargetVersion.PY36"><code class="docutils literal notranslate"><span class="pre">TargetVersion.PY36</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.TargetVersion.PY37"><code class="docutils literal notranslate"><span class="pre">TargetVersion.PY37</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.TargetVersion.PY38"><code class="docutils literal notranslate"><span class="pre">TargetVersion.PY38</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.TargetVersion.PY39"><code class="docutils literal notranslate"><span class="pre">TargetVersion.PY39</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.TargetVersion.PY310"><code class="docutils literal notranslate"><span class="pre">TargetVersion.PY310</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.TargetVersion.PY311"><code class="docutils literal notranslate"><span class="pre">TargetVersion.PY311</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.TargetVersion.PY312"><code class="docutils literal notranslate"><span class="pre">TargetVersion.PY312</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.TargetVersion.PY313"><code class="docutils literal notranslate"><span class="pre">TargetVersion.PY313</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.TargetVersion.PY314"><code class="docutils literal notranslate"><span class="pre">TargetVersion.PY314</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.TargetVersion.PY315"><code class="docutils literal notranslate"><span class="pre">TargetVersion.PY315</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.TargetVersion.pretty"><code class="docutils literal notranslate"><span class="pre">TargetVersion.pretty()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="black.mode.html#black.mode.Feature"><code class="docutils literal notranslate"><span class="pre">Feature</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Feature.F_STRINGS"><code class="docutils literal notranslate"><span class="pre">Feature.F_STRINGS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Feature.NUMERIC_UNDERSCORES"><code class="docutils literal notranslate"><span class="pre">Feature.NUMERIC_UNDERSCORES</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Feature.TRAILING_COMMA_IN_CALL"><code class="docutils literal notranslate"><span class="pre">Feature.TRAILING_COMMA_IN_CALL</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Feature.TRAILING_COMMA_IN_DEF"><code class="docutils literal notranslate"><span class="pre">Feature.TRAILING_COMMA_IN_DEF</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Feature.ASYNC_IDENTIFIERS"><code class="docutils literal notranslate"><span class="pre">Feature.ASYNC_IDENTIFIERS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Feature.ASYNC_KEYWORDS"><code class="docutils literal notranslate"><span class="pre">Feature.ASYNC_KEYWORDS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Feature.ASSIGNMENT_EXPRESSIONS"><code class="docutils literal notranslate"><span class="pre">Feature.ASSIGNMENT_EXPRESSIONS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Feature.POS_ONLY_ARGUMENTS"><code class="docutils literal notranslate"><span class="pre">Feature.POS_ONLY_ARGUMENTS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Feature.RELAXED_DECORATORS"><code class="docutils literal notranslate"><span class="pre">Feature.RELAXED_DECORATORS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Feature.PATTERN_MATCHING"><code class="docutils literal notranslate"><span class="pre">Feature.PATTERN_MATCHING</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Feature.UNPACKING_ON_FLOW"><code class="docutils literal notranslate"><span class="pre">Feature.UNPACKING_ON_FLOW</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Feature.ANN_ASSIGN_EXTENDED_RHS"><code class="docutils literal notranslate"><span class="pre">Feature.ANN_ASSIGN_EXTENDED_RHS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Feature.EXCEPT_STAR"><code class="docutils literal notranslate"><span class="pre">Feature.EXCEPT_STAR</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Feature.VARIADIC_GENERICS"><code class="docutils literal notranslate"><span class="pre">Feature.VARIADIC_GENERICS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Feature.DEBUG_F_STRINGS"><code class="docutils literal notranslate"><span class="pre">Feature.DEBUG_F_STRINGS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Feature.PARENTHESIZED_CONTEXT_MANAGERS"><code class="docutils literal notranslate"><span class="pre">Feature.PARENTHESIZED_CONTEXT_MANAGERS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Feature.TYPE_PARAMS"><code class="docutils literal notranslate"><span class="pre">Feature.TYPE_PARAMS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Feature.TYPE_PARAM_DEFAULTS"><code class="docutils literal notranslate"><span class="pre">Feature.TYPE_PARAM_DEFAULTS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Feature.UNPARENTHESIZED_EXCEPT_TYPES"><code class="docutils literal notranslate"><span class="pre">Feature.UNPARENTHESIZED_EXCEPT_TYPES</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Feature.T_STRINGS"><code class="docutils literal notranslate"><span class="pre">Feature.T_STRINGS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Feature.LAZY_IMPORTS"><code class="docutils literal notranslate"><span class="pre">Feature.LAZY_IMPORTS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Feature.UNPACKING_IN_COMPREHENSIONS"><code class="docutils literal notranslate"><span class="pre">Feature.UNPACKING_IN_COMPREHENSIONS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Feature.FORCE_OPTIONAL_PARENTHESES"><code class="docutils literal notranslate"><span class="pre">Feature.FORCE_OPTIONAL_PARENTHESES</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Feature.FUTURE_ANNOTATIONS"><code class="docutils literal notranslate"><span class="pre">Feature.FUTURE_ANNOTATIONS</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="black.mode.html#black.mode.supports_feature"><code class="docutils literal notranslate"><span class="pre">supports_feature()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.mode.html#black.mode.Preview"><code class="docutils literal notranslate"><span class="pre">Preview</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Preview.string_processing"><code class="docutils literal notranslate"><span class="pre">Preview.string_processing</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Preview.hug_parens_with_braces_and_square_brackets"><code class="docutils literal notranslate"><span class="pre">Preview.hug_parens_with_braces_and_square_brackets</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Preview.wrap_comprehension_in"><code class="docutils literal notranslate"><span class="pre">Preview.wrap_comprehension_in</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Preview.simplify_power_operator_hugging"><code class="docutils literal notranslate"><span class="pre">Preview.simplify_power_operator_hugging</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Preview.wrap_long_dict_values_in_parens"><code class="docutils literal notranslate"><span class="pre">Preview.wrap_long_dict_values_in_parens</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Preview.fix_if_guard_explosion_in_case_statement"><code class="docutils literal notranslate"><span class="pre">Preview.fix_if_guard_explosion_in_case_statement</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Preview.pyi_overload_group_blank_lines"><code class="docutils literal notranslate"><span class="pre">Preview.pyi_overload_group_blank_lines</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Preview.fix_unnecessary_parens_in_indexed_assignment"><code class="docutils literal notranslate"><span class="pre">Preview.fix_unnecessary_parens_in_indexed_assignment</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Preview.pyi_blank_line_before_decorated_class"><code class="docutils literal notranslate"><span class="pre">Preview.pyi_blank_line_before_decorated_class</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Preview.pyi_blank_line_after_function_docstring"><code class="docutils literal notranslate"><span class="pre">Preview.pyi_blank_line_after_function_docstring</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Preview.hug_comparator"><code class="docutils literal notranslate"><span class="pre">Preview.hug_comparator</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Preview.parenthesize_tuple_in_yield"><code class="docutils literal notranslate"><span class="pre">Preview.parenthesize_tuple_in_yield</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Preview.fmt_off_class_blank_lines"><code class="docutils literal notranslate"><span class="pre">Preview.fmt_off_class_blank_lines</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Preview.remove_redundant_generator_parentheses"><code class="docutils literal notranslate"><span class="pre">Preview.remove_redundant_generator_parentheses</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="black.mode.html#black.mode.Mode"><code class="docutils literal notranslate"><span class="pre">Mode</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Mode.target_versions"><code class="docutils literal notranslate"><span class="pre">Mode.target_versions</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Mode.line_length"><code class="docutils literal notranslate"><span class="pre">Mode.line_length</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Mode.string_normalization"><code class="docutils literal notranslate"><span class="pre">Mode.string_normalization</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Mode.is_pyi"><code class="docutils literal notranslate"><span class="pre">Mode.is_pyi</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Mode.is_ipynb"><code class="docutils literal notranslate"><span class="pre">Mode.is_ipynb</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Mode.skip_source_first_line"><code class="docutils literal notranslate"><span class="pre">Mode.skip_source_first_line</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Mode.magic_trailing_comma"><code class="docutils literal notranslate"><span class="pre">Mode.magic_trailing_comma</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Mode.python_cell_magics"><code class="docutils literal notranslate"><span class="pre">Mode.python_cell_magics</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Mode.preview"><code class="docutils literal notranslate"><span class="pre">Mode.preview</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Mode.unstable"><code class="docutils literal notranslate"><span class="pre">Mode.unstable</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Mode.enabled_features"><code class="docutils literal notranslate"><span class="pre">Mode.enabled_features</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html#black.mode.Mode.get_cache_key"><code class="docutils literal notranslate"><span class="pre">Mode.get_cache_key()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="black.nodes.html">black.nodes module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.Visitor"><code class="docutils literal notranslate"><span class="pre">Visitor</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.nodes.html#black.nodes.Visitor.visit"><code class="docutils literal notranslate"><span class="pre">Visitor.visit()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.nodes.html#black.nodes.Visitor.visit_default"><code class="docutils literal notranslate"><span class="pre">Visitor.visit_default()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.whitespace"><code class="docutils literal notranslate"><span class="pre">whitespace()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.make_simple_prefix"><code class="docutils literal notranslate"><span class="pre">make_simple_prefix()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.preceding_leaf"><code class="docutils literal notranslate"><span class="pre">preceding_leaf()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.prev_siblings_are"><code class="docutils literal notranslate"><span class="pre">prev_siblings_are()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.parent_type"><code class="docutils literal notranslate"><span class="pre">parent_type()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.child_towards"><code class="docutils literal notranslate"><span class="pre">child_towards()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.replace_child"><code class="docutils literal notranslate"><span class="pre">replace_child()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.container_of"><code class="docutils literal notranslate"><span class="pre">container_of()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.first_leaf_of"><code class="docutils literal notranslate"><span class="pre">first_leaf_of()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_arith_like"><code class="docutils literal notranslate"><span class="pre">is_arith_like()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_simple_exponentiation"><code class="docutils literal notranslate"><span class="pre">is_simple_exponentiation()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_docstring"><code class="docutils literal notranslate"><span class="pre">is_docstring()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_empty_tuple"><code class="docutils literal notranslate"><span class="pre">is_empty_tuple()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_one_tuple"><code class="docutils literal notranslate"><span class="pre">is_one_tuple()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_tuple"><code class="docutils literal notranslate"><span class="pre">is_tuple()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_tuple_containing_walrus"><code class="docutils literal notranslate"><span class="pre">is_tuple_containing_walrus()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_tuple_containing_star"><code class="docutils literal notranslate"><span class="pre">is_tuple_containing_star()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_generator"><code class="docutils literal notranslate"><span class="pre">is_generator()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_one_sequence_between"><code class="docutils literal notranslate"><span class="pre">is_one_sequence_between()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_walrus_assignment"><code class="docutils literal notranslate"><span class="pre">is_walrus_assignment()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_simple_decorator_trailer"><code class="docutils literal notranslate"><span class="pre">is_simple_decorator_trailer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_simple_decorator_expression"><code class="docutils literal notranslate"><span class="pre">is_simple_decorator_expression()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_yield"><code class="docutils literal notranslate"><span class="pre">is_yield()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_vararg"><code class="docutils literal notranslate"><span class="pre">is_vararg()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_fstring"><code class="docutils literal notranslate"><span class="pre">is_fstring()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.fstring_tstring_to_string"><code class="docutils literal notranslate"><span class="pre">fstring_tstring_to_string()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_multiline_string"><code class="docutils literal notranslate"><span class="pre">is_multiline_string()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_parent_function_or_class"><code class="docutils literal notranslate"><span class="pre">is_parent_function_or_class()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_stub_suite"><code class="docutils literal notranslate"><span class="pre">is_stub_suite()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_stub_body"><code class="docutils literal notranslate"><span class="pre">is_stub_body()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_atom_with_invisible_parens"><code class="docutils literal notranslate"><span class="pre">is_atom_with_invisible_parens()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_empty_par"><code class="docutils literal notranslate"><span class="pre">is_empty_par()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_empty_lpar"><code class="docutils literal notranslate"><span class="pre">is_empty_lpar()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_empty_rpar"><code class="docutils literal notranslate"><span class="pre">is_empty_rpar()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_import"><code class="docutils literal notranslate"><span class="pre">is_import()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_with_or_async_with_stmt"><code class="docutils literal notranslate"><span class="pre">is_with_or_async_with_stmt()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_async_stmt_or_funcdef"><code class="docutils literal notranslate"><span class="pre">is_async_stmt_or_funcdef()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_type_comment"><code class="docutils literal notranslate"><span class="pre">is_type_comment()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_type_comment_string"><code class="docutils literal notranslate"><span class="pre">is_type_comment_string()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_type_ignore_comment"><code class="docutils literal notranslate"><span class="pre">is_type_ignore_comment()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_type_ignore_comment_string"><code class="docutils literal notranslate"><span class="pre">is_type_ignore_comment_string()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.wrap_in_parentheses"><code class="docutils literal notranslate"><span class="pre">wrap_in_parentheses()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.unwrap_singleton_parenthesis"><code class="docutils literal notranslate"><span class="pre">unwrap_singleton_parenthesis()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.ensure_visible"><code class="docutils literal notranslate"><span class="pre">ensure_visible()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_name_token"><code class="docutils literal notranslate"><span class="pre">is_name_token()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_lpar_token"><code class="docutils literal notranslate"><span class="pre">is_lpar_token()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_rpar_token"><code class="docutils literal notranslate"><span class="pre">is_rpar_token()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_number_token"><code class="docutils literal notranslate"><span class="pre">is_number_token()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.get_annotation_type"><code class="docutils literal notranslate"><span class="pre">get_annotation_type()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.is_part_of_annotation"><code class="docutils literal notranslate"><span class="pre">is_part_of_annotation()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.first_leaf"><code class="docutils literal notranslate"><span class="pre">first_leaf()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.last_leaf"><code class="docutils literal notranslate"><span class="pre">last_leaf()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.furthest_ancestor_with_last_leaf"><code class="docutils literal notranslate"><span class="pre">furthest_ancestor_with_last_leaf()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.nodes.html#black.nodes.has_sibling_with_type"><code class="docutils literal notranslate"><span class="pre">has_sibling_with_type()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="black.numerics.html">black.numerics module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="black.numerics.html#black.numerics.format_hex"><code class="docutils literal notranslate"><span class="pre">format_hex()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.numerics.html#black.numerics.format_scientific_notation"><code class="docutils literal notranslate"><span class="pre">format_scientific_notation()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.numerics.html#black.numerics.format_complex_number"><code class="docutils literal notranslate"><span class="pre">format_complex_number()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.numerics.html#black.numerics.format_float_or_int_string"><code class="docutils literal notranslate"><span class="pre">format_float_or_int_string()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.numerics.html#black.numerics.normalize_numeric_literal"><code class="docutils literal notranslate"><span class="pre">normalize_numeric_literal()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="black.output.html">black.output module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="black.output.html#black.output.out"><code class="docutils literal notranslate"><span class="pre">out()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.output.html#black.output.err"><code class="docutils literal notranslate"><span class="pre">err()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.output.html#black.output.ipynb_diff"><code class="docutils literal notranslate"><span class="pre">ipynb_diff()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.output.html#black.output.diff"><code class="docutils literal notranslate"><span class="pre">diff()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.output.html#black.output.color_diff"><code class="docutils literal notranslate"><span class="pre">color_diff()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.output.html#black.output.style_output"><code class="docutils literal notranslate"><span class="pre">style_output()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.output.html#black.output.dump_to_file"><code class="docutils literal notranslate"><span class="pre">dump_to_file()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="black.parsing.html">black.parsing module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="black.parsing.html#black.parsing.InvalidInput"><code class="docutils literal notranslate"><span class="pre">InvalidInput</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.parsing.html#black.parsing.InvalidInput.lineno"><code class="docutils literal notranslate"><span class="pre">InvalidInput.lineno</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.parsing.html#black.parsing.InvalidInput.column"><code class="docutils literal notranslate"><span class="pre">InvalidInput.column</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.parsing.html#black.parsing.InvalidInput.context"><code class="docutils literal notranslate"><span class="pre">InvalidInput.context</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.parsing.html#black.parsing.InvalidInput.details"><code class="docutils literal notranslate"><span class="pre">InvalidInput.details</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="black.parsing.html#black.parsing.get_grammars"><code class="docutils literal notranslate"><span class="pre">get_grammars()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.parsing.html#black.parsing.lib2to3_parse"><code class="docutils literal notranslate"><span class="pre">lib2to3_parse()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.parsing.html#black.parsing.ASTSafetyError"><code class="docutils literal notranslate"><span class="pre">ASTSafetyError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.parsing.html#black.parsing.SourceASTParseError"><code class="docutils literal notranslate"><span class="pre">SourceASTParseError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.parsing.html#black.parsing.parse_ast"><code class="docutils literal notranslate"><span class="pre">parse_ast()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.parsing.html#black.parsing.stringify_ast"><code class="docutils literal notranslate"><span class="pre">stringify_ast()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="black.ranges.html">black.ranges module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="black.ranges.html#black.ranges.parse_line_ranges"><code class="docutils literal notranslate"><span class="pre">parse_line_ranges()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.ranges.html#black.ranges.is_valid_line_range"><code class="docutils literal notranslate"><span class="pre">is_valid_line_range()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.ranges.html#black.ranges.sanitized_lines"><code class="docutils literal notranslate"><span class="pre">sanitized_lines()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.ranges.html#black.ranges.adjusted_lines"><code class="docutils literal notranslate"><span class="pre">adjusted_lines()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.ranges.html#black.ranges.convert_unchanged_lines"><code class="docutils literal notranslate"><span class="pre">convert_unchanged_lines()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="black.report.html">black.report module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="black.report.html#black.report.Changed"><code class="docutils literal notranslate"><span class="pre">Changed</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.report.html#black.report.Changed.NO"><code class="docutils literal notranslate"><span class="pre">Changed.NO</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.report.html#black.report.Changed.CACHED"><code class="docutils literal notranslate"><span class="pre">Changed.CACHED</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.report.html#black.report.Changed.YES"><code class="docutils literal notranslate"><span class="pre">Changed.YES</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="black.report.html#black.report.NothingChanged"><code class="docutils literal notranslate"><span class="pre">NothingChanged</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.report.html#black.report.Report"><code class="docutils literal notranslate"><span class="pre">Report</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.report.html#black.report.Report.check"><code class="docutils literal notranslate"><span class="pre">Report.check</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.report.html#black.report.Report.diff"><code class="docutils literal notranslate"><span class="pre">Report.diff</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.report.html#black.report.Report.quiet"><code class="docutils literal notranslate"><span class="pre">Report.quiet</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.report.html#black.report.Report.verbose"><code class="docutils literal notranslate"><span class="pre">Report.verbose</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.report.html#black.report.Report.change_count"><code class="docutils literal notranslate"><span class="pre">Report.change_count</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.report.html#black.report.Report.same_count"><code class="docutils literal notranslate"><span class="pre">Report.same_count</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.report.html#black.report.Report.failure_count"><code class="docutils literal notranslate"><span class="pre">Report.failure_count</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.report.html#black.report.Report.done"><code class="docutils literal notranslate"><span class="pre">Report.done()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.report.html#black.report.Report.failed"><code class="docutils literal notranslate"><span class="pre">Report.failed()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.report.html#black.report.Report.path_ignored"><code class="docutils literal notranslate"><span class="pre">Report.path_ignored()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.report.html#black.report.Report.return_code"><code class="docutils literal notranslate"><span class="pre">Report.return_code</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="black.rusty.html">black.rusty module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="black.rusty.html#black.rusty.Ok"><code class="docutils literal notranslate"><span class="pre">Ok</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.rusty.html#black.rusty.Ok.ok"><code class="docutils literal notranslate"><span class="pre">Ok.ok()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="black.rusty.html#black.rusty.Err"><code class="docutils literal notranslate"><span class="pre">Err</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.rusty.html#black.rusty.Err.err"><code class="docutils literal notranslate"><span class="pre">Err.err()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="black.schema.html">black.schema module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="black.schema.html#black.schema.get_schema"><code class="docutils literal notranslate"><span class="pre">get_schema()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="black.strings.html">black.strings module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="black.strings.html#black.strings.sub_twice"><code class="docutils literal notranslate"><span class="pre">sub_twice()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.strings.html#black.strings.has_triple_quotes"><code class="docutils literal notranslate"><span class="pre">has_triple_quotes()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.strings.html#black.strings.lines_with_leading_tabs_expanded"><code class="docutils literal notranslate"><span class="pre">lines_with_leading_tabs_expanded()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.strings.html#black.strings.fix_multiline_docstring"><code class="docutils literal notranslate"><span class="pre">fix_multiline_docstring()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.strings.html#black.strings.get_string_prefix"><code class="docutils literal notranslate"><span class="pre">get_string_prefix()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.strings.html#black.strings.assert_is_leaf_string"><code class="docutils literal notranslate"><span class="pre">assert_is_leaf_string()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.strings.html#black.strings.normalize_string_prefix"><code class="docutils literal notranslate"><span class="pre">normalize_string_prefix()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.strings.html#black.strings.normalize_string_quotes"><code class="docutils literal notranslate"><span class="pre">normalize_string_quotes()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.strings.html#black.strings.normalize_fstring_quotes"><code class="docutils literal notranslate"><span class="pre">normalize_fstring_quotes()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.strings.html#black.strings.normalize_unicode_escape_sequences"><code class="docutils literal notranslate"><span class="pre">normalize_unicode_escape_sequences()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.strings.html#black.strings.char_width"><code class="docutils literal notranslate"><span class="pre">char_width()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.strings.html#black.strings.str_width"><code class="docutils literal notranslate"><span class="pre">str_width()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.strings.html#black.strings.count_chars_in_width"><code class="docutils literal notranslate"><span class="pre">count_chars_in_width()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="black.trans.html">black.trans module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="black.trans.html#black.trans.CannotTransform"><code class="docutils literal notranslate"><span class="pre">CannotTransform</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.trans.html#black.trans.TErr"><code class="docutils literal notranslate"><span class="pre">TErr()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.trans.html#black.trans.hug_power_op"><code class="docutils literal notranslate"><span class="pre">hug_power_op()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.trans.html#black.trans.handle_is_simple_look_up_prev"><code class="docutils literal notranslate"><span class="pre">handle_is_simple_look_up_prev()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.trans.html#black.trans.handle_is_simple_lookup_forward"><code class="docutils literal notranslate"><span class="pre">handle_is_simple_lookup_forward()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.trans.html#black.trans.is_expression_chained"><code class="docutils literal notranslate"><span class="pre">is_expression_chained()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.trans.html#black.trans.StringTransformer"><code class="docutils literal notranslate"><span class="pre">StringTransformer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.trans.html#black.trans.StringTransformer.do_match"><code class="docutils literal notranslate"><span class="pre">StringTransformer.do_match()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.trans.html#black.trans.StringTransformer.do_transform"><code class="docutils literal notranslate"><span class="pre">StringTransformer.do_transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="black.trans.html#black.trans.CustomSplit"><code class="docutils literal notranslate"><span class="pre">CustomSplit</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.trans.html#black.trans.CustomSplit.has_prefix"><code class="docutils literal notranslate"><span class="pre">CustomSplit.has_prefix</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.trans.html#black.trans.CustomSplit.break_idx"><code class="docutils literal notranslate"><span class="pre">CustomSplit.break_idx</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="black.trans.html#black.trans.CustomSplitMapMixin"><code class="docutils literal notranslate"><span class="pre">CustomSplitMapMixin</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.trans.html#black.trans.CustomSplitMapMixin.add_custom_splits"><code class="docutils literal notranslate"><span class="pre">CustomSplitMapMixin.add_custom_splits()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.trans.html#black.trans.CustomSplitMapMixin.pop_custom_splits"><code class="docutils literal notranslate"><span class="pre">CustomSplitMapMixin.pop_custom_splits()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.trans.html#black.trans.CustomSplitMapMixin.has_custom_splits"><code class="docutils literal notranslate"><span class="pre">CustomSplitMapMixin.has_custom_splits()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="black.trans.html#black.trans.StringMerger"><code class="docutils literal notranslate"><span class="pre">StringMerger</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.trans.html#black.trans.StringMerger.do_match"><code class="docutils literal notranslate"><span class="pre">StringMerger.do_match()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.trans.html#black.trans.StringMerger.do_transform"><code class="docutils literal notranslate"><span class="pre">StringMerger.do_transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="black.trans.html#black.trans.StringParenStripper"><code class="docutils literal notranslate"><span class="pre">StringParenStripper</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.trans.html#black.trans.StringParenStripper.do_match"><code class="docutils literal notranslate"><span class="pre">StringParenStripper.do_match()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.trans.html#black.trans.StringParenStripper.do_transform"><code class="docutils literal notranslate"><span class="pre">StringParenStripper.do_transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="black.trans.html#black.trans.BaseStringSplitter"><code class="docutils literal notranslate"><span class="pre">BaseStringSplitter</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.trans.html#black.trans.BaseStringSplitter.STRING_OPERATORS"><code class="docutils literal notranslate"><span class="pre">BaseStringSplitter.STRING_OPERATORS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.trans.html#black.trans.BaseStringSplitter.do_splitter_match"><code class="docutils literal notranslate"><span class="pre">BaseStringSplitter.do_splitter_match()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.trans.html#black.trans.BaseStringSplitter.do_match"><code class="docutils literal notranslate"><span class="pre">BaseStringSplitter.do_match()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="black.trans.html#black.trans.iter_fexpr_spans"><code class="docutils literal notranslate"><span class="pre">iter_fexpr_spans()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.trans.html#black.trans.fstring_contains_expr"><code class="docutils literal notranslate"><span class="pre">fstring_contains_expr()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.trans.html#black.trans.StringSplitter"><code class="docutils literal notranslate"><span class="pre">StringSplitter</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.trans.html#black.trans.StringSplitter.MIN_SUBSTR_SIZE"><code class="docutils literal notranslate"><span class="pre">StringSplitter.MIN_SUBSTR_SIZE</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.trans.html#black.trans.StringSplitter.do_splitter_match"><code class="docutils literal notranslate"><span class="pre">StringSplitter.do_splitter_match()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.trans.html#black.trans.StringSplitter.do_transform"><code class="docutils literal notranslate"><span class="pre">StringSplitter.do_transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="black.trans.html#black.trans.StringParenWrapper"><code class="docutils literal notranslate"><span class="pre">StringParenWrapper</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.trans.html#black.trans.StringParenWrapper.do_splitter_match"><code class="docutils literal notranslate"><span class="pre">StringParenWrapper.do_splitter_match()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.trans.html#black.trans.StringParenWrapper.do_transform"><code class="docutils literal notranslate"><span class="pre">StringParenWrapper.do_transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="black.trans.html#black.trans.StringParser"><code class="docutils literal notranslate"><span class="pre">StringParser</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.trans.html#black.trans.StringParser.DEFAULT_TOKEN"><code class="docutils literal notranslate"><span class="pre">StringParser.DEFAULT_TOKEN</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.trans.html#black.trans.StringParser.START"><code class="docutils literal notranslate"><span class="pre">StringParser.START</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.trans.html#black.trans.StringParser.DOT"><code class="docutils literal notranslate"><span class="pre">StringParser.DOT</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.trans.html#black.trans.StringParser.NAME"><code class="docutils literal notranslate"><span class="pre">StringParser.NAME</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.trans.html#black.trans.StringParser.PERCENT"><code class="docutils literal notranslate"><span class="pre">StringParser.PERCENT</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.trans.html#black.trans.StringParser.SINGLE_FMT_ARG"><code class="docutils literal notranslate"><span class="pre">StringParser.SINGLE_FMT_ARG</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.trans.html#black.trans.StringParser.LPAR"><code class="docutils literal notranslate"><span class="pre">StringParser.LPAR</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.trans.html#black.trans.StringParser.RPAR"><code class="docutils literal notranslate"><span class="pre">StringParser.RPAR</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.trans.html#black.trans.StringParser.DONE"><code class="docutils literal notranslate"><span class="pre">StringParser.DONE</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.trans.html#black.trans.StringParser.parse"><code class="docutils literal notranslate"><span class="pre">StringParser.parse()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="black.trans.html#black.trans.insert_str_child_factory"><code class="docutils literal notranslate"><span class="pre">insert_str_child_factory()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.trans.html#black.trans.is_valid_index_factory"><code class="docutils literal notranslate"><span class="pre">is_valid_index_factory()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="modules.html" class="btn btn-neutral float-left" title="black" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="black.resources.html" class="btn btn-neutral float-right" title="black.resources package" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2026, Laboratorio IE0417.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

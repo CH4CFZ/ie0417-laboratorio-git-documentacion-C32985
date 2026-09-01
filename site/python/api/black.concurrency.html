@@ -1,0 +1,162 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>black.concurrency module &mdash; documentación de Black - 0.1 (commit 8947c48)</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=0dabe907"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=f85f4cfb"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+    <link rel="next" title="black.const module" href="black.const.html" />
+    <link rel="prev" title="black.comments module" href="black.comments.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Black
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenidos:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../introduccion.html">Introducción a Black</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduccion.html#que-es-black">¿Qué es Black?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduccion.html#organizacion-del-codigo-fuente">Organización del código fuente</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../introduccion.html#alcance-de-esta-documentacion">Alcance de esta documentación</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="modules.html">black</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="black.html">black package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Black</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../introduccion.html">Introducción a Black</a></li>
+          <li class="breadcrumb-item"><a href="modules.html">black</a></li>
+          <li class="breadcrumb-item"><a href="black.html">black package</a></li>
+      <li class="breadcrumb-item active">black.concurrency module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/black.concurrency.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-black.concurrency">
+<span id="black-concurrency-module"></span><h1>black.concurrency module<a class="headerlink" href="#module-black.concurrency" title="Link to this heading"></a></h1>
+<p>Formatting many files at once via multiprocessing. Contains entrypoint and utilities.</p>
+<p>NOTE: this module is only imported if we need to format several files at once.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="black.concurrency.maybe_use_uvloop">
+<span class="sig-prename descclassname"><span class="pre">black.concurrency.</span></span><span class="sig-name descname"><span class="pre">maybe_use_uvloop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AbstractEventLoop</span></span></span><a class="reference internal" href="../_modules/black/concurrency.html#maybe_use_uvloop"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.concurrency.maybe_use_uvloop" title="Link to this definition"></a></dt>
+<dd><p>If our environment has uvloop or winloop installed we use it otherwise
+a normal asyncio eventloop is called as fallback.</p>
+<p>This is called only from command-line entry points to avoid
+interfering with the parent process if Black is used as a library.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.concurrency.cancel">
+<span class="sig-prename descclassname"><span class="pre">black.concurrency.</span></span><span class="sig-name descname"><span class="pre">cancel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tasks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Future</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/concurrency.html#cancel"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.concurrency.cancel" title="Link to this definition"></a></dt>
+<dd><p>asyncio signal handler that cancels all <cite>tasks</cite> and reports to stderr.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.concurrency.shutdown">
+<span class="sig-prename descclassname"><span class="pre">black.concurrency.</span></span><span class="sig-name descname"><span class="pre">shutdown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loop</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AbstractEventLoop</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/concurrency.html#shutdown"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.concurrency.shutdown" title="Link to this definition"></a></dt>
+<dd><p>Cancel all pending tasks on <cite>loop</cite>, wait for them, and close the loop.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.concurrency.reformat_many">
+<span class="sig-prename descclassname"><span class="pre">black.concurrency.</span></span><span class="sig-name descname"><span class="pre">reformat_many</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sources</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fast</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_back</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.html#black.WriteBack" title="black.WriteBack"><span class="pre">WriteBack</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">report</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.report.html#black.report.Report" title="black.report.Report"><span class="pre">Report</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">workers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_cache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/concurrency.html#reformat_many"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.concurrency.reformat_many" title="Link to this definition"></a></dt>
+<dd><p>Reformat multiple files using a ProcessPoolExecutor.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.concurrency.schedule_formatting">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">black.concurrency.</span></span><span class="sig-name descname"><span class="pre">schedule_formatting</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sources</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fast</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_back</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.html#black.WriteBack" title="black.WriteBack"><span class="pre">WriteBack</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">report</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.report.html#black.report.Report" title="black.report.Report"><span class="pre">Report</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">loop</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AbstractEventLoop</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">executor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Executor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_cache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/concurrency.html#schedule_formatting"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.concurrency.schedule_formatting" title="Link to this definition"></a></dt>
+<dd><p>Run formatting of <cite>sources</cite> in parallel using the provided <cite>executor</cite>.</p>
+<p>(Use ProcessPoolExecutors for actual parallelism.)</p>
+<p><cite>write_back</cite>, <cite>fast</cite>, and <cite>mode</cite> options are passed to
+<code class="xref py py-func docutils literal notranslate"><span class="pre">format_file_in_place()</span></code>.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="black.comments.html" class="btn btn-neutral float-left" title="black.comments module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="black.const.html" class="btn btn-neutral float-right" title="black.const module" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2026, Laboratorio IE0417.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

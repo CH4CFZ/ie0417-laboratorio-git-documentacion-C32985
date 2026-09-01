@@ -1,0 +1,438 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>black &mdash; documentación de Black - 0.1 (commit 8947c48)</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=0dabe907"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=f85f4cfb"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+    <link rel="next" title="black package" href="black.html" />
+    <link rel="prev" title="Introducción a Black" href="../introduccion.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Black
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenidos:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../introduccion.html">Introducción a Black</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduccion.html#que-es-black">¿Qué es Black?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduccion.html#organizacion-del-codigo-fuente">Organización del código fuente</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../introduccion.html#alcance-de-esta-documentacion">Alcance de esta documentación</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">black</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="black.html">black package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Black</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../introduccion.html">Introducción a Black</a></li>
+      <li class="breadcrumb-item active">black</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/modules.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="black">
+<h1>black<a class="headerlink" href="#black" title="Link to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="black.html">black package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="black.html#black.WriteBack"><code class="docutils literal notranslate"><span class="pre">WriteBack</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.html#black.WriteBack.NO"><code class="docutils literal notranslate"><span class="pre">WriteBack.NO</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.html#black.WriteBack.YES"><code class="docutils literal notranslate"><span class="pre">WriteBack.YES</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.html#black.WriteBack.DIFF"><code class="docutils literal notranslate"><span class="pre">WriteBack.DIFF</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.html#black.WriteBack.CHECK"><code class="docutils literal notranslate"><span class="pre">WriteBack.CHECK</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.html#black.WriteBack.COLOR_DIFF"><code class="docutils literal notranslate"><span class="pre">WriteBack.COLOR_DIFF</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.html#black.WriteBack.from_configuration"><code class="docutils literal notranslate"><span class="pre">WriteBack.from_configuration()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="black.html#black.read_pyproject_toml"><code class="docutils literal notranslate"><span class="pre">read_pyproject_toml()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.html#black.spellcheck_pyproject_toml_keys"><code class="docutils literal notranslate"><span class="pre">spellcheck_pyproject_toml_keys()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.html#black.target_version_option_callback"><code class="docutils literal notranslate"><span class="pre">target_version_option_callback()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.html#black.enable_unstable_feature_callback"><code class="docutils literal notranslate"><span class="pre">enable_unstable_feature_callback()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.html#black.re_compile_maybe_verbose"><code class="docutils literal notranslate"><span class="pre">re_compile_maybe_verbose()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.html#black.validate_regex"><code class="docutils literal notranslate"><span class="pre">validate_regex()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.html#black.get_sources"><code class="docutils literal notranslate"><span class="pre">get_sources()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.html#black.reformat_code"><code class="docutils literal notranslate"><span class="pre">reformat_code()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.html#black.reformat_one"><code class="docutils literal notranslate"><span class="pre">reformat_one()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.html#black.format_file_in_place"><code class="docutils literal notranslate"><span class="pre">format_file_in_place()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.html#black.format_stdin_to_stdout"><code class="docutils literal notranslate"><span class="pre">format_stdin_to_stdout()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.html#black.check_stability_and_equivalence"><code class="docutils literal notranslate"><span class="pre">check_stability_and_equivalence()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.html#black.format_file_contents"><code class="docutils literal notranslate"><span class="pre">format_file_contents()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.html#black.format_cell"><code class="docutils literal notranslate"><span class="pre">format_cell()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.html#black.validate_metadata"><code class="docutils literal notranslate"><span class="pre">validate_metadata()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.html#black.format_ipynb_string"><code class="docutils literal notranslate"><span class="pre">format_ipynb_string()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.html#black.format_str"><code class="docutils literal notranslate"><span class="pre">format_str()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.html#black.decode_bytes"><code class="docutils literal notranslate"><span class="pre">decode_bytes()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.html#black.get_features_used"><code class="docutils literal notranslate"><span class="pre">get_features_used()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.html#black.is_unpacking_comprehension"><code class="docutils literal notranslate"><span class="pre">is_unpacking_comprehension()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.html#black.detect_target_versions"><code class="docutils literal notranslate"><span class="pre">detect_target_versions()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.html#black.get_future_imports"><code class="docutils literal notranslate"><span class="pre">get_future_imports()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.html#black.assert_equivalent"><code class="docutils literal notranslate"><span class="pre">assert_equivalent()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.html#black.assert_stable"><code class="docutils literal notranslate"><span class="pre">assert_stable()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.html#black.patched_main"><code class="docutils literal notranslate"><span class="pre">patched_main()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="black.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.resources.html">black.resources package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="black.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="black.brackets.html">black.brackets module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="black.brackets.html#black.brackets.BracketMatchError"><code class="docutils literal notranslate"><span class="pre">BracketMatchError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.brackets.html#black.brackets.BracketTracker"><code class="docutils literal notranslate"><span class="pre">BracketTracker</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.brackets.html#black.brackets.is_split_after_delimiter"><code class="docutils literal notranslate"><span class="pre">is_split_after_delimiter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.brackets.html#black.brackets.is_split_before_delimiter"><code class="docutils literal notranslate"><span class="pre">is_split_before_delimiter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.brackets.html#black.brackets.max_delimiter_priority_in_atom"><code class="docutils literal notranslate"><span class="pre">max_delimiter_priority_in_atom()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.brackets.html#black.brackets.get_leaves_inside_matching_brackets"><code class="docutils literal notranslate"><span class="pre">get_leaves_inside_matching_brackets()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="black.cache.html">black.cache module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="black.cache.html#black.cache.FileData"><code class="docutils literal notranslate"><span class="pre">FileData</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.cache.html#black.cache.get_cache_dir"><code class="docutils literal notranslate"><span class="pre">get_cache_dir()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.cache.html#black.cache.get_cache_file"><code class="docutils literal notranslate"><span class="pre">get_cache_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.cache.html#black.cache.Cache"><code class="docutils literal notranslate"><span class="pre">Cache</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="black.comments.html">black.comments module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="black.comments.html#black.comments.ProtoComment"><code class="docutils literal notranslate"><span class="pre">ProtoComment</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.comments.html#black.comments.generate_comments"><code class="docutils literal notranslate"><span class="pre">generate_comments()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.comments.html#black.comments.list_comments"><code class="docutils literal notranslate"><span class="pre">list_comments()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.comments.html#black.comments.normalize_trailing_prefix"><code class="docutils literal notranslate"><span class="pre">normalize_trailing_prefix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.comments.html#black.comments.make_comment"><code class="docutils literal notranslate"><span class="pre">make_comment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.comments.html#black.comments.normalize_fmt_off"><code class="docutils literal notranslate"><span class="pre">normalize_fmt_off()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.comments.html#black.comments.convert_one_fmt_off_pair"><code class="docutils literal notranslate"><span class="pre">convert_one_fmt_off_pair()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.comments.html#black.comments.generate_ignored_nodes"><code class="docutils literal notranslate"><span class="pre">generate_ignored_nodes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.comments.html#black.comments.is_fmt_on"><code class="docutils literal notranslate"><span class="pre">is_fmt_on()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.comments.html#black.comments.children_contains_fmt_on"><code class="docutils literal notranslate"><span class="pre">children_contains_fmt_on()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.comments.html#black.comments.contains_pragma_comment"><code class="docutils literal notranslate"><span class="pre">contains_pragma_comment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.comments.html#black.comments.contains_fmt_directive"><code class="docutils literal notranslate"><span class="pre">contains_fmt_directive()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="black.concurrency.html">black.concurrency module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="black.concurrency.html#black.concurrency.maybe_use_uvloop"><code class="docutils literal notranslate"><span class="pre">maybe_use_uvloop()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.concurrency.html#black.concurrency.cancel"><code class="docutils literal notranslate"><span class="pre">cancel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.concurrency.html#black.concurrency.shutdown"><code class="docutils literal notranslate"><span class="pre">shutdown()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.concurrency.html#black.concurrency.reformat_many"><code class="docutils literal notranslate"><span class="pre">reformat_many()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.concurrency.html#black.concurrency.schedule_formatting"><code class="docutils literal notranslate"><span class="pre">schedule_formatting()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="black.const.html">black.const module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="black.debug.html">black.debug module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="black.debug.html#black.debug.DebugVisitor"><code class="docutils literal notranslate"><span class="pre">DebugVisitor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="black.files.html">black.files module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="black.files.html#black.files.find_project_root"><code class="docutils literal notranslate"><span class="pre">find_project_root()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.files.html#black.files.find_pyproject_toml"><code class="docutils literal notranslate"><span class="pre">find_pyproject_toml()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.files.html#black.files.parse_pyproject_toml"><code class="docutils literal notranslate"><span class="pre">parse_pyproject_toml()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.files.html#black.files.infer_target_version"><code class="docutils literal notranslate"><span class="pre">infer_target_version()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.files.html#black.files.parse_req_python_version"><code class="docutils literal notranslate"><span class="pre">parse_req_python_version()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.files.html#black.files.parse_req_python_specifier"><code class="docutils literal notranslate"><span class="pre">parse_req_python_specifier()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.files.html#black.files.strip_specifier_set"><code class="docutils literal notranslate"><span class="pre">strip_specifier_set()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.files.html#black.files.find_user_pyproject_toml"><code class="docutils literal notranslate"><span class="pre">find_user_pyproject_toml()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.files.html#black.files.get_gitignore"><code class="docutils literal notranslate"><span class="pre">get_gitignore()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.files.html#black.files.resolves_outside_root_or_cannot_stat"><code class="docutils literal notranslate"><span class="pre">resolves_outside_root_or_cannot_stat()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.files.html#black.files.best_effort_relative_path"><code class="docutils literal notranslate"><span class="pre">best_effort_relative_path()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.files.html#black.files.path_is_excluded"><code class="docutils literal notranslate"><span class="pre">path_is_excluded()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.files.html#black.files.gen_python_files"><code class="docutils literal notranslate"><span class="pre">gen_python_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.files.html#black.files.wrap_stream_for_windows"><code class="docutils literal notranslate"><span class="pre">wrap_stream_for_windows()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="black.handle_ipynb_magics.html">black.handle_ipynb_magics module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.Replacement"><code class="docutils literal notranslate"><span class="pre">Replacement</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.jupyter_dependencies_are_installed"><code class="docutils literal notranslate"><span class="pre">jupyter_dependencies_are_installed()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.validate_cell"><code class="docutils literal notranslate"><span class="pre">validate_cell()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.remove_trailing_semicolon"><code class="docutils literal notranslate"><span class="pre">remove_trailing_semicolon()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.put_trailing_semicolon_back"><code class="docutils literal notranslate"><span class="pre">put_trailing_semicolon_back()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.mask_cell"><code class="docutils literal notranslate"><span class="pre">mask_cell()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.create_token"><code class="docutils literal notranslate"><span class="pre">create_token()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.get_token"><code class="docutils literal notranslate"><span class="pre">get_token()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.replace_cell_magics"><code class="docutils literal notranslate"><span class="pre">replace_cell_magics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.replace_magics"><code class="docutils literal notranslate"><span class="pre">replace_magics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.unmask_cell"><code class="docutils literal notranslate"><span class="pre">unmask_cell()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.CellMagic"><code class="docutils literal notranslate"><span class="pre">CellMagic</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.CellMagicFinder"><code class="docutils literal notranslate"><span class="pre">CellMagicFinder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.OffsetAndMagic"><code class="docutils literal notranslate"><span class="pre">OffsetAndMagic</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.handle_ipynb_magics.html#black.handle_ipynb_magics.MagicFinder"><code class="docutils literal notranslate"><span class="pre">MagicFinder</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="black.linegen.html">black.linegen module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="black.linegen.html#black.linegen.CannotSplit"><code class="docutils literal notranslate"><span class="pre">CannotSplit</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.linegen.html#black.linegen.LineGenerator"><code class="docutils literal notranslate"><span class="pre">LineGenerator</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.linegen.html#black.linegen.transform_line"><code class="docutils literal notranslate"><span class="pre">transform_line()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.linegen.html#black.linegen.should_split_funcdef_with_rhs"><code class="docutils literal notranslate"><span class="pre">should_split_funcdef_with_rhs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.linegen.html#black.linegen.left_hand_split"><code class="docutils literal notranslate"><span class="pre">left_hand_split()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.linegen.html#black.linegen.right_hand_split"><code class="docutils literal notranslate"><span class="pre">right_hand_split()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.linegen.html#black.linegen.bracket_split_succeeded_or_raise"><code class="docutils literal notranslate"><span class="pre">bracket_split_succeeded_or_raise()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.linegen.html#black.linegen.bracket_split_build_line"><code class="docutils literal notranslate"><span class="pre">bracket_split_build_line()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.linegen.html#black.linegen.dont_increase_indentation"><code class="docutils literal notranslate"><span class="pre">dont_increase_indentation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.linegen.html#black.linegen.delimiter_split"><code class="docutils literal notranslate"><span class="pre">delimiter_split()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.linegen.html#black.linegen.standalone_comment_split"><code class="docutils literal notranslate"><span class="pre">standalone_comment_split()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.linegen.html#black.linegen.normalize_invisible_parens"><code class="docutils literal notranslate"><span class="pre">normalize_invisible_parens()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.linegen.html#black.linegen.remove_await_parens"><code class="docutils literal notranslate"><span class="pre">remove_await_parens()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.linegen.html#black.linegen.remove_with_parens"><code class="docutils literal notranslate"><span class="pre">remove_with_parens()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.linegen.html#black.linegen.maybe_make_parens_invisible_in_atom"><code class="docutils literal notranslate"><span class="pre">maybe_make_parens_invisible_in_atom()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.linegen.html#black.linegen.should_split_line"><code class="docutils literal notranslate"><span class="pre">should_split_line()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.linegen.html#black.linegen.generate_trailers_to_omit"><code class="docutils literal notranslate"><span class="pre">generate_trailers_to_omit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.linegen.html#black.linegen.run_transformer"><code class="docutils literal notranslate"><span class="pre">run_transformer()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="black.lines.html">black.lines module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="black.lines.html#black.lines.Line"><code class="docutils literal notranslate"><span class="pre">Line</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.lines.html#black.lines.RHSResult"><code class="docutils literal notranslate"><span class="pre">RHSResult</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.lines.html#black.lines.LinesBlock"><code class="docutils literal notranslate"><span class="pre">LinesBlock</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.lines.html#black.lines.EmptyLineTracker"><code class="docutils literal notranslate"><span class="pre">EmptyLineTracker</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.lines.html#black.lines.enumerate_reversed"><code class="docutils literal notranslate"><span class="pre">enumerate_reversed()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.lines.html#black.lines.append_leaves"><code class="docutils literal notranslate"><span class="pre">append_leaves()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.lines.html#black.lines.is_line_short_enough"><code class="docutils literal notranslate"><span class="pre">is_line_short_enough()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.lines.html#black.lines.can_be_split"><code class="docutils literal notranslate"><span class="pre">can_be_split()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.lines.html#black.lines.can_omit_invisible_parens"><code class="docutils literal notranslate"><span class="pre">can_omit_invisible_parens()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.lines.html#black.lines.line_to_string"><code class="docutils literal notranslate"><span class="pre">line_to_string()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="black.mode.html">black.mode module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="black.mode.html#black.mode.TargetVersion"><code class="docutils literal notranslate"><span class="pre">TargetVersion</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.mode.html#black.mode.Feature"><code class="docutils literal notranslate"><span class="pre">Feature</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.mode.html#black.mode.supports_feature"><code class="docutils literal notranslate"><span class="pre">supports_feature()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.mode.html#black.mode.Preview"><code class="docutils literal notranslate"><span class="pre">Preview</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.mode.html#black.mode.Mode"><code class="docutils literal notranslate"><span class="pre">Mode</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="black.nodes.html">black.nodes module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.Visitor"><code class="docutils literal notranslate"><span class="pre">Visitor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.whitespace"><code class="docutils literal notranslate"><span class="pre">whitespace()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.make_simple_prefix"><code class="docutils literal notranslate"><span class="pre">make_simple_prefix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.preceding_leaf"><code class="docutils literal notranslate"><span class="pre">preceding_leaf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.prev_siblings_are"><code class="docutils literal notranslate"><span class="pre">prev_siblings_are()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.parent_type"><code class="docutils literal notranslate"><span class="pre">parent_type()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.child_towards"><code class="docutils literal notranslate"><span class="pre">child_towards()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.replace_child"><code class="docutils literal notranslate"><span class="pre">replace_child()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.container_of"><code class="docutils literal notranslate"><span class="pre">container_of()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.first_leaf_of"><code class="docutils literal notranslate"><span class="pre">first_leaf_of()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_arith_like"><code class="docutils literal notranslate"><span class="pre">is_arith_like()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_simple_exponentiation"><code class="docutils literal notranslate"><span class="pre">is_simple_exponentiation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_docstring"><code class="docutils literal notranslate"><span class="pre">is_docstring()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_empty_tuple"><code class="docutils literal notranslate"><span class="pre">is_empty_tuple()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_one_tuple"><code class="docutils literal notranslate"><span class="pre">is_one_tuple()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_tuple"><code class="docutils literal notranslate"><span class="pre">is_tuple()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_tuple_containing_walrus"><code class="docutils literal notranslate"><span class="pre">is_tuple_containing_walrus()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_tuple_containing_star"><code class="docutils literal notranslate"><span class="pre">is_tuple_containing_star()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_generator"><code class="docutils literal notranslate"><span class="pre">is_generator()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_one_sequence_between"><code class="docutils literal notranslate"><span class="pre">is_one_sequence_between()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_walrus_assignment"><code class="docutils literal notranslate"><span class="pre">is_walrus_assignment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_simple_decorator_trailer"><code class="docutils literal notranslate"><span class="pre">is_simple_decorator_trailer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_simple_decorator_expression"><code class="docutils literal notranslate"><span class="pre">is_simple_decorator_expression()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_yield"><code class="docutils literal notranslate"><span class="pre">is_yield()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_vararg"><code class="docutils literal notranslate"><span class="pre">is_vararg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_fstring"><code class="docutils literal notranslate"><span class="pre">is_fstring()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.fstring_tstring_to_string"><code class="docutils literal notranslate"><span class="pre">fstring_tstring_to_string()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_multiline_string"><code class="docutils literal notranslate"><span class="pre">is_multiline_string()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_parent_function_or_class"><code class="docutils literal notranslate"><span class="pre">is_parent_function_or_class()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_stub_suite"><code class="docutils literal notranslate"><span class="pre">is_stub_suite()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_stub_body"><code class="docutils literal notranslate"><span class="pre">is_stub_body()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_atom_with_invisible_parens"><code class="docutils literal notranslate"><span class="pre">is_atom_with_invisible_parens()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_empty_par"><code class="docutils literal notranslate"><span class="pre">is_empty_par()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_empty_lpar"><code class="docutils literal notranslate"><span class="pre">is_empty_lpar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_empty_rpar"><code class="docutils literal notranslate"><span class="pre">is_empty_rpar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_import"><code class="docutils literal notranslate"><span class="pre">is_import()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_with_or_async_with_stmt"><code class="docutils literal notranslate"><span class="pre">is_with_or_async_with_stmt()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_async_stmt_or_funcdef"><code class="docutils literal notranslate"><span class="pre">is_async_stmt_or_funcdef()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_type_comment"><code class="docutils literal notranslate"><span class="pre">is_type_comment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_type_comment_string"><code class="docutils literal notranslate"><span class="pre">is_type_comment_string()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_type_ignore_comment"><code class="docutils literal notranslate"><span class="pre">is_type_ignore_comment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_type_ignore_comment_string"><code class="docutils literal notranslate"><span class="pre">is_type_ignore_comment_string()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.wrap_in_parentheses"><code class="docutils literal notranslate"><span class="pre">wrap_in_parentheses()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.unwrap_singleton_parenthesis"><code class="docutils literal notranslate"><span class="pre">unwrap_singleton_parenthesis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.ensure_visible"><code class="docutils literal notranslate"><span class="pre">ensure_visible()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_name_token"><code class="docutils literal notranslate"><span class="pre">is_name_token()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_lpar_token"><code class="docutils literal notranslate"><span class="pre">is_lpar_token()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_rpar_token"><code class="docutils literal notranslate"><span class="pre">is_rpar_token()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_number_token"><code class="docutils literal notranslate"><span class="pre">is_number_token()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.get_annotation_type"><code class="docutils literal notranslate"><span class="pre">get_annotation_type()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.is_part_of_annotation"><code class="docutils literal notranslate"><span class="pre">is_part_of_annotation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.first_leaf"><code class="docutils literal notranslate"><span class="pre">first_leaf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.last_leaf"><code class="docutils literal notranslate"><span class="pre">last_leaf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.furthest_ancestor_with_last_leaf"><code class="docutils literal notranslate"><span class="pre">furthest_ancestor_with_last_leaf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.nodes.html#black.nodes.has_sibling_with_type"><code class="docutils literal notranslate"><span class="pre">has_sibling_with_type()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="black.numerics.html">black.numerics module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="black.numerics.html#black.numerics.format_hex"><code class="docutils literal notranslate"><span class="pre">format_hex()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.numerics.html#black.numerics.format_scientific_notation"><code class="docutils literal notranslate"><span class="pre">format_scientific_notation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.numerics.html#black.numerics.format_complex_number"><code class="docutils literal notranslate"><span class="pre">format_complex_number()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.numerics.html#black.numerics.format_float_or_int_string"><code class="docutils literal notranslate"><span class="pre">format_float_or_int_string()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.numerics.html#black.numerics.normalize_numeric_literal"><code class="docutils literal notranslate"><span class="pre">normalize_numeric_literal()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="black.output.html">black.output module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="black.output.html#black.output.out"><code class="docutils literal notranslate"><span class="pre">out()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.output.html#black.output.err"><code class="docutils literal notranslate"><span class="pre">err()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.output.html#black.output.ipynb_diff"><code class="docutils literal notranslate"><span class="pre">ipynb_diff()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.output.html#black.output.diff"><code class="docutils literal notranslate"><span class="pre">diff()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.output.html#black.output.color_diff"><code class="docutils literal notranslate"><span class="pre">color_diff()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.output.html#black.output.style_output"><code class="docutils literal notranslate"><span class="pre">style_output()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.output.html#black.output.dump_to_file"><code class="docutils literal notranslate"><span class="pre">dump_to_file()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="black.parsing.html">black.parsing module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="black.parsing.html#black.parsing.InvalidInput"><code class="docutils literal notranslate"><span class="pre">InvalidInput</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.parsing.html#black.parsing.get_grammars"><code class="docutils literal notranslate"><span class="pre">get_grammars()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.parsing.html#black.parsing.lib2to3_parse"><code class="docutils literal notranslate"><span class="pre">lib2to3_parse()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.parsing.html#black.parsing.ASTSafetyError"><code class="docutils literal notranslate"><span class="pre">ASTSafetyError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.parsing.html#black.parsing.SourceASTParseError"><code class="docutils literal notranslate"><span class="pre">SourceASTParseError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.parsing.html#black.parsing.parse_ast"><code class="docutils literal notranslate"><span class="pre">parse_ast()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.parsing.html#black.parsing.stringify_ast"><code class="docutils literal notranslate"><span class="pre">stringify_ast()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="black.ranges.html">black.ranges module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="black.ranges.html#black.ranges.parse_line_ranges"><code class="docutils literal notranslate"><span class="pre">parse_line_ranges()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.ranges.html#black.ranges.is_valid_line_range"><code class="docutils literal notranslate"><span class="pre">is_valid_line_range()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.ranges.html#black.ranges.sanitized_lines"><code class="docutils literal notranslate"><span class="pre">sanitized_lines()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.ranges.html#black.ranges.adjusted_lines"><code class="docutils literal notranslate"><span class="pre">adjusted_lines()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.ranges.html#black.ranges.convert_unchanged_lines"><code class="docutils literal notranslate"><span class="pre">convert_unchanged_lines()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="black.report.html">black.report module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="black.report.html#black.report.Changed"><code class="docutils literal notranslate"><span class="pre">Changed</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.report.html#black.report.NothingChanged"><code class="docutils literal notranslate"><span class="pre">NothingChanged</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.report.html#black.report.Report"><code class="docutils literal notranslate"><span class="pre">Report</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="black.rusty.html">black.rusty module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="black.rusty.html#black.rusty.Ok"><code class="docutils literal notranslate"><span class="pre">Ok</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.rusty.html#black.rusty.Err"><code class="docutils literal notranslate"><span class="pre">Err</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="black.schema.html">black.schema module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="black.schema.html#black.schema.get_schema"><code class="docutils literal notranslate"><span class="pre">get_schema()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="black.strings.html">black.strings module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="black.strings.html#black.strings.sub_twice"><code class="docutils literal notranslate"><span class="pre">sub_twice()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.strings.html#black.strings.has_triple_quotes"><code class="docutils literal notranslate"><span class="pre">has_triple_quotes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.strings.html#black.strings.lines_with_leading_tabs_expanded"><code class="docutils literal notranslate"><span class="pre">lines_with_leading_tabs_expanded()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.strings.html#black.strings.fix_multiline_docstring"><code class="docutils literal notranslate"><span class="pre">fix_multiline_docstring()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.strings.html#black.strings.get_string_prefix"><code class="docutils literal notranslate"><span class="pre">get_string_prefix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.strings.html#black.strings.assert_is_leaf_string"><code class="docutils literal notranslate"><span class="pre">assert_is_leaf_string()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.strings.html#black.strings.normalize_string_prefix"><code class="docutils literal notranslate"><span class="pre">normalize_string_prefix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.strings.html#black.strings.normalize_string_quotes"><code class="docutils literal notranslate"><span class="pre">normalize_string_quotes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.strings.html#black.strings.normalize_fstring_quotes"><code class="docutils literal notranslate"><span class="pre">normalize_fstring_quotes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.strings.html#black.strings.normalize_unicode_escape_sequences"><code class="docutils literal notranslate"><span class="pre">normalize_unicode_escape_sequences()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.strings.html#black.strings.char_width"><code class="docutils literal notranslate"><span class="pre">char_width()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.strings.html#black.strings.str_width"><code class="docutils literal notranslate"><span class="pre">str_width()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.strings.html#black.strings.count_chars_in_width"><code class="docutils literal notranslate"><span class="pre">count_chars_in_width()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="black.trans.html">black.trans module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="black.trans.html#black.trans.CannotTransform"><code class="docutils literal notranslate"><span class="pre">CannotTransform</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.trans.html#black.trans.TErr"><code class="docutils literal notranslate"><span class="pre">TErr()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.trans.html#black.trans.hug_power_op"><code class="docutils literal notranslate"><span class="pre">hug_power_op()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.trans.html#black.trans.handle_is_simple_look_up_prev"><code class="docutils literal notranslate"><span class="pre">handle_is_simple_look_up_prev()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.trans.html#black.trans.handle_is_simple_lookup_forward"><code class="docutils literal notranslate"><span class="pre">handle_is_simple_lookup_forward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.trans.html#black.trans.is_expression_chained"><code class="docutils literal notranslate"><span class="pre">is_expression_chained()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.trans.html#black.trans.StringTransformer"><code class="docutils literal notranslate"><span class="pre">StringTransformer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.trans.html#black.trans.CustomSplit"><code class="docutils literal notranslate"><span class="pre">CustomSplit</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.trans.html#black.trans.CustomSplitMapMixin"><code class="docutils literal notranslate"><span class="pre">CustomSplitMapMixin</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.trans.html#black.trans.StringMerger"><code class="docutils literal notranslate"><span class="pre">StringMerger</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.trans.html#black.trans.StringParenStripper"><code class="docutils literal notranslate"><span class="pre">StringParenStripper</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.trans.html#black.trans.BaseStringSplitter"><code class="docutils literal notranslate"><span class="pre">BaseStringSplitter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.trans.html#black.trans.iter_fexpr_spans"><code class="docutils literal notranslate"><span class="pre">iter_fexpr_spans()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.trans.html#black.trans.fstring_contains_expr"><code class="docutils literal notranslate"><span class="pre">fstring_contains_expr()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.trans.html#black.trans.StringSplitter"><code class="docutils literal notranslate"><span class="pre">StringSplitter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.trans.html#black.trans.StringParenWrapper"><code class="docutils literal notranslate"><span class="pre">StringParenWrapper</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.trans.html#black.trans.StringParser"><code class="docutils literal notranslate"><span class="pre">StringParser</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.trans.html#black.trans.insert_str_child_factory"><code class="docutils literal notranslate"><span class="pre">insert_str_child_factory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="black.trans.html#black.trans.is_valid_index_factory"><code class="docutils literal notranslate"><span class="pre">is_valid_index_factory()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="../introduccion.html" class="btn btn-neutral float-left" title="Introducción a Black" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="black.html" class="btn btn-neutral float-right" title="black package" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2026, Laboratorio IE0417.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
