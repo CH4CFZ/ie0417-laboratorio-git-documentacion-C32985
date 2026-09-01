@@ -8,11 +8,17 @@ import os
 import sys
 
 # -- Resolución del paquete ---------------------------------------------------
-# Black vive en <repo>/src/black. Agregamos esa ruta al sys.path para que
-# autodoc pueda importar el paquete sin necesidad de instalarlo aparte
-# (aunque en esta entrega también se instaló en el entorno virtual con
-# `pip install .` para que sus dependencias declaradas queden resueltas).
-BLACK_SRC = os.path.abspath(
+# Black vive en <ruta-clonada>/src/black. Agregamos esa ruta al sys.path para
+# que autodoc pueda importar el paquete (aunque en esta entrega también se
+# instaló en el entorno virtual con `pip install <ruta>` para que sus
+# dependencias declaradas queden resueltas).
+#
+# La ruta se puede fijar con la variable de entorno SPHINX_BLACK_SRC
+# (la usa scripts/build-docs.sh); si no está definida, se usa como respaldo
+# una ruta relativa por defecto, asumiendo que el código fuente de Black se
+# clonó como carpeta hermana de este repositorio, con el nombre
+# "black-fuente".
+BLACK_SRC = os.environ.get("SPHINX_BLACK_SRC") or os.path.abspath(
     os.path.join(os.path.dirname(__file__), "..", "..", "..", "black-fuente", "src")
 )
 sys.path.insert(0, BLACK_SRC)
