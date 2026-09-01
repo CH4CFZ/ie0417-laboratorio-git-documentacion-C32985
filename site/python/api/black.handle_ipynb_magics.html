@@ -1,0 +1,408 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>black.handle_ipynb_magics module &mdash; documentación de Black - 0.1 (commit 8947c48)</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=0dabe907"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=f85f4cfb"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+    <link rel="next" title="black.linegen module" href="black.linegen.html" />
+    <link rel="prev" title="black.files module" href="black.files.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Black
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenidos:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../introduccion.html">Introducción a Black</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduccion.html#que-es-black">¿Qué es Black?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduccion.html#organizacion-del-codigo-fuente">Organización del código fuente</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../introduccion.html#alcance-de-esta-documentacion">Alcance de esta documentación</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="modules.html">black</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="black.html">black package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Black</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../introduccion.html">Introducción a Black</a></li>
+          <li class="breadcrumb-item"><a href="modules.html">black</a></li>
+          <li class="breadcrumb-item"><a href="black.html">black package</a></li>
+      <li class="breadcrumb-item active">black.handle_ipynb_magics module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/black.handle_ipynb_magics.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-black.handle_ipynb_magics">
+<span id="black-handle-ipynb-magics-module"></span><h1>black.handle_ipynb_magics module<a class="headerlink" href="#module-black.handle_ipynb_magics" title="Link to this heading"></a></h1>
+<p>Functions to process IPython magics with.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="black.handle_ipynb_magics.Replacement">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">black.handle_ipynb_magics.</span></span><span class="sig-name descname"><span class="pre">Replacement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/black/handle_ipynb_magics.html#Replacement"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.handle_ipynb_magics.Replacement" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.handle_ipynb_magics.Replacement.mask">
+<span class="sig-name descname"><span class="pre">mask</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#black.handle_ipynb_magics.Replacement.mask" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.handle_ipynb_magics.Replacement.src">
+<span class="sig-name descname"><span class="pre">src</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#black.handle_ipynb_magics.Replacement.src" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.handle_ipynb_magics.jupyter_dependencies_are_installed">
+<span class="sig-prename descclassname"><span class="pre">black.handle_ipynb_magics.</span></span><span class="sig-name descname"><span class="pre">jupyter_dependencies_are_installed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">warn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/handle_ipynb_magics.html#jupyter_dependencies_are_installed"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.handle_ipynb_magics.jupyter_dependencies_are_installed" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.handle_ipynb_magics.validate_cell">
+<span class="sig-prename descclassname"><span class="pre">black.handle_ipynb_magics.</span></span><span class="sig-name descname"><span class="pre">validate_cell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/handle_ipynb_magics.html#validate_cell"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.handle_ipynb_magics.validate_cell" title="Link to this definition"></a></dt>
+<dd><p>Check that cell does not already contain TransformerManager transformations,
+or non-Python cell magics, which might cause tokenizer_rt to break because of
+indentations.</p>
+<p>If a cell contains <code class="docutils literal notranslate"><span class="pre">!ls</span></code>, then it’ll be transformed to
+<code class="docutils literal notranslate"><span class="pre">get_ipython().system('ls')</span></code>. However, if the cell originally contained
+<code class="docutils literal notranslate"><span class="pre">get_ipython().system('ls')</span></code>, then it would get transformed in the same way:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TransformerManager</span><span class="p">()</span><span class="o">.</span><span class="n">transform_cell</span><span class="p">(</span><span class="s2">"get_ipython().system('ls')"</span><span class="p">)</span>
+<span class="go">"get_ipython().system('ls')\n"</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">TransformerManager</span><span class="p">()</span><span class="o">.</span><span class="n">transform_cell</span><span class="p">(</span><span class="s2">"!ls"</span><span class="p">)</span>
+<span class="go">"get_ipython().system('ls')\n"</span>
+</pre></div>
+</div>
+<p>Due to the impossibility of safely roundtripping in such situations, cells
+containing transformed magics will be ignored.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.handle_ipynb_magics.remove_trailing_semicolon">
+<span class="sig-prename descclassname"><span class="pre">black.handle_ipynb_magics.</span></span><span class="sig-name descname"><span class="pre">remove_trailing_semicolon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/handle_ipynb_magics.html#remove_trailing_semicolon"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.handle_ipynb_magics.remove_trailing_semicolon" title="Link to this definition"></a></dt>
+<dd><p>Remove trailing semicolon from Jupyter notebook cell.</p>
+<p>For example,</p>
+<blockquote>
+<div><p>fig, ax = plt.subplots()
+ax.plot(x_data, y_data);  # plot data</p>
+</div></blockquote>
+<p>would become</p>
+<blockquote>
+<div><p>fig, ax = plt.subplots()
+ax.plot(x_data, y_data)  # plot data</p>
+</div></blockquote>
+<p>Mirrors the logic in <cite>quiet</cite> from <cite>IPython.core.displayhook</cite>, but uses
+<code class="docutils literal notranslate"><span class="pre">tokenize_rt</span></code> so that round-tripping works fine.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.handle_ipynb_magics.put_trailing_semicolon_back">
+<span class="sig-prename descclassname"><span class="pre">black.handle_ipynb_magics.</span></span><span class="sig-name descname"><span class="pre">put_trailing_semicolon_back</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_trailing_semicolon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/black/handle_ipynb_magics.html#put_trailing_semicolon_back"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.handle_ipynb_magics.put_trailing_semicolon_back" title="Link to this definition"></a></dt>
+<dd><p>Put trailing semicolon back if cell originally had it.</p>
+<p>Mirrors the logic in <cite>quiet</cite> from <cite>IPython.core.displayhook</cite>, but uses
+<code class="docutils literal notranslate"><span class="pre">tokenize_rt</span></code> so that round-tripping works fine.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.handle_ipynb_magics.mask_cell">
+<span class="sig-prename descclassname"><span class="pre">black.handle_ipynb_magics.</span></span><span class="sig-name descname"><span class="pre">mask_cell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#black.handle_ipynb_magics.Replacement" title="black.handle_ipynb_magics.Replacement"><span class="pre">Replacement</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/handle_ipynb_magics.html#mask_cell"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.handle_ipynb_magics.mask_cell" title="Link to this definition"></a></dt>
+<dd><p>Mask IPython magics so content becomes parseable Python code.</p>
+<p>For example,</p>
+<blockquote>
+<div><p>%matplotlib inline
+“foo”</p>
+</div></blockquote>
+<p>becomes</p>
+<blockquote>
+<div><p>b»25716f358c32750»
+“foo”</p>
+</div></blockquote>
+<p>The replacements are returned, along with the transformed code.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.handle_ipynb_magics.create_token">
+<span class="sig-prename descclassname"><span class="pre">black.handle_ipynb_magics.</span></span><span class="sig-name descname"><span class="pre">create_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_chars</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/black/handle_ipynb_magics.html#create_token"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.handle_ipynb_magics.create_token" title="Link to this definition"></a></dt>
+<dd><p>Create a randomly generated token that is n_chars characters long.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.handle_ipynb_magics.get_token">
+<span class="sig-prename descclassname"><span class="pre">black.handle_ipynb_magics.</span></span><span class="sig-name descname"><span class="pre">get_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">magic</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">existing_tokens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/black/handle_ipynb_magics.html#get_token"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.handle_ipynb_magics.get_token" title="Link to this definition"></a></dt>
+<dd><p>Return randomly generated token to mask IPython magic with.</p>
+<p>For example, if “magic” was <cite>%matplotlib inline</cite>, then a possible
+token to mask it with would be <cite>«43fdd17f7e5ddc83»</cite>. The token
+will be the same length as the magic, and we make sure that it was
+not already present anywhere else in the cell.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.handle_ipynb_magics.replace_cell_magics">
+<span class="sig-prename descclassname"><span class="pre">black.handle_ipynb_magics.</span></span><span class="sig-name descname"><span class="pre">replace_cell_magics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#black.handle_ipynb_magics.Replacement" title="black.handle_ipynb_magics.Replacement"><span class="pre">Replacement</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/handle_ipynb_magics.html#replace_cell_magics"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.handle_ipynb_magics.replace_cell_magics" title="Link to this definition"></a></dt>
+<dd><p>Replace cell magic with token.</p>
+<p>Note that “src” will already have been processed by IPython’s
+TransformerManager().transform_cell.</p>
+<p>Example,</p>
+<blockquote>
+<div><p>get_ipython().run_cell_magic(“t”, “-n1”, “ls =!lsn”)</p>
+</div></blockquote>
+<p>becomes</p>
+<blockquote>
+<div><p>«a794.»
+ls =!ls</p>
+</div></blockquote>
+<p>The replacement, along with the transformed code, is returned.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.handle_ipynb_magics.replace_magics">
+<span class="sig-prename descclassname"><span class="pre">black.handle_ipynb_magics.</span></span><span class="sig-name descname"><span class="pre">replace_magics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#black.handle_ipynb_magics.Replacement" title="black.handle_ipynb_magics.Replacement"><span class="pre">Replacement</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/handle_ipynb_magics.html#replace_magics"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.handle_ipynb_magics.replace_magics" title="Link to this definition"></a></dt>
+<dd><p>Replace magics within body of cell.</p>
+<p>Note that “src” will already have been processed by IPython’s
+TransformerManager().transform_cell.</p>
+<p>Example, this</p>
+<blockquote>
+<div><p>get_ipython().run_line_magic(“matplotlib”, “inline”)
+“foo”</p>
+</div></blockquote>
+<p>becomes</p>
+<blockquote>
+<div><p>«5e67db56d490fd39»
+“foo”</p>
+</div></blockquote>
+<p>The replacement, along with the transformed code, are returned.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.handle_ipynb_magics.unmask_cell">
+<span class="sig-prename descclassname"><span class="pre">black.handle_ipynb_magics.</span></span><span class="sig-name descname"><span class="pre">unmask_cell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">replacements</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#black.handle_ipynb_magics.Replacement" title="black.handle_ipynb_magics.Replacement"><span class="pre">Replacement</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/black/handle_ipynb_magics.html#unmask_cell"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.handle_ipynb_magics.unmask_cell" title="Link to this definition"></a></dt>
+<dd><p>Remove replacements from cell.</p>
+<p>For example</p>
+<blockquote>
+<div><p>«9b20»
+foo = bar</p>
+</div></blockquote>
+<p>becomes</p>
+<blockquote>
+<div><p>%%time
+foo = bar</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="black.handle_ipynb_magics.CellMagic">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">black.handle_ipynb_magics.</span></span><span class="sig-name descname"><span class="pre">CellMagic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/black/handle_ipynb_magics.html#CellMagic"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.handle_ipynb_magics.CellMagic" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.handle_ipynb_magics.CellMagic.name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#black.handle_ipynb_magics.CellMagic.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.handle_ipynb_magics.CellMagic.params">
+<span class="sig-name descname"><span class="pre">params</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#black.handle_ipynb_magics.CellMagic.params" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.handle_ipynb_magics.CellMagic.body">
+<span class="sig-name descname"><span class="pre">body</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#black.handle_ipynb_magics.CellMagic.body" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="black.handle_ipynb_magics.CellMagic.header">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">header</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#black.handle_ipynb_magics.CellMagic.header" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="black.handle_ipynb_magics.CellMagicFinder">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">black.handle_ipynb_magics.</span></span><span class="sig-name descname"><span class="pre">CellMagicFinder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_magic</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#black.handle_ipynb_magics.CellMagic" title="black.handle_ipynb_magics.CellMagic"><span class="pre">CellMagic</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/black/handle_ipynb_magics.html#CellMagicFinder"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.handle_ipynb_magics.CellMagicFinder" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">NodeVisitor</span></code></p>
+<p>Find cell magics.</p>
+<p>Note that the source of the abstract syntax tree
+will already have been processed by IPython’s
+TransformerManager().transform_cell.</p>
+<p>For example,</p>
+<blockquote>
+<div><p>%%timen
+foo()</p>
+</div></blockquote>
+<p>would have been transformed to</p>
+<blockquote>
+<div><p>get_ipython().run_cell_magic(“time”, “”, “foo()n”)</p>
+</div></blockquote>
+<p>and we look for instances of the latter.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="black.handle_ipynb_magics.CellMagicFinder.visit_Expr">
+<span class="sig-name descname"><span class="pre">visit_Expr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Expr</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/handle_ipynb_magics.html#CellMagicFinder.visit_Expr"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.handle_ipynb_magics.CellMagicFinder.visit_Expr" title="Link to this definition"></a></dt>
+<dd><p>Find cell magic, extract header and body.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="black.handle_ipynb_magics.OffsetAndMagic">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">black.handle_ipynb_magics.</span></span><span class="sig-name descname"><span class="pre">OffsetAndMagic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">col_offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">magic</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/black/handle_ipynb_magics.html#OffsetAndMagic"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.handle_ipynb_magics.OffsetAndMagic" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.handle_ipynb_magics.OffsetAndMagic.col_offset">
+<span class="sig-name descname"><span class="pre">col_offset</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#black.handle_ipynb_magics.OffsetAndMagic.col_offset" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.handle_ipynb_magics.OffsetAndMagic.magic">
+<span class="sig-name descname"><span class="pre">magic</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#black.handle_ipynb_magics.OffsetAndMagic.magic" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="black.handle_ipynb_magics.MagicFinder">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">black.handle_ipynb_magics.</span></span><span class="sig-name descname"><span class="pre">MagicFinder</span></span><a class="reference internal" href="../_modules/black/handle_ipynb_magics.html#MagicFinder"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.handle_ipynb_magics.MagicFinder" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">NodeVisitor</span></code></p>
+<p>Visit cell to look for get_ipython calls.</p>
+<p>Note that the source of the abstract syntax tree
+will already have been processed by IPython’s
+TransformerManager().transform_cell.</p>
+<p>For example,</p>
+<blockquote>
+<div><p>%matplotlib inline</p>
+</div></blockquote>
+<p>would have been transformed to</p>
+<blockquote>
+<div><p>get_ipython().run_line_magic(“matplotlib”, “inline”)</p>
+</div></blockquote>
+<p>and we look for instances of the latter (and likewise for other
+types of magics).</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.handle_ipynb_magics.MagicFinder.magics">
+<span class="sig-name descname"><span class="pre">magics</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#black.handle_ipynb_magics.OffsetAndMagic" title="black.handle_ipynb_magics.OffsetAndMagic"><span class="pre">OffsetAndMagic</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#black.handle_ipynb_magics.MagicFinder.magics" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.handle_ipynb_magics.MagicFinder.visit_Assign">
+<span class="sig-name descname"><span class="pre">visit_Assign</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Assign</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/handle_ipynb_magics.html#MagicFinder.visit_Assign"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.handle_ipynb_magics.MagicFinder.visit_Assign" title="Link to this definition"></a></dt>
+<dd><p>Look for system assign magics.</p>
+<p>For example,</p>
+<blockquote>
+<div><p>black_version = !black –version
+env = %env var</p>
+</div></blockquote>
+<p>would have been (respectively) transformed to</p>
+<blockquote>
+<div><p>black_version = get_ipython().getoutput(“black –version”)
+env = get_ipython().run_line_magic(“env”, “var”)</p>
+</div></blockquote>
+<p>and we look for instances of any of the latter.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.handle_ipynb_magics.MagicFinder.visit_Expr">
+<span class="sig-name descname"><span class="pre">visit_Expr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Expr</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/handle_ipynb_magics.html#MagicFinder.visit_Expr"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.handle_ipynb_magics.MagicFinder.visit_Expr" title="Link to this definition"></a></dt>
+<dd><p>Look for magics in body of cell.</p>
+<p>For examples,</p>
+<blockquote>
+<div><p>!ls
+!!ls
+?ls
+??ls</p>
+</div></blockquote>
+<p>would (respectively) get transformed to</p>
+<blockquote>
+<div><p>get_ipython().system(“ls”)
+get_ipython().getoutput(“ls”)
+get_ipython().run_line_magic(“pinfo”, “ls”)
+get_ipython().run_line_magic(“pinfo2”, “ls”)</p>
+</div></blockquote>
+<p>and we look for instances of any of the latter.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="black.files.html" class="btn btn-neutral float-left" title="black.files module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="black.linegen.html" class="btn btn-neutral float-right" title="black.linegen module" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2026, Laboratorio IE0417.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

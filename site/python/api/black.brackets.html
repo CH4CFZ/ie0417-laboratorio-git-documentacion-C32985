@@ -1,0 +1,279 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>black.brackets module &mdash; documentación de Black - 0.1 (commit 8947c48)</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=0dabe907"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=f85f4cfb"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+    <link rel="next" title="black.cache module" href="black.cache.html" />
+    <link rel="prev" title="black.resources package" href="black.resources.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Black
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenidos:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../introduccion.html">Introducción a Black</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduccion.html#que-es-black">¿Qué es Black?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduccion.html#organizacion-del-codigo-fuente">Organización del código fuente</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../introduccion.html#alcance-de-esta-documentacion">Alcance de esta documentación</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="modules.html">black</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="black.html">black package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Black</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../introduccion.html">Introducción a Black</a></li>
+          <li class="breadcrumb-item"><a href="modules.html">black</a></li>
+          <li class="breadcrumb-item"><a href="black.html">black package</a></li>
+      <li class="breadcrumb-item active">black.brackets module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/black.brackets.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-black.brackets">
+<span id="black-brackets-module"></span><h1>black.brackets module<a class="headerlink" href="#module-black.brackets" title="Link to this heading"></a></h1>
+<p>Builds on top of nodes.py to track brackets.</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="black.brackets.BracketMatchError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">black.brackets.</span></span><span class="sig-name descname"><span class="pre">BracketMatchError</span></span><a class="reference internal" href="../_modules/black/brackets.html#BracketMatchError"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.brackets.BracketMatchError" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Raised when an opening bracket is unable to be matched to a closing bracket.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="black.brackets.BracketTracker">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">black.brackets.</span></span><span class="sig-name descname"><span class="pre">BracketTracker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">depth:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0,</span> <span class="pre">bracket_match:</span> <span class="pre">dict[tuple[int,</span> <span class="pre">int],</span> <span class="pre">~blib2to3.pytree.Leaf]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;,</span> <span class="pre">delimiters:</span> <span class="pre">dict[int,</span> <span class="pre">int]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;,</span> <span class="pre">previous:</span> <span class="pre">~blib2to3.pytree.Leaf</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">_for_loop_depths:</span> <span class="pre">list[int]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;,</span> <span class="pre">_lambda_argument_depths:</span> <span class="pre">list[int]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;,</span> <span class="pre">invisible:</span> <span class="pre">list[~blib2to3.pytree.Leaf]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/black/brackets.html#BracketTracker"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.brackets.BracketTracker" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Keeps track of brackets on a line.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.brackets.BracketTracker.depth">
+<span class="sig-name descname"><span class="pre">depth</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#black.brackets.BracketTracker.depth" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.brackets.BracketTracker.bracket_match">
+<span class="sig-name descname"><span class="pre">bracket_match</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Leaf</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#black.brackets.BracketTracker.bracket_match" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.brackets.BracketTracker.delimiters">
+<span class="sig-name descname"><span class="pre">delimiters</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#black.brackets.BracketTracker.delimiters" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.brackets.BracketTracker.previous">
+<span class="sig-name descname"><span class="pre">previous</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#black.brackets.BracketTracker.previous" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.brackets.BracketTracker.invisible">
+<span class="sig-name descname"><span class="pre">invisible</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Leaf</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#black.brackets.BracketTracker.invisible" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.brackets.BracketTracker.mark">
+<span class="sig-name descname"><span class="pre">mark</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/brackets.html#BracketTracker.mark"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.brackets.BracketTracker.mark" title="Link to this definition"></a></dt>
+<dd><p>Mark <cite>leaf</cite> with bracket-related metadata. Keep track of delimiters.</p>
+<p>All leaves receive an int <cite>bracket_depth</cite> field that stores how deep
+within brackets a given leaf is. 0 means there are no enclosing brackets
+that started on this line.</p>
+<p>If a leaf is itself a closing bracket and there is a matching opening
+bracket earlier, it receives an <cite>opening_bracket</cite> field with which it forms a
+pair. This is a one-directional link to avoid reference cycles. Closing
+bracket without opening happens on lines continued from previous
+breaks, e.g. <cite>) -&gt; «ReturnType»:</cite> as part of a funcdef where we place
+the return type annotation on its own line of the previous closing RPAR.</p>
+<p>If a leaf is a delimiter (a token on which Black can split the line if
+needed) and it’s on depth 0, its <cite>id()</cite> is stored in the tracker’s
+<cite>delimiters</cite> field.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.brackets.BracketTracker.any_open_for_or_lambda">
+<span class="sig-name descname"><span class="pre">any_open_for_or_lambda</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/brackets.html#BracketTracker.any_open_for_or_lambda"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.brackets.BracketTracker.any_open_for_or_lambda" title="Link to this definition"></a></dt>
+<dd><p>Return True if there is an open for or lambda expression on the line.</p>
+<p>See maybe_increment_for_loop_variable and maybe_increment_lambda_arguments
+for details.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.brackets.BracketTracker.any_open_brackets">
+<span class="sig-name descname"><span class="pre">any_open_brackets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/brackets.html#BracketTracker.any_open_brackets"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.brackets.BracketTracker.any_open_brackets" title="Link to this definition"></a></dt>
+<dd><p>Return True if there is an yet unmatched open bracket on the line.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.brackets.BracketTracker.max_delimiter_priority">
+<span class="sig-name descname"><span class="pre">max_delimiter_priority</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exclude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../_modules/black/brackets.html#BracketTracker.max_delimiter_priority"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.brackets.BracketTracker.max_delimiter_priority" title="Link to this definition"></a></dt>
+<dd><p>Return the highest priority of a delimiter found on the line.</p>
+<p>Values are consistent with what <cite>is_split_*_delimiter()</cite> return.
+Raises ValueError on no delimiters.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.brackets.BracketTracker.delimiter_count_with_priority">
+<span class="sig-name descname"><span class="pre">delimiter_count_with_priority</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">priority</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../_modules/black/brackets.html#BracketTracker.delimiter_count_with_priority"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.brackets.BracketTracker.delimiter_count_with_priority" title="Link to this definition"></a></dt>
+<dd><p>Return the number of delimiters with the given <cite>priority</cite>.</p>
+<p>If no <cite>priority</cite> is passed, defaults to max priority on the line.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.brackets.BracketTracker.maybe_increment_for_loop_variable">
+<span class="sig-name descname"><span class="pre">maybe_increment_for_loop_variable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/brackets.html#BracketTracker.maybe_increment_for_loop_variable"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.brackets.BracketTracker.maybe_increment_for_loop_variable" title="Link to this definition"></a></dt>
+<dd><p>In a for loop, or comprehension, the variables are often unpacks.</p>
+<p>To avoid splitting on the comma in this situation, increase the depth of
+tokens between <cite>for</cite> and <cite>in</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.brackets.BracketTracker.maybe_decrement_after_for_loop_variable">
+<span class="sig-name descname"><span class="pre">maybe_decrement_after_for_loop_variable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/brackets.html#BracketTracker.maybe_decrement_after_for_loop_variable"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.brackets.BracketTracker.maybe_decrement_after_for_loop_variable" title="Link to this definition"></a></dt>
+<dd><p>See <cite>maybe_increment_for_loop_variable</cite> above for explanation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.brackets.BracketTracker.maybe_increment_lambda_arguments">
+<span class="sig-name descname"><span class="pre">maybe_increment_lambda_arguments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/brackets.html#BracketTracker.maybe_increment_lambda_arguments"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.brackets.BracketTracker.maybe_increment_lambda_arguments" title="Link to this definition"></a></dt>
+<dd><p>In a lambda expression, there might be more than one argument.</p>
+<p>To avoid splitting on the comma in this situation, increase the depth of
+tokens between <cite>lambda</cite> and <cite>:</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.brackets.BracketTracker.maybe_decrement_after_lambda_arguments">
+<span class="sig-name descname"><span class="pre">maybe_decrement_after_lambda_arguments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/brackets.html#BracketTracker.maybe_decrement_after_lambda_arguments"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.brackets.BracketTracker.maybe_decrement_after_lambda_arguments" title="Link to this definition"></a></dt>
+<dd><p>See <cite>maybe_increment_lambda_arguments</cite> above for explanation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.brackets.BracketTracker.get_open_lsqb">
+<span class="sig-name descname"><span class="pre">get_open_lsqb</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/brackets.html#BracketTracker.get_open_lsqb"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.brackets.BracketTracker.get_open_lsqb" title="Link to this definition"></a></dt>
+<dd><p>Return the most recent opening square bracket (if any).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.brackets.is_split_after_delimiter">
+<span class="sig-prename descclassname"><span class="pre">black.brackets.</span></span><span class="sig-name descname"><span class="pre">is_split_after_delimiter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../_modules/black/brackets.html#is_split_after_delimiter"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.brackets.is_split_after_delimiter" title="Link to this definition"></a></dt>
+<dd><p>Return the priority of the <cite>leaf</cite> delimiter, given a line break after it.</p>
+<p>The delimiter priorities returned here are from those delimiters that would
+cause a line break after themselves.</p>
+<p>Higher numbers are higher priority.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.brackets.is_split_before_delimiter">
+<span class="sig-prename descclassname"><span class="pre">black.brackets.</span></span><span class="sig-name descname"><span class="pre">is_split_before_delimiter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">previous</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../_modules/black/brackets.html#is_split_before_delimiter"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.brackets.is_split_before_delimiter" title="Link to this definition"></a></dt>
+<dd><p>Return the priority of the <cite>leaf</cite> delimiter, given a line break before it.</p>
+<p>The delimiter priorities returned here are from those delimiters that would
+cause a line break before themselves.</p>
+<p>Higher numbers are higher priority.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.brackets.max_delimiter_priority_in_atom">
+<span class="sig-prename descclassname"><span class="pre">black.brackets.</span></span><span class="sig-name descname"><span class="pre">max_delimiter_priority_in_atom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../_modules/black/brackets.html#max_delimiter_priority_in_atom"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.brackets.max_delimiter_priority_in_atom" title="Link to this definition"></a></dt>
+<dd><p>Return maximum delimiter priority inside <cite>node</cite>.</p>
+<p>This is specific to atoms with contents contained in a pair of parentheses.
+If <cite>node</cite> isn’t an atom or there are no enclosing parentheses, returns 0.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.brackets.get_leaves_inside_matching_brackets">
+<span class="sig-prename descclassname"><span class="pre">black.brackets.</span></span><span class="sig-name descname"><span class="pre">get_leaves_inside_matching_brackets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Leaf</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/brackets.html#get_leaves_inside_matching_brackets"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.brackets.get_leaves_inside_matching_brackets" title="Link to this definition"></a></dt>
+<dd><p>Return leaves that are inside matching brackets.</p>
+<p>The input <cite>leaves</cite> can have non-matching brackets at the head or tail parts.
+Matching brackets are included.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="black.resources.html" class="btn btn-neutral float-left" title="black.resources package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="black.cache.html" class="btn btn-neutral float-right" title="black.cache module" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2026, Laboratorio IE0417.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

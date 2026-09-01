@@ -1,0 +1,515 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>black.nodes module &mdash; documentación de Black - 0.1 (commit 8947c48)</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=0dabe907"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=f85f4cfb"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+    <link rel="next" title="black.numerics module" href="black.numerics.html" />
+    <link rel="prev" title="black.mode module" href="black.mode.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Black
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenidos:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../introduccion.html">Introducción a Black</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduccion.html#que-es-black">¿Qué es Black?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduccion.html#organizacion-del-codigo-fuente">Organización del código fuente</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../introduccion.html#alcance-de-esta-documentacion">Alcance de esta documentación</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="modules.html">black</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="black.html">black package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Black</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../introduccion.html">Introducción a Black</a></li>
+          <li class="breadcrumb-item"><a href="modules.html">black</a></li>
+          <li class="breadcrumb-item"><a href="black.html">black package</a></li>
+      <li class="breadcrumb-item active">black.nodes module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/black.nodes.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-black.nodes">
+<span id="black-nodes-module"></span><h1>black.nodes module<a class="headerlink" href="#module-black.nodes" title="Link to this heading"></a></h1>
+<p>blib2to3 Node/Leaf transformation-related utility functions.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="black.nodes.Visitor">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">Visitor</span></span><a class="reference internal" href="../_modules/black/nodes.html#Visitor"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.Visitor" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code>]</p>
+<p>Basic lib2to3 visitor that yields things of type <cite>T</cite> on <cite>visit()</cite>.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="black.nodes.Visitor.visit">
+<span class="sig-name descname"><span class="pre">visit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/nodes.html#Visitor.visit"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.Visitor.visit" title="Link to this definition"></a></dt>
+<dd><p>Main method to visit <cite>node</cite> and its children.</p>
+<p>It tries to find a <cite>visit_*()</cite> method for the given <cite>node.type</cite>, like
+<cite>visit_simple_stmt</cite> for Node objects or <cite>visit_INDENT</cite> for Leaf objects.
+If no dedicated <cite>visit_*()</cite> method is found, chooses <cite>visit_default()</cite>
+instead.</p>
+<p>Then yields objects of type <cite>T</cite> from the selected visitor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.nodes.Visitor.visit_default">
+<span class="sig-name descname"><span class="pre">visit_default</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/nodes.html#Visitor.visit_default"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.Visitor.visit_default" title="Link to this definition"></a></dt>
+<dd><p>Default <cite>visit_*()</cite> implementation. Recurses to children of <cite>node</cite>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.whitespace">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">whitespace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">complex_subscript</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#whitespace"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.whitespace" title="Link to this definition"></a></dt>
+<dd><p>Return whitespace prefix if needed for the given <cite>leaf</cite>.</p>
+<p><cite>complex_subscript</cite> signals whether the given leaf is part of a subscription
+which has non-trivial arguments, like arithmetic expressions or function calls.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.make_simple_prefix">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">make_simple_prefix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nl_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">form_feed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'\n'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#make_simple_prefix"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.make_simple_prefix" title="Link to this definition"></a></dt>
+<dd><p>Generate a normalized prefix string.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.preceding_leaf">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">preceding_leaf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#preceding_leaf"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.preceding_leaf" title="Link to this definition"></a></dt>
+<dd><p>Return the first leaf that precedes <cite>node</cite>, if any.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.prev_siblings_are">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">prev_siblings_are</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#prev_siblings_are"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.prev_siblings_are" title="Link to this definition"></a></dt>
+<dd><p>Return if the <cite>node</cite> and its previous siblings match types against the provided
+list of tokens; the provided <cite>node</cite> has its type matched against the last element in
+the list.  <cite>None</cite> can be used as the first element to declare that the start of the
+list is anchored at the start of its parent’s children.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.parent_type">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">parent_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#parent_type"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.parent_type" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Devuelve<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>&#64;node.parent.type, if &#64;node is not None and has a parent.</dt><dd><p>OR</p>
+</dd>
+</dl>
+<p>None, otherwise.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.child_towards">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">child_towards</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ancestor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descendant</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#child_towards"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.child_towards" title="Link to this definition"></a></dt>
+<dd><p>Return the child of <cite>ancestor</cite> that contains <cite>descendant</cite>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.replace_child">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">replace_child</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old_child</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_child</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#replace_child"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.replace_child" title="Link to this definition"></a></dt>
+<dd><dl>
+<dt>Side Effects:</dt><dd><ul class="simple">
+<li><p>If &#64;old_child.parent is set, replace &#64;old_child with &#64;new_child in</p></li>
+</ul>
+<dl class="simple">
+<dt>&#64;old_child’s underlying Node structure.</dt><dd><p>OR</p>
+</dd>
+</dl>
+<ul class="simple">
+<li><p>Otherwise, this function does nothing.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.container_of">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">container_of</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#container_of"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.container_of" title="Link to this definition"></a></dt>
+<dd><p>Return <cite>leaf</cite> or one of its ancestors that is the topmost container of it.</p>
+<p>By «container» we mean a node where <cite>leaf</cite> is the very first child.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.first_leaf_of">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">first_leaf_of</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#first_leaf_of"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.first_leaf_of" title="Link to this definition"></a></dt>
+<dd><p>Returns the first leaf of the node tree.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_arith_like">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_arith_like</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_arith_like"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_arith_like" title="Link to this definition"></a></dt>
+<dd><p>Whether node is an arithmetic or a binary arithmetic expression</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_simple_exponentiation">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_simple_exponentiation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_simple_exponentiation"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_simple_exponentiation" title="Link to this definition"></a></dt>
+<dd><p>Whether whitespace around <cite>**</cite> should be removed.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_docstring">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_docstring</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_docstring"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_docstring" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_empty_tuple">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_empty_tuple</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_empty_tuple"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_empty_tuple" title="Link to this definition"></a></dt>
+<dd><p>Return True if <cite>node</cite> holds an empty tuple.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_one_tuple">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_one_tuple</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_one_tuple"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_one_tuple" title="Link to this definition"></a></dt>
+<dd><p>Return True if <cite>node</cite> holds a tuple with one element, with or without parens.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_tuple">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_tuple</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_tuple"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_tuple" title="Link to this definition"></a></dt>
+<dd><p>Return True if <cite>node</cite> holds a tuple.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_tuple_containing_walrus">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_tuple_containing_walrus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_tuple_containing_walrus"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_tuple_containing_walrus" title="Link to this definition"></a></dt>
+<dd><p>Return True if <cite>node</cite> holds a tuple that contains a walrus operator.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_tuple_containing_star">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_tuple_containing_star</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_tuple_containing_star"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_tuple_containing_star" title="Link to this definition"></a></dt>
+<dd><p>Return True if <cite>node</cite> holds a tuple that contains a star operator.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_generator">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_generator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_generator"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_generator" title="Link to this definition"></a></dt>
+<dd><p>Return True if <cite>node</cite> holds a generator.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_one_sequence_between">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_one_sequence_between</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">opening</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">closing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">leaves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Leaf</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">brackets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(7,</span> <span class="pre">8)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_one_sequence_between"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_one_sequence_between" title="Link to this definition"></a></dt>
+<dd><p>Return True if content between <cite>opening</cite> and <cite>closing</cite> is a one-sequence.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_walrus_assignment">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_walrus_assignment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_walrus_assignment"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_walrus_assignment" title="Link to this definition"></a></dt>
+<dd><p>Return True iff <cite>node</cite> is of the shape ( test := test )</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_simple_decorator_trailer">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_simple_decorator_trailer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_simple_decorator_trailer"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_simple_decorator_trailer" title="Link to this definition"></a></dt>
+<dd><p>Return True iff <cite>node</cite> is a trailer valid in a simple decorator</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_simple_decorator_expression">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_simple_decorator_expression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_simple_decorator_expression"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_simple_decorator_expression" title="Link to this definition"></a></dt>
+<dd><p>Return True iff <cite>node</cite> could be a “dotted name” decorator</p>
+<p>This function takes the node of the “namedexpr_test” of the new decorator
+grammar and test if it would be valid under the old decorator grammar.</p>
+<p>The old grammar was: decorator: &#64; dotted_name [arguments] NEWLINE
+The new grammar is : decorator: &#64; namedexpr_test NEWLINE</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_yield">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_yield</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_yield"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_yield" title="Link to this definition"></a></dt>
+<dd><p>Return True if <cite>node</cite> holds a <cite>yield</cite> or <cite>yield from</cite> expression.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_vararg">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_vararg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">within</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_vararg"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_vararg" title="Link to this definition"></a></dt>
+<dd><p>Return True if <cite>leaf</cite> is a star or double star in a vararg or kwarg.</p>
+<p>If <cite>within</cite> includes VARARGS_PARENTS, this applies to function signatures.
+If <cite>within</cite> includes UNPACKING_PARENTS, it applies to right hand-side
+extended iterable unpacking (PEP 3132) and additional unpacking
+generalizations (PEP 448).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_fstring">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_fstring</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_fstring"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_fstring" title="Link to this definition"></a></dt>
+<dd><p>Return True if the node is an f-string</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.fstring_tstring_to_string">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">fstring_tstring_to_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Leaf</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#fstring_tstring_to_string"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.fstring_tstring_to_string" title="Link to this definition"></a></dt>
+<dd><p>Converts an fstring or tstring node back to a string node.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_multiline_string">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_multiline_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_multiline_string"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_multiline_string" title="Link to this definition"></a></dt>
+<dd><p>Return True if <cite>leaf</cite> is a multiline string that actually spans many lines.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_parent_function_or_class">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_parent_function_or_class</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_parent_function_or_class"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_parent_function_or_class" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_stub_suite">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_stub_suite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_stub_suite"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_stub_suite" title="Link to this definition"></a></dt>
+<dd><p>Return True if <cite>node</cite> is a suite with a stub body.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_stub_body">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_stub_body</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_stub_body"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_stub_body" title="Link to this definition"></a></dt>
+<dd><p>Return True if <cite>node</cite> is a simple statement containing an ellipsis.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_atom_with_invisible_parens">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_atom_with_invisible_parens</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_atom_with_invisible_parens"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_atom_with_invisible_parens" title="Link to this definition"></a></dt>
+<dd><p>Given a <cite>LN</cite>, determines whether it’s an atom <cite>node</cite> with invisible
+parens. Useful in dedupe-ing and normalizing parens.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_empty_par">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_empty_par</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_empty_par"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_empty_par" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_empty_lpar">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_empty_lpar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_empty_lpar"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_empty_lpar" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_empty_rpar">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_empty_rpar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_empty_rpar"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_empty_rpar" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_import">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_import</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_import"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_import" title="Link to this definition"></a></dt>
+<dd><p>Return True if the given leaf starts an import statement.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_with_or_async_with_stmt">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_with_or_async_with_stmt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_with_or_async_with_stmt"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_with_or_async_with_stmt" title="Link to this definition"></a></dt>
+<dd><p>Return True if the given leaf starts a with or async with statement.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_async_stmt_or_funcdef">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_async_stmt_or_funcdef</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_async_stmt_or_funcdef"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_async_stmt_or_funcdef" title="Link to this definition"></a></dt>
+<dd><p>Return True if the given leaf starts an async def/for/with statement.</p>
+<p>Note that <cite>async def</cite> can be either an <cite>async_stmt</cite> or <cite>async_funcdef</cite>,
+the latter is used when it has decorators.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_type_comment">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_type_comment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_type_comment"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_type_comment" title="Link to this definition"></a></dt>
+<dd><p>Return True if the given leaf is a type comment. This function should only
+be used for general type comments (excluding ignore annotations, which should
+use <cite>is_type_ignore_comment</cite>). Note that general type comments are no longer
+used in modern version of Python, this function may be deprecated in the future.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_type_comment_string">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_type_comment_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_type_comment_string"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_type_comment_string" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_type_ignore_comment">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_type_ignore_comment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_type_ignore_comment"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_type_ignore_comment" title="Link to this definition"></a></dt>
+<dd><p>Return True if the given leaf is a type comment with ignore annotation.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_type_ignore_comment_string">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_type_ignore_comment_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_type_ignore_comment_string"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_type_ignore_comment_string" title="Link to this definition"></a></dt>
+<dd><p>Return True if the given string match with type comment with
+ignore annotation.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.wrap_in_parentheses">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">wrap_in_parentheses</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">child</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">visible</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#wrap_in_parentheses"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.wrap_in_parentheses" title="Link to this definition"></a></dt>
+<dd><p>Wrap <cite>child</cite> in parentheses.</p>
+<p>This replaces <cite>child</cite> with an atom holding the parentheses and the old
+child.  That requires moving the prefix.</p>
+<p>If <cite>visible</cite> is False, the leaves will be valueless (and thus invisible).</p>
+<p>When the caller already knows <cite>child</cite>’s position in <cite>parent.children</cite> it
+can pass <cite>index</cite> so the child is swapped in place. The default path locates
+<cite>child</cite> with <cite>Base.remove</cite>, which scans and rewrites the whole child list;
+that is O(len(parent.children)) per call and turns quadratic when a caller
+wraps every child of a large node (e.g. each value of a big dict literal).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.unwrap_singleton_parenthesis">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">unwrap_singleton_parenthesis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#unwrap_singleton_parenthesis"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.unwrap_singleton_parenthesis" title="Link to this definition"></a></dt>
+<dd><p>Returns <cite>wrapped</cite> if <cite>node</cite> is of the shape ( wrapped ).</p>
+<p>Parenthesis can be optional. Returns None otherwise</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.ensure_visible">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">ensure_visible</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#ensure_visible"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.ensure_visible" title="Link to this definition"></a></dt>
+<dd><p>Make sure parentheses are visible.</p>
+<p>They could be invisible as part of some statements (see
+<code class="xref py py-func docutils literal notranslate"><span class="pre">normalize_invisible_parens()</span></code> and <code class="xref py py-func docutils literal notranslate"><span class="pre">visit_import_from()</span></code>).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_name_token">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_name_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nl</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">TypeGuard</span><span class="p"><span class="pre">[</span></span><span class="pre">Leaf</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_name_token"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_name_token" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_lpar_token">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_lpar_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nl</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">TypeGuard</span><span class="p"><span class="pre">[</span></span><span class="pre">Leaf</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_lpar_token"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_lpar_token" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_rpar_token">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_rpar_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nl</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">TypeGuard</span><span class="p"><span class="pre">[</span></span><span class="pre">Leaf</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_rpar_token"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_rpar_token" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_number_token">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_number_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nl</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">TypeGuard</span><span class="p"><span class="pre">[</span></span><span class="pre">Leaf</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_number_token"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_number_token" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.get_annotation_type">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">get_annotation_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'return'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'param'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/nodes.html#get_annotation_type"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.get_annotation_type" title="Link to this definition"></a></dt>
+<dd><p>Returns the type of annotation this leaf is part of, if any.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.is_part_of_annotation">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">is_part_of_annotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#is_part_of_annotation"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.is_part_of_annotation" title="Link to this definition"></a></dt>
+<dd><p>Returns whether this leaf is part of a type annotation.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.first_leaf">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">first_leaf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#first_leaf"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.first_leaf" title="Link to this definition"></a></dt>
+<dd><p>Returns the first leaf of the ancestor node.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.last_leaf">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">last_leaf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#last_leaf"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.last_leaf" title="Link to this definition"></a></dt>
+<dd><p>Returns the last leaf of the ancestor node.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.furthest_ancestor_with_last_leaf">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">furthest_ancestor_with_last_leaf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#furthest_ancestor_with_last_leaf"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.furthest_ancestor_with_last_leaf" title="Link to this definition"></a></dt>
+<dd><p>Returns the furthest ancestor that has this leaf node as the last leaf.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.nodes.has_sibling_with_type">
+<span class="sig-prename descclassname"><span class="pre">black.nodes.</span></span><span class="sig-name descname"><span class="pre">has_sibling_with_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/nodes.html#has_sibling_with_type"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.nodes.has_sibling_with_type" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="black.mode.html" class="btn btn-neutral float-left" title="black.mode module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="black.numerics.html" class="btn btn-neutral float-right" title="black.numerics module" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2026, Laboratorio IE0417.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

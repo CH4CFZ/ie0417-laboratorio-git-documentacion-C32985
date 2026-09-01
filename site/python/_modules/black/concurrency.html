@@ -1,0 +1,354 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>black.concurrency &mdash; documentación de Black - 0.1 (commit 8947c48)</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=0dabe907"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/translations.js?v=f85f4cfb"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Black
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenidos:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduccion.html">Introducción a Black</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Black</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Código de módulo</a></li>
+          <li class="breadcrumb-item"><a href="../black.html">black</a></li>
+      <li class="breadcrumb-item active">black.concurrency</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Código fuente para black.concurrency</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""</span>
+<span class="sd">Formatting many files at once via multiprocessing. Contains entrypoint and utilities.</span>
+
+<span class="sd">NOTE: this module is only imported if we need to format several files at once.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">signal</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">concurrent.futures</span><span class="w"> </span><span class="kn">import</span> <span class="n">Executor</span><span class="p">,</span> <span class="n">ProcessPoolExecutor</span><span class="p">,</span> <span class="n">ThreadPoolExecutor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">multiprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Manager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">click</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mypy_extensions</span><span class="w"> </span><span class="kn">import</span> <span class="n">mypyc_attr</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">black</span><span class="w"> </span><span class="kn">import</span> <span class="n">WriteBack</span><span class="p">,</span> <span class="n">format_file_in_place</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">black.cache</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cache</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">black.mode</span><span class="w"> </span><span class="kn">import</span> <span class="n">Mode</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">black.output</span><span class="w"> </span><span class="kn">import</span> <span class="n">err</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">black.report</span><span class="w"> </span><span class="kn">import</span> <span class="n">Changed</span><span class="p">,</span> <span class="n">Report</span>
+
+
+<div class="viewcode-block" id="maybe_use_uvloop">
+<a class="viewcode-back" href="../../api/black.concurrency.html#black.concurrency.maybe_use_uvloop">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">maybe_use_uvloop</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">AbstractEventLoop</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""If our environment has uvloop or winloop installed we use it otherwise</span>
+<span class="sd">    a normal asyncio eventloop is called as fallback.</span>
+
+<span class="sd">    This is called only from command-line entry points to avoid</span>
+<span class="sd">    interfering with the parent process if Black is used as a library.</span>
+<span class="sd">    """</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span> <span class="o">!=</span> <span class="s2">"win32"</span><span class="p">:</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">uvloop</span>
+
+            <span class="k">return</span> <span class="n">uvloop</span><span class="o">.</span><span class="n">new_event_loop</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">winloop</span>
+
+            <span class="k">return</span> <span class="n">winloop</span><span class="o">.</span><span class="n">new_event_loop</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">new_event_loop</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="cancel">
+<a class="viewcode-back" href="../../api/black.concurrency.html#black.concurrency.cancel">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">cancel</span><span class="p">(</span><span class="n">tasks</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">[</span><span class="n">Any</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""asyncio signal handler that cancels all `tasks` and reports to stderr."""</span>
+    <span class="n">err</span><span class="p">(</span><span class="s2">"Aborted!"</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">tasks</span><span class="p">:</span>
+        <span class="n">task</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="shutdown">
+<a class="viewcode-back" href="../../api/black.concurrency.html#black.concurrency.shutdown">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">shutdown</span><span class="p">(</span><span class="n">loop</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">AbstractEventLoop</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Cancel all pending tasks on `loop`, wait for them, and close the loop."""</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># This part is borrowed from asyncio/runners.py in Python 3.7b2.</span>
+        <span class="n">to_cancel</span> <span class="o">=</span> <span class="p">[</span><span class="n">task</span> <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">all_tasks</span><span class="p">(</span><span class="n">loop</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">task</span><span class="o">.</span><span class="n">done</span><span class="p">()]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">to_cancel</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">to_cancel</span><span class="p">:</span>
+            <span class="n">task</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+        <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="n">to_cancel</span><span class="p">,</span> <span class="n">return_exceptions</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="c1"># `concurrent.futures.Future` objects cannot be cancelled once they</span>
+        <span class="c1"># are already running. There might be some when the `shutdown()` happened.</span>
+        <span class="c1"># Silence their logger's spew about the event loop being closed.</span>
+        <span class="n">cf_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">"concurrent.futures"</span><span class="p">)</span>
+        <span class="n">cf_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">CRITICAL</span><span class="p">)</span>
+        <span class="n">loop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+
+<span class="c1"># diff-shades depends on being to monkeypatch this function to operate. I know it's</span>
+<span class="c1"># not ideal, but this shouldn't cause any issues ... hopefully. ~ichard26</span>
+<div class="viewcode-block" id="reformat_many">
+<a class="viewcode-back" href="../../api/black.concurrency.html#black.concurrency.reformat_many">[documentos]</a>
+<span class="nd">@mypyc_attr</span><span class="p">(</span><span class="n">patchable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">reformat_many</span><span class="p">(</span>
+    <span class="n">sources</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="n">Path</span><span class="p">],</span>
+    <span class="n">fast</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="n">write_back</span><span class="p">:</span> <span class="n">WriteBack</span><span class="p">,</span>
+    <span class="n">mode</span><span class="p">:</span> <span class="n">Mode</span><span class="p">,</span>
+    <span class="n">report</span><span class="p">:</span> <span class="n">Report</span><span class="p">,</span>
+    <span class="n">workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">no_cache</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Reformat multiple files using a ProcessPoolExecutor."""</span>
+
+    <span class="k">if</span> <span class="n">workers</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">workers_value</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"BLACK_NUM_WORKERS"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">workers_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">workers</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">workers_value</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">click</span><span class="o">.</span><span class="n">BadParameter</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">workers_value</span><span class="si">!r}</span><span class="s2"> is not a valid integer"</span><span class="p">,</span>
+                    <span class="n">param_hint</span><span class="o">=</span><span class="s2">"BLACK_NUM_WORKERS"</span><span class="p">,</span>
+                <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="kc">None</span>
+            <span class="k">if</span> <span class="n">workers</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">click</span><span class="o">.</span><span class="n">BadParameter</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">workers_value</span><span class="si">!r}</span><span class="s2"> is not in the range x&gt;=1"</span><span class="p">,</span>
+                    <span class="n">param_hint</span><span class="o">=</span><span class="s2">"BLACK_NUM_WORKERS"</span><span class="p">,</span>
+                <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">workers</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span> <span class="ow">or</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span> <span class="o">==</span> <span class="s2">"win32"</span><span class="p">:</span>
+        <span class="c1"># Work around https://bugs.python.org/issue26903</span>
+        <span class="n">workers</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">workers</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s2">"frozen"</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="c1"># In frozen builds (e.g. PyInstaller), avoid spawning worker processes (i.e.</span>
+        <span class="c1"># avoid using ProcessPoolExecutor) to prevent shutdown errors when workers</span>
+        <span class="c1"># try to import modules after cleanup begins.</span>
+        <span class="c1"># See https://github.com/psf/black/issues/4823</span>
+        <span class="n">workers</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="n">executor</span><span class="p">:</span> <span class="n">Executor</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">workers</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">executor</span> <span class="o">=</span> <span class="n">ProcessPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="n">workers</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="ne">NotImplementedError</span><span class="p">,</span> <span class="ne">OSError</span><span class="p">):</span>
+            <span class="c1"># we arrive here if the underlying system does not support multi-processing</span>
+            <span class="c1"># like in AWS Lambda or Termux, in which case we gracefully fallback to</span>
+            <span class="c1"># a ThreadPoolExecutor with just a single worker (more workers would not do</span>
+            <span class="c1"># us any good due to the Global Interpreter Lock)</span>
+            <span class="k">pass</span>
+
+    <span class="k">if</span> <span class="n">executor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">executor</span> <span class="o">=</span> <span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">loop</span> <span class="o">=</span> <span class="n">maybe_use_uvloop</span><span class="p">()</span>
+    <span class="n">asyncio</span><span class="o">.</span><span class="n">set_event_loop</span><span class="p">(</span><span class="n">loop</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span>
+            <span class="n">schedule_formatting</span><span class="p">(</span>
+                <span class="n">sources</span><span class="o">=</span><span class="n">sources</span><span class="p">,</span>
+                <span class="n">fast</span><span class="o">=</span><span class="n">fast</span><span class="p">,</span>
+                <span class="n">write_back</span><span class="o">=</span><span class="n">write_back</span><span class="p">,</span>
+                <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+                <span class="n">report</span><span class="o">=</span><span class="n">report</span><span class="p">,</span>
+                <span class="n">loop</span><span class="o">=</span><span class="n">loop</span><span class="p">,</span>
+                <span class="n">executor</span><span class="o">=</span><span class="n">executor</span><span class="p">,</span>
+                <span class="n">no_cache</span><span class="o">=</span><span class="n">no_cache</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">shutdown</span><span class="p">(</span><span class="n">loop</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">asyncio</span><span class="o">.</span><span class="n">set_event_loop</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">executor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">executor</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="schedule_formatting">
+<a class="viewcode-back" href="../../api/black.concurrency.html#black.concurrency.schedule_formatting">[documentos]</a>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">schedule_formatting</span><span class="p">(</span>
+    <span class="n">sources</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="n">Path</span><span class="p">],</span>
+    <span class="n">fast</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="n">write_back</span><span class="p">:</span> <span class="n">WriteBack</span><span class="p">,</span>
+    <span class="n">mode</span><span class="p">:</span> <span class="n">Mode</span><span class="p">,</span>
+    <span class="n">report</span><span class="p">:</span> <span class="n">Report</span><span class="p">,</span>
+    <span class="n">loop</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">AbstractEventLoop</span><span class="p">,</span>
+    <span class="n">executor</span><span class="p">:</span> <span class="n">Executor</span><span class="p">,</span>
+    <span class="n">no_cache</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Run formatting of `sources` in parallel using the provided `executor`.</span>
+
+<span class="sd">    (Use ProcessPoolExecutors for actual parallelism.)</span>
+
+<span class="sd">    `write_back`, `fast`, and `mode` options are passed to</span>
+<span class="sd">    :func:`format_file_in_place`.</span>
+<span class="sd">    """</span>
+    <span class="n">cache</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">no_cache</span> <span class="k">else</span> <span class="n">Cache</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">cache</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">write_back</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span>
+        <span class="n">WriteBack</span><span class="o">.</span><span class="n">DIFF</span><span class="p">,</span>
+        <span class="n">WriteBack</span><span class="o">.</span><span class="n">COLOR_DIFF</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="n">sources</span><span class="p">,</span> <span class="n">cached</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">filtered_cached</span><span class="p">(</span><span class="n">sources</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">src</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">cached</span><span class="p">):</span>
+            <span class="n">report</span><span class="o">.</span><span class="n">done</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">Changed</span><span class="o">.</span><span class="n">CACHED</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">sources</span><span class="p">:</span>
+        <span class="k">return</span>
+
+    <span class="n">cancelled</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">sources_to_cache</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">lock</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">manager</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">write_back</span> <span class="ow">in</span> <span class="p">(</span><span class="n">WriteBack</span><span class="o">.</span><span class="n">DIFF</span><span class="p">,</span> <span class="n">WriteBack</span><span class="o">.</span><span class="n">COLOR_DIFF</span><span class="p">):</span>
+        <span class="c1"># For diff output, we need locks to ensure we don't interleave output</span>
+        <span class="c1"># from different processes.</span>
+        <span class="n">manager</span> <span class="o">=</span> <span class="n">Manager</span><span class="p">()</span>
+        <span class="n">lock</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">tasks</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">asyncio</span><span class="o">.</span><span class="n">ensure_future</span><span class="p">(</span>
+                <span class="n">loop</span><span class="o">.</span><span class="n">run_in_executor</span><span class="p">(</span>
+                    <span class="n">executor</span><span class="p">,</span> <span class="n">format_file_in_place</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">fast</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">write_back</span><span class="p">,</span> <span class="n">lock</span>
+                <span class="p">)</span>
+            <span class="p">):</span> <span class="n">src</span>
+            <span class="k">for</span> <span class="n">src</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">sources</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="n">pending</span> <span class="o">=</span> <span class="n">tasks</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">loop</span><span class="o">.</span><span class="n">add_signal_handler</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">,</span> <span class="n">cancel</span><span class="p">,</span> <span class="n">pending</span><span class="p">)</span>
+            <span class="n">loop</span><span class="o">.</span><span class="n">add_signal_handler</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGTERM</span><span class="p">,</span> <span class="n">cancel</span><span class="p">,</span> <span class="n">pending</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">NotImplementedError</span><span class="p">:</span>
+            <span class="c1"># There are no good alternatives for these on Windows.</span>
+            <span class="k">pass</span>
+        <span class="k">while</span> <span class="n">pending</span><span class="p">:</span>
+            <span class="n">done</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">pending</span><span class="p">,</span> <span class="n">return_when</span><span class="o">=</span><span class="n">asyncio</span><span class="o">.</span><span class="n">FIRST_COMPLETED</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">done</span><span class="p">:</span>
+                <span class="n">src</span> <span class="o">=</span> <span class="n">tasks</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">task</span><span class="o">.</span><span class="n">cancelled</span><span class="p">():</span>
+                    <span class="n">cancelled</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">exc</span> <span class="o">:=</span> <span class="n">task</span><span class="o">.</span><span class="n">exception</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">report</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+                        <span class="n">traceback</span><span class="o">.</span><span class="n">print_exception</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">exc</span><span class="p">),</span> <span class="n">exc</span><span class="p">,</span> <span class="n">exc</span><span class="o">.</span><span class="n">__traceback__</span><span class="p">)</span>
+                    <span class="n">report</span><span class="o">.</span><span class="n">failed</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">exc</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">changed</span> <span class="o">=</span> <span class="n">Changed</span><span class="o">.</span><span class="n">YES</span> <span class="k">if</span> <span class="n">task</span><span class="o">.</span><span class="n">result</span><span class="p">()</span> <span class="k">else</span> <span class="n">Changed</span><span class="o">.</span><span class="n">NO</span>
+                    <span class="c1"># If the file was written back or was successfully checked as</span>
+                    <span class="c1"># well-formatted, store this information in the cache.</span>
+                    <span class="k">if</span> <span class="n">write_back</span> <span class="ow">is</span> <span class="n">WriteBack</span><span class="o">.</span><span class="n">YES</span> <span class="ow">or</span> <span class="p">(</span>
+                        <span class="n">write_back</span> <span class="ow">is</span> <span class="n">WriteBack</span><span class="o">.</span><span class="n">CHECK</span> <span class="ow">and</span> <span class="n">changed</span> <span class="ow">is</span> <span class="n">Changed</span><span class="o">.</span><span class="n">NO</span>
+                    <span class="p">):</span>
+                        <span class="n">sources_to_cache</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
+                    <span class="n">report</span><span class="o">.</span><span class="n">done</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">changed</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">cancelled</span><span class="p">:</span>
+            <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="n">cancelled</span><span class="p">,</span> <span class="n">return_exceptions</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sources_to_cache</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">no_cache</span> <span class="ow">and</span> <span class="n">cache</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">cache</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">sources_to_cache</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">manager</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">manager</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2026, Laboratorio IE0417.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

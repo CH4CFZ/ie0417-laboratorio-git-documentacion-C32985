@@ -1,0 +1,523 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>black.lines module &mdash; documentación de Black - 0.1 (commit 8947c48)</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=0dabe907"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=f85f4cfb"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+    <link rel="next" title="black.mode module" href="black.mode.html" />
+    <link rel="prev" title="black.linegen module" href="black.linegen.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Black
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenidos:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../introduccion.html">Introducción a Black</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduccion.html#que-es-black">¿Qué es Black?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduccion.html#organizacion-del-codigo-fuente">Organización del código fuente</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../introduccion.html#alcance-de-esta-documentacion">Alcance de esta documentación</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="modules.html">black</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="black.html">black package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Black</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../introduccion.html">Introducción a Black</a></li>
+          <li class="breadcrumb-item"><a href="modules.html">black</a></li>
+          <li class="breadcrumb-item"><a href="black.html">black package</a></li>
+      <li class="breadcrumb-item active">black.lines module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/black.lines.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-black.lines">
+<span id="black-lines-module"></span><h1>black.lines module<a class="headerlink" href="#module-black.lines" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="black.lines.Line">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">black.lines.</span></span><span class="sig-name descname"><span class="pre">Line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">leaves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Leaf</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict[int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">list[~blib2to3.pytree.Leaf]]</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bracket_tracker</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.brackets.html#black.brackets.BracketTracker" title="black.brackets.BracketTracker"><span class="pre">BracketTracker</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inside_brackets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">should_split_rhs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">magic_trailing_comma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_complex_subscript_cache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict[int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bool]</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/black/lines.html#Line"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.lines.Line" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Holds leaves and comments. Can be printed with <cite>str(line)</cite>.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.lines.Line.mode">
+<span class="sig-name descname"><span class="pre">mode</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span><a class="headerlink" href="#black.lines.Line.mode" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.lines.Line.depth">
+<span class="sig-name descname"><span class="pre">depth</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#black.lines.Line.depth" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.lines.Line.leaves">
+<span class="sig-name descname"><span class="pre">leaves</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Leaf</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#black.lines.Line.leaves" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.lines.Line.comments">
+<span class="sig-name descname"><span class="pre">comments</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Leaf</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#black.lines.Line.comments" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.lines.Line.bracket_tracker">
+<span class="sig-name descname"><span class="pre">bracket_tracker</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="black.brackets.html#black.brackets.BracketTracker" title="black.brackets.BracketTracker"><span class="pre">BracketTracker</span></a></span><a class="headerlink" href="#black.lines.Line.bracket_tracker" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.lines.Line.inside_brackets">
+<span class="sig-name descname"><span class="pre">inside_brackets</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></span><a class="headerlink" href="#black.lines.Line.inside_brackets" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.lines.Line.should_split_rhs">
+<span class="sig-name descname"><span class="pre">should_split_rhs</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></span><a class="headerlink" href="#black.lines.Line.should_split_rhs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.lines.Line.magic_trailing_comma">
+<span class="sig-name descname"><span class="pre">magic_trailing_comma</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Leaf</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#black.lines.Line.magic_trailing_comma" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.lines.Line.append">
+<span class="sig-name descname"><span class="pre">append</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preformatted</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">track_bracket</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/lines.html#Line.append"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.lines.Line.append" title="Link to this definition"></a></dt>
+<dd><p>Add a new <cite>leaf</cite> to the end of the line.</p>
+<p>Unless <cite>preformatted</cite> is True, the <cite>leaf</cite> will receive a new consistent
+whitespace prefix and metadata applied by <code class="xref py py-class docutils literal notranslate"><span class="pre">BracketTracker</span></code>.
+Trailing commas are maybe removed, unpacked for loop variables are
+demoted from being delimiters.</p>
+<p>Inline comments are put aside.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.lines.Line.append_safe">
+<span class="sig-name descname"><span class="pre">append_safe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preformatted</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/lines.html#Line.append_safe"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.lines.Line.append_safe" title="Link to this definition"></a></dt>
+<dd><p>Like <a class="reference internal" href="#black.lines.Line.append" title="black.lines.Line.append"><code class="xref py py-func docutils literal notranslate"><span class="pre">append()</span></code></a> but disallow invalid standalone comment structure.</p>
+<p>Raises ValueError when any <cite>leaf</cite> is appended after a standalone comment
+or when a standalone comment is not the first leaf on the line.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="black.lines.Line.is_comment">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_comment</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#black.lines.Line.is_comment" title="Link to this definition"></a></dt>
+<dd><p>Is this line a standalone comment?</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="black.lines.Line.is_decorator">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_decorator</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#black.lines.Line.is_decorator" title="Link to this definition"></a></dt>
+<dd><p>Is this line a decorator?</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="black.lines.Line.is_import">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_import</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#black.lines.Line.is_import" title="Link to this definition"></a></dt>
+<dd><p>Is this an import line?</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="black.lines.Line.is_with_or_async_with_stmt">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_with_or_async_with_stmt</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#black.lines.Line.is_with_or_async_with_stmt" title="Link to this definition"></a></dt>
+<dd><p>Is this a with_stmt line?</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="black.lines.Line.is_class">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_class</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#black.lines.Line.is_class" title="Link to this definition"></a></dt>
+<dd><p>Is this line a class definition?</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="black.lines.Line.is_stub_class">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_stub_class</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#black.lines.Line.is_stub_class" title="Link to this definition"></a></dt>
+<dd><p>Is this line a class definition with a body consisting only of «…»?</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="black.lines.Line.is_def">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_def</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#black.lines.Line.is_def" title="Link to this definition"></a></dt>
+<dd><p>Is this a function definition? (Also returns True for async defs.)</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="black.lines.Line.is_stub_def">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_stub_def</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#black.lines.Line.is_stub_def" title="Link to this definition"></a></dt>
+<dd><p>Is this line a function definition with a body consisting only of «…»?</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="black.lines.Line.is_class_paren_empty">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_class_paren_empty</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#black.lines.Line.is_class_paren_empty" title="Link to this definition"></a></dt>
+<dd><p>Is this a class with no base classes but using parentheses?</p>
+<p>Those are unnecessary and should be removed.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="black.lines.Line.is_docstring">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_docstring</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#black.lines.Line.is_docstring" title="Link to this definition"></a></dt>
+<dd><p>Is the line a docstring?</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="black.lines.Line.is_chained_assignment">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_chained_assignment</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#black.lines.Line.is_chained_assignment" title="Link to this definition"></a></dt>
+<dd><p>Is the line a chained assignment</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="black.lines.Line.opens_block">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">opens_block</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#black.lines.Line.opens_block" title="Link to this definition"></a></dt>
+<dd><p>Does this line open a new level of indentation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.lines.Line.is_fmt_pass_converted">
+<span class="sig-name descname"><span class="pre">is_fmt_pass_converted</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">first_leaf_matches</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Leaf</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/lines.html#Line.is_fmt_pass_converted"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.lines.Line.is_fmt_pass_converted" title="Link to this definition"></a></dt>
+<dd><p>Is this line converted from fmt off/skip code?</p>
+<p>If first_leaf_matches is not None, it only returns True if the first
+leaf of converted code matches.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.lines.Line.contains_standalone_comments">
+<span class="sig-name descname"><span class="pre">contains_standalone_comments</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/lines.html#Line.contains_standalone_comments"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.lines.Line.contains_standalone_comments" title="Link to this definition"></a></dt>
+<dd><p>If so, needs to be split before emitting.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.lines.Line.contains_implicit_multiline_string_with_comments">
+<span class="sig-name descname"><span class="pre">contains_implicit_multiline_string_with_comments</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/lines.html#Line.contains_implicit_multiline_string_with_comments"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.lines.Line.contains_implicit_multiline_string_with_comments" title="Link to this definition"></a></dt>
+<dd><p>Check if we have an implicit multiline string with comments on the line</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.lines.Line.contains_uncollapsable_type_comments">
+<span class="sig-name descname"><span class="pre">contains_uncollapsable_type_comments</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/lines.html#Line.contains_uncollapsable_type_comments"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.lines.Line.contains_uncollapsable_type_comments" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.lines.Line.contains_unsplittable_type_ignore">
+<span class="sig-name descname"><span class="pre">contains_unsplittable_type_ignore</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/lines.html#Line.contains_unsplittable_type_ignore"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.lines.Line.contains_unsplittable_type_ignore" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.lines.Line.contains_multiline_strings">
+<span class="sig-name descname"><span class="pre">contains_multiline_strings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/lines.html#Line.contains_multiline_strings"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.lines.Line.contains_multiline_strings" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.lines.Line.has_magic_trailing_comma">
+<span class="sig-name descname"><span class="pre">has_magic_trailing_comma</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">closing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/lines.html#Line.has_magic_trailing_comma"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.lines.Line.has_magic_trailing_comma" title="Link to this definition"></a></dt>
+<dd><p>Return True if we have a magic trailing comma, that is when:
+- there’s a trailing comma here
+- it’s not from single-element square bracket indexing
+- it’s not a one-tuple</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.lines.Line.append_comment">
+<span class="sig-name descname"><span class="pre">append_comment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/lines.html#Line.append_comment"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.lines.Line.append_comment" title="Link to this definition"></a></dt>
+<dd><p>Add an inline or standalone comment to the line.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.lines.Line.comments_after">
+<span class="sig-name descname"><span class="pre">comments_after</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Leaf</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/lines.html#Line.comments_after"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.lines.Line.comments_after" title="Link to this definition"></a></dt>
+<dd><p>Generate comments that should appear directly after <cite>leaf</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.lines.Line.remove_trailing_comma">
+<span class="sig-name descname"><span class="pre">remove_trailing_comma</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/lines.html#Line.remove_trailing_comma"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.lines.Line.remove_trailing_comma" title="Link to this definition"></a></dt>
+<dd><p>Remove the trailing comma and moves the comments attached to it.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.lines.Line.is_complex_subscript">
+<span class="sig-name descname"><span class="pre">is_complex_subscript</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/lines.html#Line.is_complex_subscript"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.lines.Line.is_complex_subscript" title="Link to this definition"></a></dt>
+<dd><p>Return True iff <cite>leaf</cite> is part of a slice with non-trivial exprs.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.lines.Line.enumerate_with_length">
+<span class="sig-name descname"><span class="pre">enumerate_with_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">is_reversed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Leaf</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/lines.html#Line.enumerate_with_length"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.lines.Line.enumerate_with_length" title="Link to this definition"></a></dt>
+<dd><p>Return an enumeration of leaves with their length.</p>
+<p>Stops prematurely on multiline strings and standalone comments.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.lines.Line.clone">
+<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></span><a class="reference internal" href="../_modules/black/lines.html#Line.clone"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.lines.Line.clone" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="black.lines.RHSResult">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">black.lines.</span></span><span class="sig-name descname"><span class="pre">RHSResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">head</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tail</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">opening_bracket</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">closing_bracket</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/black/lines.html#RHSResult"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.lines.RHSResult" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Intermediate split result from a right hand split.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.lines.RHSResult.head">
+<span class="sig-name descname"><span class="pre">head</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span><a class="headerlink" href="#black.lines.RHSResult.head" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.lines.RHSResult.body">
+<span class="sig-name descname"><span class="pre">body</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span><a class="headerlink" href="#black.lines.RHSResult.body" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.lines.RHSResult.tail">
+<span class="sig-name descname"><span class="pre">tail</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span><a class="headerlink" href="#black.lines.RHSResult.tail" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.lines.RHSResult.opening_bracket">
+<span class="sig-name descname"><span class="pre">opening_bracket</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Leaf</span></span><a class="headerlink" href="#black.lines.RHSResult.opening_bracket" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.lines.RHSResult.closing_bracket">
+<span class="sig-name descname"><span class="pre">closing_bracket</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Leaf</span></span><a class="headerlink" href="#black.lines.RHSResult.closing_bracket" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="black.lines.LinesBlock">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">black.lines.</span></span><span class="sig-name descname"><span class="pre">LinesBlock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">previous_block</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#black.lines.LinesBlock" title="black.lines.LinesBlock"><span class="pre">LinesBlock</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">original_line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">before</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content_lines</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">after</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">form_feed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/black/lines.html#LinesBlock"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.lines.LinesBlock" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class that holds information about a block of formatted lines.</p>
+<p>This is introduced so that the EmptyLineTracker can look behind the standalone
+comments and adjust their empty lines for class or def lines.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.lines.LinesBlock.mode">
+<span class="sig-name descname"><span class="pre">mode</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span><a class="headerlink" href="#black.lines.LinesBlock.mode" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.lines.LinesBlock.previous_block">
+<span class="sig-name descname"><span class="pre">previous_block</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#black.lines.LinesBlock" title="black.lines.LinesBlock"><span class="pre">LinesBlock</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#black.lines.LinesBlock.previous_block" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.lines.LinesBlock.original_line">
+<span class="sig-name descname"><span class="pre">original_line</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span><a class="headerlink" href="#black.lines.LinesBlock.original_line" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.lines.LinesBlock.before">
+<span class="sig-name descname"><span class="pre">before</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#black.lines.LinesBlock.before" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.lines.LinesBlock.content_lines">
+<span class="sig-name descname"><span class="pre">content_lines</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#black.lines.LinesBlock.content_lines" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.lines.LinesBlock.after">
+<span class="sig-name descname"><span class="pre">after</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#black.lines.LinesBlock.after" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.lines.LinesBlock.form_feed">
+<span class="sig-name descname"><span class="pre">form_feed</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></span><a class="headerlink" href="#black.lines.LinesBlock.form_feed" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.lines.LinesBlock.all_lines">
+<span class="sig-name descname"><span class="pre">all_lines</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/lines.html#LinesBlock.all_lines"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.lines.LinesBlock.all_lines" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="black.lines.EmptyLineTracker">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">black.lines.</span></span><span class="sig-name descname"><span class="pre">EmptyLineTracker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">previous_line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">previous_block</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#black.lines.LinesBlock" title="black.lines.LinesBlock"><span class="pre">LinesBlock</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">previous_defs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">semantic_leading_comment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#black.lines.LinesBlock" title="black.lines.LinesBlock"><span class="pre">LinesBlock</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_pyi_previous_decorated_func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_DecoratedFuncInfo</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/black/lines.html#EmptyLineTracker"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.lines.EmptyLineTracker" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Provides a stateful method that returns the number of potential extra
+empty lines needed before and after the currently processed line.</p>
+<p>Note: this tracker works on lines that haven’t been split yet.  It assumes
+the prefix of the first leaf consists of optional newlines.  Those newlines
+are consumed by <cite>maybe_empty_lines()</cite> and included in the computation.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.lines.EmptyLineTracker.mode">
+<span class="sig-name descname"><span class="pre">mode</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span><a class="headerlink" href="#black.lines.EmptyLineTracker.mode" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.lines.EmptyLineTracker.previous_line">
+<span class="sig-name descname"><span class="pre">previous_line</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#black.lines.EmptyLineTracker.previous_line" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.lines.EmptyLineTracker.previous_block">
+<span class="sig-name descname"><span class="pre">previous_block</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#black.lines.LinesBlock" title="black.lines.LinesBlock"><span class="pre">LinesBlock</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#black.lines.EmptyLineTracker.previous_block" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.lines.EmptyLineTracker.previous_defs">
+<span class="sig-name descname"><span class="pre">previous_defs</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#black.lines.EmptyLineTracker.previous_defs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="black.lines.EmptyLineTracker.semantic_leading_comment">
+<span class="sig-name descname"><span class="pre">semantic_leading_comment</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#black.lines.LinesBlock" title="black.lines.LinesBlock"><span class="pre">LinesBlock</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#black.lines.EmptyLineTracker.semantic_leading_comment" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="black.lines.EmptyLineTracker.maybe_empty_lines">
+<span class="sig-name descname"><span class="pre">maybe_empty_lines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">current_line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#black.lines.LinesBlock" title="black.lines.LinesBlock"><span class="pre">LinesBlock</span></a></span></span><a class="reference internal" href="../_modules/black/lines.html#EmptyLineTracker.maybe_empty_lines"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.lines.EmptyLineTracker.maybe_empty_lines" title="Link to this definition"></a></dt>
+<dd><p>Return the number of extra empty lines before and after the <cite>current_line</cite>.</p>
+<p>This is for separating <cite>def</cite>, <cite>async def</cite> and <cite>class</cite> with extra empty
+lines (two on module-level).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.lines.enumerate_reversed">
+<span class="sig-prename descclassname"><span class="pre">black.lines.</span></span><span class="sig-name descname"><span class="pre">enumerate_reversed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/lines.html#enumerate_reversed"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.lines.enumerate_reversed" title="Link to this definition"></a></dt>
+<dd><p>Like <cite>reversed(enumerate(sequence))</cite> if that were possible.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.lines.append_leaves">
+<span class="sig-prename descclassname"><span class="pre">black.lines.</span></span><span class="sig-name descname"><span class="pre">append_leaves</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">leaves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Leaf</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preformatted</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/lines.html#append_leaves"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.lines.append_leaves" title="Link to this definition"></a></dt>
+<dd><p>Append leaves (taken from &#64;old_line) to &#64;new_line, making sure to fix the
+underlying Node structure where appropriate.</p>
+<p>All of the leaves in &#64;leaves are duplicated. The duplicates are then
+appended to &#64;new_line and used to replace their originals in the underlying
+Node structure. Any comments attached to the old leaves are reattached to
+the new leaves.</p>
+<dl class="simple">
+<dt>Pre-conditions:</dt><dd><p>set(&#64;leaves) is a subset of set(&#64;old_line.leaves).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.lines.is_line_short_enough">
+<span class="sig-prename descclassname"><span class="pre">black.lines.</span></span><span class="sig-name descname"><span class="pre">is_line_short_enough</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/lines.html#is_line_short_enough"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.lines.is_line_short_enough" title="Link to this definition"></a></dt>
+<dd><p>For non-multiline strings, return True if <cite>line</cite> is no longer than <cite>line_length</cite>.
+For multiline strings, looks at the context around <cite>line</cite> to determine
+if it should be inlined or split up.
+Uses the provided <cite>line_str</cite> rendering, if any, otherwise computes a new one.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.lines.can_be_split">
+<span class="sig-prename descclassname"><span class="pre">black.lines.</span></span><span class="sig-name descname"><span class="pre">can_be_split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/lines.html#can_be_split"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.lines.can_be_split" title="Link to this definition"></a></dt>
+<dd><p>Return False if the line cannot be split <em>for sure</em>.</p>
+<p>This is not an exhaustive search but a cheap heuristic that we can use to
+avoid some unfortunate formattings (mostly around wrapping unsplittable code
+in unnecessary parentheses).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.lines.can_omit_invisible_parens">
+<span class="sig-prename descclassname"><span class="pre">black.lines.</span></span><span class="sig-name descname"><span class="pre">can_omit_invisible_parens</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rhs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#black.lines.RHSResult" title="black.lines.RHSResult"><span class="pre">RHSResult</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.mode.html#black.mode.Mode" title="black.mode.Mode"><span class="pre">Mode</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/lines.html#can_omit_invisible_parens"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.lines.can_omit_invisible_parens" title="Link to this definition"></a></dt>
+<dd><p>Does <cite>rhs.body</cite> have a shape safe to reformat without optional parens around it?</p>
+<p>Returns True for only a subset of potentially nice looking formattings but
+the point is to not return false positives that end up producing lines that
+are too long.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.lines.line_to_string">
+<span class="sig-prename descclassname"><span class="pre">black.lines.</span></span><span class="sig-name descname"><span class="pre">line_to_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#black.lines.Line" title="black.lines.Line"><span class="pre">Line</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/black/lines.html#line_to_string"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.lines.line_to_string" title="Link to this definition"></a></dt>
+<dd><p>Returns the string representation of &#64;line.</p>
+<p>WARNING: This is known to be computationally expensive.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="black.linegen.html" class="btn btn-neutral float-left" title="black.linegen module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="black.mode.html" class="btn btn-neutral float-right" title="black.mode module" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2026, Laboratorio IE0417.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,580 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>black.files &mdash; documentación de Black - 0.1 (commit 8947c48)</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=0dabe907"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/translations.js?v=f85f4cfb"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Black
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenidos:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduccion.html">Introducción a Black</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Black</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Código de módulo</a></li>
+          <li class="breadcrumb-item"><a href="../black.html">black</a></li>
+      <li class="breadcrumb-item active">black.files</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Código fuente para black.files</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Sequence</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">lru_cache</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">re</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pattern</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">mypy_extensions</span><span class="w"> </span><span class="kn">import</span> <span class="n">mypyc_attr</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">packaging.specifiers</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvalidSpecifier</span><span class="p">,</span> <span class="n">Specifier</span><span class="p">,</span> <span class="n">SpecifierSet</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">packaging.version</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvalidVersion</span><span class="p">,</span> <span class="n">Version</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathspec</span><span class="w"> </span><span class="kn">import</span> <span class="n">GitIgnoreSpec</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathspec.patterns.gitignore</span><span class="w"> </span><span class="kn">import</span> <span class="n">GitIgnorePatternError</span>
+
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">11</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">tomllib</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="c1"># Help users on older alphas</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">tomli</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tomllib</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">tomli</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tomllib</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">black.handle_ipynb_magics</span><span class="w"> </span><span class="kn">import</span> <span class="n">jupyter_dependencies_are_installed</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">black.mode</span><span class="w"> </span><span class="kn">import</span> <span class="n">TargetVersion</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">black.output</span><span class="w"> </span><span class="kn">import</span> <span class="n">err</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">black.report</span><span class="w"> </span><span class="kn">import</span> <span class="n">Report</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">colorama</span>
+
+
+<span class="nd">@lru_cache</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_load_toml</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">"rb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">tomllib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+
+<span class="nd">@lru_cache</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_cached_resolve</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">path</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="find_project_root">
+<a class="viewcode-back" href="../../api/black.files.html#black.files.find_project_root">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">find_project_root</span><span class="p">(</span>
+    <span class="n">srcs</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">],</span> <span class="n">stdin_filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Return a directory containing .git, .hg, or pyproject.toml.</span>
+
+<span class="sd">    pyproject.toml files are only considered if they contain a [tool.black]</span>
+<span class="sd">    section and are ignored otherwise.</span>
+
+<span class="sd">    That directory will be a common parent of all files and directories</span>
+<span class="sd">    passed in `srcs`.</span>
+
+<span class="sd">    If no directory in the tree contains a marker that would specify it's the</span>
+<span class="sd">    project root, the root of the file system is returned.</span>
+
+<span class="sd">    Returns a two-tuple with the first element as the project root path and</span>
+<span class="sd">    the second element as a string describing the method by which the</span>
+<span class="sd">    project root was discovered.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">stdin_filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">srcs</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">stdin_filename</span> <span class="k">if</span> <span class="n">s</span> <span class="o">==</span> <span class="s2">"-"</span> <span class="k">else</span> <span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">srcs</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">srcs</span><span class="p">:</span>
+        <span class="n">resolved_srcs</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">_cached_resolve</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">())),)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">resolved_srcs</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">_cached_resolve</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">(),</span> <span class="n">src</span><span class="p">)))</span> <span class="k">for</span> <span class="n">src</span> <span class="ow">in</span> <span class="n">srcs</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">_find_project_root_cached</span><span class="p">(</span><span class="n">resolved_srcs</span><span class="p">)</span></div>
+
+
+
+<span class="nd">@lru_cache</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_find_project_root_cached</span><span class="p">(</span><span class="n">srcs</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+    <span class="n">path_srcs</span> <span class="o">=</span> <span class="p">[</span><span class="n">Path</span><span class="p">(</span><span class="n">src</span><span class="p">)</span> <span class="k">for</span> <span class="n">src</span> <span class="ow">in</span> <span class="n">srcs</span><span class="p">]</span>
+
+    <span class="c1"># A list of lists of parents for each 'src'. 'src' is included as a</span>
+    <span class="c1"># "parent" of itself if it is a directory</span>
+    <span class="n">src_parents</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="nb">list</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">parents</span><span class="p">)</span> <span class="o">+</span> <span class="p">([</span><span class="n">path</span><span class="p">]</span> <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">is_dir</span><span class="p">()</span> <span class="k">else</span> <span class="p">[])</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">path_srcs</span>
+    <span class="p">]</span>
+
+    <span class="n">common_base</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+        <span class="nb">set</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">parents</span><span class="p">)</span> <span class="k">for</span> <span class="n">parents</span> <span class="ow">in</span> <span class="n">src_parents</span><span class="p">)),</span>
+        <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">path</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">parts</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">directory</span> <span class="ow">in</span> <span class="p">(</span><span class="n">common_base</span><span class="p">,</span> <span class="o">*</span><span class="n">common_base</span><span class="o">.</span><span class="n">parents</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">directory</span> <span class="o">/</span> <span class="s2">".git"</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">directory</span><span class="p">,</span> <span class="s2">".git directory"</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">directory</span> <span class="o">/</span> <span class="s2">".hg"</span><span class="p">)</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">directory</span><span class="p">,</span> <span class="s2">".hg directory"</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">directory</span> <span class="o">/</span> <span class="s2">"pyproject.toml"</span><span class="p">)</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+            <span class="n">pyproject_toml</span> <span class="o">=</span> <span class="n">_load_toml</span><span class="p">(</span><span class="n">directory</span> <span class="o">/</span> <span class="s2">"pyproject.toml"</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">"black"</span> <span class="ow">in</span> <span class="n">pyproject_toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"tool"</span><span class="p">,</span> <span class="p">{}):</span>
+                <span class="k">return</span> <span class="n">directory</span><span class="p">,</span> <span class="s2">"pyproject.toml"</span>
+
+    <span class="k">return</span> <span class="n">directory</span><span class="p">,</span> <span class="s2">"file system root"</span>
+
+
+<div class="viewcode-block" id="find_pyproject_toml">
+<a class="viewcode-back" href="../../api/black.files.html#black.files.find_pyproject_toml">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">find_pyproject_toml</span><span class="p">(</span>
+    <span class="n">path_search_start</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">stdin_filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Find the absolute filepath to a pyproject.toml if it exists"""</span>
+    <span class="n">path_project_root</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">find_project_root</span><span class="p">(</span><span class="n">path_search_start</span><span class="p">,</span> <span class="n">stdin_filename</span><span class="p">)</span>
+    <span class="n">path_pyproject_toml</span> <span class="o">=</span> <span class="n">path_project_root</span> <span class="o">/</span> <span class="s2">"pyproject.toml"</span>
+    <span class="k">if</span> <span class="n">path_pyproject_toml</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">path_pyproject_toml</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">path_user_pyproject_toml</span> <span class="o">=</span> <span class="n">find_user_pyproject_toml</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">path_user_pyproject_toml</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">path_user_pyproject_toml</span><span class="o">.</span><span class="n">is_file</span><span class="p">()</span>
+            <span class="k">else</span> <span class="kc">None</span>
+        <span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">PermissionError</span><span class="p">,</span> <span class="ne">RuntimeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="c1"># We do not have access to the user-level config directory, so ignore it.</span>
+        <span class="n">err</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Ignoring user configuration directory due to </span><span class="si">{</span><span class="n">e</span><span class="si">!r}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="parse_pyproject_toml">
+<a class="viewcode-back" href="../../api/black.files.html#black.files.parse_pyproject_toml">[documentos]</a>
+<span class="nd">@mypyc_attr</span><span class="p">(</span><span class="n">patchable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_pyproject_toml</span><span class="p">(</span><span class="n">path_config</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Parse a pyproject toml file, pulling out relevant parts for Black.</span>
+
+<span class="sd">    If parsing fails, will raise a tomllib.TOMLDecodeError.</span>
+<span class="sd">    """</span>
+    <span class="n">pyproject_toml</span> <span class="o">=</span> <span class="n">_load_toml</span><span class="p">(</span><span class="n">path_config</span><span class="p">)</span>
+    <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">pyproject_toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"tool"</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"black"</span><span class="p">,</span> <span class="p">{})</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"--"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"-"</span><span class="p">,</span> <span class="s2">"_"</span><span class="p">):</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+    <span class="k">if</span> <span class="s2">"target_version"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
+        <span class="n">inferred_target_version</span> <span class="o">=</span> <span class="n">infer_target_version</span><span class="p">(</span><span class="n">pyproject_toml</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">inferred_target_version</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">config</span><span class="p">[</span><span class="s2">"target_version"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">inferred_target_version</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">config</span></div>
+
+
+
+<div class="viewcode-block" id="infer_target_version">
+<a class="viewcode-back" href="../../api/black.files.html#black.files.infer_target_version">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">infer_target_version</span><span class="p">(</span>
+    <span class="n">pyproject_toml</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">TargetVersion</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Infer Black's target version from the project metadata in pyproject.toml.</span>
+
+<span class="sd">    Supports the PyPA standard format (PEP 621):</span>
+<span class="sd">    https://packaging.python.org/en/latest/specifications/declaring-project-metadata/#requires-python</span>
+
+<span class="sd">    If the target version cannot be inferred, returns None.</span>
+<span class="sd">    """</span>
+    <span class="n">project_metadata</span> <span class="o">=</span> <span class="n">pyproject_toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"project"</span><span class="p">,</span> <span class="p">{})</span>
+    <span class="n">requires_python</span> <span class="o">=</span> <span class="n">project_metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"requires-python"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">requires_python</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">parse_req_python_version</span><span class="p">(</span><span class="n">requires_python</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">InvalidVersion</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">parse_req_python_specifier</span><span class="p">(</span><span class="n">requires_python</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="n">InvalidSpecifier</span><span class="p">,</span> <span class="n">InvalidVersion</span><span class="p">):</span>
+            <span class="k">pass</span>
+
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="parse_req_python_version">
+<a class="viewcode-back" href="../../api/black.files.html#black.files.parse_req_python_version">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_req_python_version</span><span class="p">(</span><span class="n">requires_python</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">TargetVersion</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Parse a version string (i.e. ``"3.7"``) to a list of TargetVersion.</span>
+
+<span class="sd">    If parsing fails, will raise a packaging.version.InvalidVersion error.</span>
+<span class="sd">    If the parsed version cannot be mapped to a valid TargetVersion, returns None.</span>
+<span class="sd">    """</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="n">Version</span><span class="p">(</span><span class="n">requires_python</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">version</span><span class="o">.</span><span class="n">release</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">TargetVersion</span><span class="p">(</span><span class="n">version</span><span class="o">.</span><span class="n">release</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">IndexError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="parse_req_python_specifier">
+<a class="viewcode-back" href="../../api/black.files.html#black.files.parse_req_python_specifier">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_req_python_specifier</span><span class="p">(</span><span class="n">requires_python</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">TargetVersion</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Parse a specifier string (i.e. ``"&gt;=3.7,&lt;3.10"``) to a list of TargetVersion.</span>
+
+<span class="sd">    If parsing fails, will raise a packaging.specifiers.InvalidSpecifier error.</span>
+<span class="sd">    If the parsed specifier cannot be mapped to a valid TargetVersion, returns None.</span>
+<span class="sd">    """</span>
+    <span class="n">specifier_set</span> <span class="o">=</span> <span class="n">strip_specifier_set</span><span class="p">(</span><span class="n">SpecifierSet</span><span class="p">(</span><span class="n">requires_python</span><span class="p">))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">specifier_set</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="n">target_version_map</span> <span class="o">=</span> <span class="p">{</span><span class="sa">f</span><span class="s2">"3.</span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">"</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">TargetVersion</span><span class="p">}</span>
+    <span class="n">compatible_versions</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">specifier_set</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">target_version_map</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">compatible_versions</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">target_version_map</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">compatible_versions</span><span class="p">]</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="strip_specifier_set">
+<a class="viewcode-back" href="../../api/black.files.html#black.files.strip_specifier_set">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">strip_specifier_set</span><span class="p">(</span><span class="n">specifier_set</span><span class="p">:</span> <span class="n">SpecifierSet</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpecifierSet</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Strip minor versions for some specifiers in the specifier set.</span>
+
+<span class="sd">    For background on version specifiers, see PEP 440:</span>
+<span class="sd">    https://peps.python.org/pep-0440/#version-specifiers</span>
+<span class="sd">    """</span>
+    <span class="n">specifiers</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">specifier_set</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">"*"</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+            <span class="n">specifiers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">s</span><span class="o">.</span><span class="n">operator</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"~="</span><span class="p">,</span> <span class="s2">"=="</span><span class="p">,</span> <span class="s2">"&gt;="</span><span class="p">,</span> <span class="s2">"==="</span><span class="p">]:</span>
+            <span class="n">version</span> <span class="o">=</span> <span class="n">Version</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">version</span><span class="p">)</span>
+            <span class="n">stripped</span> <span class="o">=</span> <span class="n">Specifier</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">s</span><span class="o">.</span><span class="n">operator</span><span class="si">}{</span><span class="n">version</span><span class="o">.</span><span class="n">major</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">version</span><span class="o">.</span><span class="n">minor</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+            <span class="n">specifiers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stripped</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">s</span><span class="o">.</span><span class="n">operator</span> <span class="o">==</span> <span class="s2">"&gt;"</span><span class="p">:</span>
+            <span class="n">version</span> <span class="o">=</span> <span class="n">Version</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">version</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">version</span><span class="o">.</span><span class="n">release</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="n">Specifier</span><span class="p">(</span><span class="sa">f</span><span class="s2">"&gt;=</span><span class="si">{</span><span class="n">version</span><span class="o">.</span><span class="n">major</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">version</span><span class="o">.</span><span class="n">minor</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+            <span class="n">specifiers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">specifiers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">SpecifierSet</span><span class="p">(</span><span class="s2">","</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">specifiers</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="find_user_pyproject_toml">
+<a class="viewcode-back" href="../../api/black.files.html#black.files.find_user_pyproject_toml">[documentos]</a>
+<span class="nd">@lru_cache</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">find_user_pyproject_toml</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Return the path to the top-level user configuration for black.</span>
+
+<span class="sd">    This looks for ~\.black on Windows and ~/.config/black on Linux and other</span>
+<span class="sd">    Unix systems.</span>
+
+<span class="sd">    May raise:</span>
+<span class="sd">    - RuntimeError: if the current user has no homedir</span>
+<span class="sd">    - PermissionError: if the current process cannot access the user's homedir</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span> <span class="o">==</span> <span class="s2">"win32"</span><span class="p">:</span>
+        <span class="c1"># Windows</span>
+        <span class="n">user_config_path</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s2">".black"</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">config_root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"XDG_CONFIG_HOME"</span><span class="p">,</span> <span class="s2">"~/.config"</span><span class="p">)</span>
+        <span class="n">user_config_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">config_root</span><span class="p">)</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span> <span class="o">/</span> <span class="s2">"black"</span>
+    <span class="k">return</span> <span class="n">_cached_resolve</span><span class="p">(</span><span class="n">user_config_path</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_gitignore">
+<a class="viewcode-back" href="../../api/black.files.html#black.files.get_gitignore">[documentos]</a>
+<span class="nd">@lru_cache</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_gitignore</span><span class="p">(</span><span class="n">root</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GitIgnoreSpec</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Return a GitIgnoreSpec matching gitignore content if present."""</span>
+    <span class="n">gitignore</span> <span class="o">=</span> <span class="n">root</span> <span class="o">/</span> <span class="s2">".gitignore"</span>
+    <span class="n">lines</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">gitignore</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+        <span class="k">with</span> <span class="n">gitignore</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">gf</span><span class="p">:</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="n">gf</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">GitIgnoreSpec</span><span class="o">.</span><span class="n">from_lines</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">GitIgnorePatternError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">err</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Could not parse </span><span class="si">{</span><span class="n">gitignore</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">raise</span></div>
+
+
+
+<div class="viewcode-block" id="resolves_outside_root_or_cannot_stat">
+<a class="viewcode-back" href="../../api/black.files.html#black.files.resolves_outside_root_or_cannot_stat">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">resolves_outside_root_or_cannot_stat</span><span class="p">(</span>
+    <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+    <span class="n">root</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+    <span class="n">report</span><span class="p">:</span> <span class="n">Report</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Returns whether the path is a symbolic link that points outside the</span>
+<span class="sd">    root directory. Also returns True if we failed to resolve the path.</span>
+<span class="sd">    """</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">resolved_path</span> <span class="o">=</span> <span class="n">_cached_resolve</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">report</span><span class="p">:</span>
+            <span class="n">report</span><span class="o">.</span><span class="n">path_ignored</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"cannot be read because </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">resolved_path</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">report</span><span class="p">:</span>
+            <span class="n">report</span><span class="o">.</span><span class="n">path_ignored</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"is a symbolic link that points outside </span><span class="si">{</span><span class="n">root</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+
+
+<div class="viewcode-block" id="best_effort_relative_path">
+<a class="viewcode-back" href="../../api/black.files.html#black.files.best_effort_relative_path">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">best_effort_relative_path</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+    <span class="c1"># Precondition: resolves_outside_root_or_cannot_stat(path, root) is False</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">path</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="n">root_parent</span> <span class="o">=</span> <span class="nb">next</span><span class="p">((</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">path</span><span class="o">.</span><span class="n">parents</span> <span class="k">if</span> <span class="n">_cached_resolve</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">==</span> <span class="n">root</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">root_parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">path</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="n">root_parent</span><span class="p">)</span>
+    <span class="c1"># something adversarial, fallback to path guaranteed by precondition</span>
+    <span class="k">return</span> <span class="n">_cached_resolve</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="n">root</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_path_is_ignored</span><span class="p">(</span>
+    <span class="n">root_relative_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">root</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+    <span class="n">gitignore_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="n">GitIgnoreSpec</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">root</span> <span class="o">/</span> <span class="n">root_relative_path</span>
+    <span class="c1"># Note that this logic is sensitive to the ordering of gitignore_dict. Callers must</span>
+    <span class="c1"># ensure that gitignore_dict is ordered from least specific to most specific.</span>
+    <span class="k">for</span> <span class="n">gitignore_path</span><span class="p">,</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">gitignore_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">relative_path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="n">gitignore_path</span><span class="p">)</span><span class="o">.</span><span class="n">as_posix</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+                <span class="n">relative_path</span> <span class="o">=</span> <span class="n">relative_path</span> <span class="o">+</span> <span class="s2">"/"</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="k">if</span> <span class="n">pattern</span><span class="o">.</span><span class="n">match_file</span><span class="p">(</span><span class="n">relative_path</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+
+
+<div class="viewcode-block" id="path_is_excluded">
+<a class="viewcode-back" href="../../api/black.files.html#black.files.path_is_excluded">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">path_is_excluded</span><span class="p">(</span>
+    <span class="n">normalized_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">pattern</span><span class="p">:</span> <span class="n">Pattern</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">normalized_path</span><span class="p">)</span> <span class="k">if</span> <span class="n">pattern</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">match</span> <span class="ow">and</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="gen_python_files">
+<a class="viewcode-back" href="../../api/black.files.html#black.files.gen_python_files">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">gen_python_files</span><span class="p">(</span>
+    <span class="n">paths</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Path</span><span class="p">],</span>
+    <span class="n">root</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+    <span class="n">include</span><span class="p">:</span> <span class="n">Pattern</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">exclude</span><span class="p">:</span> <span class="n">Pattern</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">extend_exclude</span><span class="p">:</span> <span class="n">Pattern</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">force_exclude</span><span class="p">:</span> <span class="n">Pattern</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">report</span><span class="p">:</span> <span class="n">Report</span><span class="p">,</span>
+    <span class="n">gitignore_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="n">GitIgnoreSpec</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="n">quiet</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Path</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Generate all files under `path` whose paths are not excluded by the</span>
+<span class="sd">    `exclude_regex`, `extend_exclude`, or `force_exclude` regexes,</span>
+<span class="sd">    but are included by the `include` regex.</span>
+
+<span class="sd">    Symbolic links pointing outside of the `root` directory are ignored.</span>
+
+<span class="sd">    `report` is where output about exclusions goes.</span>
+<span class="sd">    """</span>
+
+    <span class="k">assert</span> <span class="n">root</span><span class="o">.</span><span class="n">is_absolute</span><span class="p">(),</span> <span class="sa">f</span><span class="s2">"INTERNAL ERROR: `root` must be absolute but is </span><span class="si">{</span><span class="n">root</span><span class="si">}</span><span class="s2">"</span>
+    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">child</span><span class="o">.</span><span class="n">is_absolute</span><span class="p">()</span>
+        <span class="n">root_relative_path</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="n">root</span><span class="p">)</span><span class="o">.</span><span class="n">as_posix</span><span class="p">()</span>
+
+        <span class="c1"># First ignore files matching .gitignore, if passed</span>
+        <span class="k">if</span> <span class="n">gitignore_dict</span> <span class="ow">and</span> <span class="n">_path_is_ignored</span><span class="p">(</span>
+            <span class="n">root_relative_path</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">gitignore_dict</span>
+        <span class="p">):</span>
+            <span class="n">report</span><span class="o">.</span><span class="n">path_ignored</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="s2">"matches a .gitignore file content"</span><span class="p">)</span>
+            <span class="k">continue</span>
+
+        <span class="c1"># Then ignore with `--exclude` `--extend-exclude` and `--force-exclude` options.</span>
+        <span class="n">root_relative_path</span> <span class="o">=</span> <span class="s2">"/"</span> <span class="o">+</span> <span class="n">root_relative_path</span>
+        <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+            <span class="n">root_relative_path</span> <span class="o">+=</span> <span class="s2">"/"</span>
+
+        <span class="k">if</span> <span class="n">path_is_excluded</span><span class="p">(</span><span class="n">root_relative_path</span><span class="p">,</span> <span class="n">exclude</span><span class="p">):</span>
+            <span class="n">report</span><span class="o">.</span><span class="n">path_ignored</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="s2">"matches the --exclude regular expression"</span><span class="p">)</span>
+            <span class="k">continue</span>
+
+        <span class="k">if</span> <span class="n">path_is_excluded</span><span class="p">(</span><span class="n">root_relative_path</span><span class="p">,</span> <span class="n">extend_exclude</span><span class="p">):</span>
+            <span class="n">report</span><span class="o">.</span><span class="n">path_ignored</span><span class="p">(</span>
+                <span class="n">child</span><span class="p">,</span> <span class="s2">"matches the --extend-exclude regular expression"</span>
+            <span class="p">)</span>
+            <span class="k">continue</span>
+
+        <span class="k">if</span> <span class="n">path_is_excluded</span><span class="p">(</span><span class="n">root_relative_path</span><span class="p">,</span> <span class="n">force_exclude</span><span class="p">):</span>
+            <span class="n">report</span><span class="o">.</span><span class="n">path_ignored</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="s2">"matches the --force-exclude regular expression"</span><span class="p">)</span>
+            <span class="k">continue</span>
+
+        <span class="k">if</span> <span class="n">resolves_outside_root_or_cannot_stat</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">report</span><span class="p">):</span>
+            <span class="k">continue</span>
+
+        <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+            <span class="c1"># If gitignore is None, gitignore usage is disabled, while a Falsey</span>
+            <span class="c1"># gitignore is when the directory doesn't have a .gitignore file.</span>
+            <span class="k">if</span> <span class="n">gitignore_dict</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">new_gitignore_dict</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="o">**</span><span class="n">gitignore_dict</span><span class="p">,</span>
+                    <span class="n">root</span> <span class="o">/</span> <span class="n">child</span><span class="p">:</span> <span class="n">get_gitignore</span><span class="p">(</span><span class="n">child</span><span class="p">),</span>
+                <span class="p">}</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">new_gitignore_dict</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">yield from</span> <span class="n">gen_python_files</span><span class="p">(</span>
+                <span class="n">child</span><span class="o">.</span><span class="n">iterdir</span><span class="p">(),</span>
+                <span class="n">root</span><span class="p">,</span>
+                <span class="n">include</span><span class="p">,</span>
+                <span class="n">exclude</span><span class="p">,</span>
+                <span class="n">extend_exclude</span><span class="p">,</span>
+                <span class="n">force_exclude</span><span class="p">,</span>
+                <span class="n">report</span><span class="p">,</span>
+                <span class="n">new_gitignore_dict</span><span class="p">,</span>
+                <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+                <span class="n">quiet</span><span class="o">=</span><span class="n">quiet</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">child</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">".ipynb"</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">jupyter_dependencies_are_installed</span><span class="p">(</span>
+                <span class="n">warn</span><span class="o">=</span><span class="n">verbose</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">quiet</span>
+            <span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="n">include_match</span> <span class="o">=</span> <span class="n">include</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">root_relative_path</span><span class="p">)</span> <span class="k">if</span> <span class="n">include</span> <span class="k">else</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="n">include_match</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">child</span></div>
+
+
+
+<div class="viewcode-block" id="wrap_stream_for_windows">
+<a class="viewcode-back" href="../../api/black.files.html#black.files.wrap_stream_for_windows">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">wrap_stream_for_windows</span><span class="p">(</span>
+    <span class="n">f</span><span class="p">:</span> <span class="n">io</span><span class="o">.</span><span class="n">TextIOWrapper</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">io</span><span class="o">.</span><span class="n">TextIOWrapper</span><span class="p">,</span> <span class="s2">"colorama.AnsiToWin32"</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Wrap stream with colorama's wrap_stream so colors are shown on Windows.</span>
+
+<span class="sd">    If `colorama` is unavailable, the original stream is returned unmodified.</span>
+<span class="sd">    Otherwise, the `wrap_stream()` function determines whether the stream needs</span>
+<span class="sd">    to be wrapped for a Windows environment and will accordingly either return</span>
+<span class="sd">    an `AnsiToWin32` wrapper or the original stream.</span>
+<span class="sd">    """</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">colorama.initialise</span><span class="w"> </span><span class="kn">import</span> <span class="n">wrap_stream</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">f</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Set `strip=False` to avoid needing to modify test_express_diff_with_color.</span>
+        <span class="k">return</span> <span class="n">wrap_stream</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">convert</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">strip</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">autoreset</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">wrap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2026, Laboratorio IE0417.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,239 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>black.files module &mdash; documentación de Black - 0.1 (commit 8947c48)</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=0dabe907"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=f85f4cfb"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+    <link rel="next" title="black.handle_ipynb_magics module" href="black.handle_ipynb_magics.html" />
+    <link rel="prev" title="black.debug module" href="black.debug.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Black
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenidos:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../introduccion.html">Introducción a Black</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduccion.html#que-es-black">¿Qué es Black?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduccion.html#organizacion-del-codigo-fuente">Organización del código fuente</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../introduccion.html#alcance-de-esta-documentacion">Alcance de esta documentación</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="modules.html">black</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="black.html">black package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Black</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../introduccion.html">Introducción a Black</a></li>
+          <li class="breadcrumb-item"><a href="modules.html">black</a></li>
+          <li class="breadcrumb-item"><a href="black.html">black package</a></li>
+      <li class="breadcrumb-item active">black.files module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/black.files.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-black.files">
+<span id="black-files-module"></span><h1>black.files module<a class="headerlink" href="#module-black.files" title="Link to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="black.files.find_project_root">
+<span class="sig-prename descclassname"><span class="pre">black.files.</span></span><span class="sig-name descname"><span class="pre">find_project_root</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">srcs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdin_filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/files.html#find_project_root"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.files.find_project_root" title="Link to this definition"></a></dt>
+<dd><p>Return a directory containing .git, .hg, or pyproject.toml.</p>
+<p>pyproject.toml files are only considered if they contain a [tool.black]
+section and are ignored otherwise.</p>
+<p>That directory will be a common parent of all files and directories
+passed in <cite>srcs</cite>.</p>
+<p>If no directory in the tree contains a marker that would specify it’s the
+project root, the root of the file system is returned.</p>
+<p>Returns a two-tuple with the first element as the project root path and
+the second element as a string describing the method by which the
+project root was discovered.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.files.find_pyproject_toml">
+<span class="sig-prename descclassname"><span class="pre">black.files.</span></span><span class="sig-name descname"><span class="pre">find_pyproject_toml</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_search_start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdin_filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/files.html#find_pyproject_toml"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.files.find_pyproject_toml" title="Link to this definition"></a></dt>
+<dd><p>Find the absolute filepath to a pyproject.toml if it exists</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.files.parse_pyproject_toml">
+<span class="sig-prename descclassname"><span class="pre">black.files.</span></span><span class="sig-name descname"><span class="pre">parse_pyproject_toml</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/files.html#parse_pyproject_toml"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.files.parse_pyproject_toml" title="Link to this definition"></a></dt>
+<dd><p>Parse a pyproject toml file, pulling out relevant parts for Black.</p>
+<p>If parsing fails, will raise a tomllib.TOMLDecodeError.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.files.infer_target_version">
+<span class="sig-prename descclassname"><span class="pre">black.files.</span></span><span class="sig-name descname"><span class="pre">infer_target_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pyproject_toml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.mode.html#black.mode.TargetVersion" title="black.mode.TargetVersion"><span class="pre">TargetVersion</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/files.html#infer_target_version"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.files.infer_target_version" title="Link to this definition"></a></dt>
+<dd><p>Infer Black’s target version from the project metadata in pyproject.toml.</p>
+<p>Supports the PyPA standard format (PEP 621):
+<a class="reference external" href="https://packaging.python.org/en/latest/specifications/declaring-project-metadata/#requires-python">https://packaging.python.org/en/latest/specifications/declaring-project-metadata/#requires-python</a></p>
+<p>If the target version cannot be inferred, returns None.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.files.parse_req_python_version">
+<span class="sig-prename descclassname"><span class="pre">black.files.</span></span><span class="sig-name descname"><span class="pre">parse_req_python_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">requires_python</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.mode.html#black.mode.TargetVersion" title="black.mode.TargetVersion"><span class="pre">TargetVersion</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/files.html#parse_req_python_version"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.files.parse_req_python_version" title="Link to this definition"></a></dt>
+<dd><p>Parse a version string (i.e. <code class="docutils literal notranslate"><span class="pre">&quot;3.7&quot;</span></code>) to a list of TargetVersion.</p>
+<p>If parsing fails, will raise a packaging.version.InvalidVersion error.
+If the parsed version cannot be mapped to a valid TargetVersion, returns None.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.files.parse_req_python_specifier">
+<span class="sig-prename descclassname"><span class="pre">black.files.</span></span><span class="sig-name descname"><span class="pre">parse_req_python_specifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">requires_python</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="black.mode.html#black.mode.TargetVersion" title="black.mode.TargetVersion"><span class="pre">TargetVersion</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/files.html#parse_req_python_specifier"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.files.parse_req_python_specifier" title="Link to this definition"></a></dt>
+<dd><p>Parse a specifier string (i.e. <code class="docutils literal notranslate"><span class="pre">&quot;&gt;=3.7,&lt;3.10&quot;</span></code>) to a list of TargetVersion.</p>
+<p>If parsing fails, will raise a packaging.specifiers.InvalidSpecifier error.
+If the parsed specifier cannot be mapped to a valid TargetVersion, returns None.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.files.strip_specifier_set">
+<span class="sig-prename descclassname"><span class="pre">black.files.</span></span><span class="sig-name descname"><span class="pre">strip_specifier_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">specifier_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SpecifierSet</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">SpecifierSet</span></span></span><a class="reference internal" href="../_modules/black/files.html#strip_specifier_set"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.files.strip_specifier_set" title="Link to this definition"></a></dt>
+<dd><p>Strip minor versions for some specifiers in the specifier set.</p>
+<p>For background on version specifiers, see PEP 440:
+<a class="reference external" href="https://peps.python.org/pep-0440/#version-specifiers">https://peps.python.org/pep-0440/#version-specifiers</a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.files.find_user_pyproject_toml">
+<span class="sig-prename descclassname"><span class="pre">black.files.</span></span><span class="sig-name descname"><span class="pre">find_user_pyproject_toml</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Path</span></span></span><a class="reference internal" href="../_modules/black/files.html#find_user_pyproject_toml"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.files.find_user_pyproject_toml" title="Link to this definition"></a></dt>
+<dd><p>Return the path to the top-level user configuration for black.</p>
+<p>This looks for ~.black on Windows and ~/.config/black on Linux and other
+Unix systems.</p>
+<p>May raise:
+- RuntimeError: if the current user has no homedir
+- PermissionError: if the current process cannot access the user’s homedir</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.files.get_gitignore">
+<span class="sig-prename descclassname"><span class="pre">black.files.</span></span><span class="sig-name descname"><span class="pre">get_gitignore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">GitIgnoreSpec</span></span></span><a class="reference internal" href="../_modules/black/files.html#get_gitignore"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.files.get_gitignore" title="Link to this definition"></a></dt>
+<dd><p>Return a GitIgnoreSpec matching gitignore content if present.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.files.resolves_outside_root_or_cannot_stat">
+<span class="sig-prename descclassname"><span class="pre">black.files.</span></span><span class="sig-name descname"><span class="pre">resolves_outside_root_or_cannot_stat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">report</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.report.html#black.report.Report" title="black.report.Report"><span class="pre">Report</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/files.html#resolves_outside_root_or_cannot_stat"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.files.resolves_outside_root_or_cannot_stat" title="Link to this definition"></a></dt>
+<dd><p>Returns whether the path is a symbolic link that points outside the
+root directory. Also returns True if we failed to resolve the path.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.files.best_effort_relative_path">
+<span class="sig-prename descclassname"><span class="pre">black.files.</span></span><span class="sig-name descname"><span class="pre">best_effort_relative_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Path</span></span></span><a class="reference internal" href="../_modules/black/files.html#best_effort_relative_path"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.files.best_effort_relative_path" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.files.path_is_excluded">
+<span class="sig-prename descclassname"><span class="pre">black.files.</span></span><span class="sig-name descname"><span class="pre">path_is_excluded</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">normalized_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Pattern</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/files.html#path_is_excluded"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.files.path_is_excluded" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.files.gen_python_files">
+<span class="sig-prename descclassname"><span class="pre">black.files.</span></span><span class="sig-name descname"><span class="pre">gen_python_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">paths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Pattern</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Pattern</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extend_exclude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Pattern</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_exclude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Pattern</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">report</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="black.report.html#black.report.Report" title="black.report.Report"><span class="pre">Report</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">gitignore_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">GitIgnoreSpec</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quiet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/files.html#gen_python_files"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.files.gen_python_files" title="Link to this definition"></a></dt>
+<dd><p>Generate all files under <cite>path</cite> whose paths are not excluded by the
+<cite>exclude_regex</cite>, <cite>extend_exclude</cite>, or <cite>force_exclude</cite> regexes,
+but are included by the <cite>include</cite> regex.</p>
+<p>Symbolic links pointing outside of the <cite>root</cite> directory are ignored.</p>
+<p><cite>report</cite> is where output about exclusions goes.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.files.wrap_stream_for_windows">
+<span class="sig-prename descclassname"><span class="pre">black.files.</span></span><span class="sig-name descname"><span class="pre">wrap_stream_for_windows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">TextIOWrapper</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">TextIOWrapper</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">colorama.AnsiToWin32</span></span></span><a class="reference internal" href="../_modules/black/files.html#wrap_stream_for_windows"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.files.wrap_stream_for_windows" title="Link to this definition"></a></dt>
+<dd><p>Wrap stream with colorama’s wrap_stream so colors are shown on Windows.</p>
+<p>If <cite>colorama</cite> is unavailable, the original stream is returned unmodified.
+Otherwise, the <cite>wrap_stream()</cite> function determines whether the stream needs
+to be wrapped for a Windows environment and will accordingly either return
+an <cite>AnsiToWin32</cite> wrapper or the original stream.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="black.debug.html" class="btn btn-neutral float-left" title="black.debug module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="black.handle_ipynb_magics.html" class="btn btn-neutral float-right" title="black.handle_ipynb_magics module" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2026, Laboratorio IE0417.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

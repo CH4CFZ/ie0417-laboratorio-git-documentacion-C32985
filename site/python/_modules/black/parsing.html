@@ -1,0 +1,419 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>black.parsing &mdash; documentación de Black - 0.1 (commit 8947c48)</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=0dabe907"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/translations.js?v=f85f4cfb"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Black
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenidos:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduccion.html">Introducción a Black</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Black</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Código de módulo</a></li>
+          <li class="breadcrumb-item"><a href="../black.html">black</a></li>
+      <li class="breadcrumb-item active">black.parsing</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Código fuente para black.parsing</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""</span>
+<span class="sd">Parse Python code and perform AST validation.</span>
+<span class="sd">"""</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">ast</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Collection</span><span class="p">,</span> <span class="n">Iterator</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">black.mode</span><span class="w"> </span><span class="kn">import</span> <span class="n">VERSION_TO_FEATURES</span><span class="p">,</span> <span class="n">Feature</span><span class="p">,</span> <span class="n">TargetVersion</span><span class="p">,</span> <span class="n">supports_feature</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">black.nodes</span><span class="w"> </span><span class="kn">import</span> <span class="n">syms</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">blib2to3</span><span class="w"> </span><span class="kn">import</span> <span class="n">pygram</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">blib2to3.pgen2</span><span class="w"> </span><span class="kn">import</span> <span class="n">driver</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">blib2to3.pgen2.grammar</span><span class="w"> </span><span class="kn">import</span> <span class="n">Grammar</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">blib2to3.pgen2.parse</span><span class="w"> </span><span class="kn">import</span> <span class="n">ParseError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">blib2to3.pgen2.tokenize</span><span class="w"> </span><span class="kn">import</span> <span class="n">TokenError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">blib2to3.pytree</span><span class="w"> </span><span class="kn">import</span> <span class="n">Leaf</span><span class="p">,</span> <span class="n">Node</span>
+
+
+<div class="viewcode-block" id="InvalidInput">
+<a class="viewcode-back" href="../../api/black.parsing.html#black.parsing.InvalidInput">[documentos]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">InvalidInput</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Raised when input source code fails all parse attempts."""</span>
+
+    <span class="n">lineno</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">column</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">context</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">details</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">lineno</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">column</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">context</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">details</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">details</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lineno</span> <span class="o">=</span> <span class="n">lineno</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">column</span> <span class="o">=</span> <span class="n">column</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">details</span> <span class="o">=</span> <span class="n">details</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+
+
+
+<div class="viewcode-block" id="get_grammars">
+<a class="viewcode-back" href="../../api/black.parsing.html#black.parsing.get_grammars">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_grammars</span><span class="p">(</span><span class="n">target_versions</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="n">TargetVersion</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Grammar</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">target_versions</span><span class="p">:</span>
+        <span class="c1"># No target_version specified, so try all grammars.</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="c1"># Python 3.7-3.9</span>
+            <span class="n">pygram</span><span class="o">.</span><span class="n">python_grammar_async_keywords</span><span class="p">,</span>
+            <span class="c1"># Python 3.0-3.6</span>
+            <span class="n">pygram</span><span class="o">.</span><span class="n">python_grammar</span><span class="p">,</span>
+            <span class="c1"># Python 3.10+</span>
+            <span class="n">pygram</span><span class="o">.</span><span class="n">python_grammar_soft_keywords</span><span class="p">,</span>
+        <span class="p">]</span>
+
+    <span class="n">grammars</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># If we have to parse both, try to parse async as a keyword first</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">supports_feature</span><span class="p">(</span>
+        <span class="n">target_versions</span><span class="p">,</span> <span class="n">Feature</span><span class="o">.</span><span class="n">ASYNC_IDENTIFIERS</span>
+    <span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">supports_feature</span><span class="p">(</span><span class="n">target_versions</span><span class="p">,</span> <span class="n">Feature</span><span class="o">.</span><span class="n">PATTERN_MATCHING</span><span class="p">):</span>
+        <span class="c1"># Python 3.7-3.9</span>
+        <span class="n">grammars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pygram</span><span class="o">.</span><span class="n">python_grammar_async_keywords</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">supports_feature</span><span class="p">(</span><span class="n">target_versions</span><span class="p">,</span> <span class="n">Feature</span><span class="o">.</span><span class="n">ASYNC_KEYWORDS</span><span class="p">):</span>
+        <span class="c1"># Python 3.0-3.6</span>
+        <span class="n">grammars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pygram</span><span class="o">.</span><span class="n">python_grammar</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">Feature</span><span class="o">.</span><span class="n">PATTERN_MATCHING</span> <span class="ow">in</span> <span class="n">VERSION_TO_FEATURES</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">target_versions</span><span class="p">):</span>
+        <span class="c1"># Python 3.10+</span>
+        <span class="n">grammars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pygram</span><span class="o">.</span><span class="n">python_grammar_soft_keywords</span><span class="p">)</span>
+
+    <span class="c1"># At least one of the above branches must have been taken, because every Python</span>
+    <span class="c1"># version has exactly one of the two 'ASYNC_*' flags</span>
+    <span class="k">return</span> <span class="n">grammars</span></div>
+
+
+
+<div class="viewcode-block" id="lib2to3_parse">
+<a class="viewcode-back" href="../../api/black.parsing.html#black.parsing.lib2to3_parse">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">lib2to3_parse</span><span class="p">(</span>
+    <span class="n">src_txt</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">target_versions</span><span class="p">:</span> <span class="n">Collection</span><span class="p">[</span><span class="n">TargetVersion</span><span class="p">]</span> <span class="o">=</span> <span class="p">()</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Node</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Given a string with source, return the lib2to3 Node."""</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">src_txt</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">):</span>
+        <span class="n">src_txt</span> <span class="o">+=</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
+
+    <span class="n">grammars</span> <span class="o">=</span> <span class="n">get_grammars</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">target_versions</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">target_versions</span><span class="p">:</span>
+        <span class="n">max_tv</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">target_versions</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">tv</span><span class="p">:</span> <span class="n">tv</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">tv_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">" for target version </span><span class="si">{</span><span class="n">max_tv</span><span class="o">.</span><span class="n">pretty</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">tv_str</span> <span class="o">=</span> <span class="s2">""</span>
+
+    <span class="n">errors</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">grammar</span> <span class="ow">in</span> <span class="n">grammars</span><span class="p">:</span>
+        <span class="n">drv</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">Driver</span><span class="p">(</span><span class="n">grammar</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">drv</span><span class="o">.</span><span class="n">parse_string</span><span class="p">(</span><span class="n">src_txt</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+            <span class="k">break</span>
+
+        <span class="k">except</span> <span class="n">ParseError</span> <span class="k">as</span> <span class="n">pe</span><span class="p">:</span>
+            <span class="n">lineno</span><span class="p">,</span> <span class="n">column</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">context</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="n">src_txt</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">faulty_line</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">lineno</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                <span class="n">faulty_line</span> <span class="o">=</span> <span class="s2">"&lt;line number missing in source&gt;"</span>
+            <span class="n">context</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"cannot parse</span><span class="si">{</span><span class="n">tv_str</span><span class="si">}</span><span class="s2">"</span>
+            <span class="n">details</span> <span class="o">=</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">((</span>
+                <span class="s2">""</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">"    </span><span class="si">{</span><span class="n">faulty_line</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">"    </span><span class="si">{</span><span class="s1">' '</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">column</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="s2">^"</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">"ParseError: </span><span class="si">{</span><span class="n">pe</span><span class="o">.</span><span class="n">msg</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+            <span class="p">))</span>
+            <span class="n">error_msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">context</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">lineno</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">column</span><span class="si">}{</span><span class="n">details</span><span class="si">}</span><span class="s2">"</span>
+            <span class="n">errors</span><span class="p">[</span><span class="n">grammar</span><span class="o">.</span><span class="n">version</span><span class="p">]</span> <span class="o">=</span> <span class="n">InvalidInput</span><span class="p">(</span>
+                <span class="n">error_msg</span><span class="p">,</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">details</span>
+            <span class="p">)</span>
+
+        <span class="k">except</span> <span class="n">TokenError</span> <span class="k">as</span> <span class="n">te</span><span class="p">:</span>
+            <span class="n">lineno</span><span class="p">,</span> <span class="n">column</span> <span class="o">=</span> <span class="n">te</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="n">src_txt</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">faulty_line</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">lineno</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                <span class="n">faulty_line</span> <span class="o">=</span> <span class="s2">"&lt;line number missing in source&gt;"</span>
+            <span class="n">context</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"cannot parse</span><span class="si">{</span><span class="n">tv_str</span><span class="si">}</span><span class="s2">"</span>
+            <span class="n">details</span> <span class="o">=</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">((</span>
+                <span class="s2">""</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">"    </span><span class="si">{</span><span class="n">faulty_line</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">"    </span><span class="si">{</span><span class="s1">' '</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">column</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="s2">^"</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">"TokenError: </span><span class="si">{</span><span class="n">te</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+            <span class="p">))</span>
+            <span class="n">error_msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">context</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">lineno</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">column</span><span class="si">}{</span><span class="n">details</span><span class="si">}</span><span class="s2">"</span>
+            <span class="n">errors</span><span class="p">[</span><span class="n">grammar</span><span class="o">.</span><span class="n">version</span><span class="p">]</span> <span class="o">=</span> <span class="n">InvalidInput</span><span class="p">(</span>
+                <span class="n">error_msg</span><span class="p">,</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">details</span>
+            <span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Choose the latest version when raising the actual parsing error.</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span>
+        <span class="n">exc</span> <span class="o">=</span> <span class="n">errors</span><span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="n">errors</span><span class="p">)]</span>
+        <span class="k">raise</span> <span class="n">exc</span> <span class="kn">from</span><span class="w"> </span><span class="kc">None</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">Leaf</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">syms</span><span class="o">.</span><span class="n">file_input</span><span class="p">,</span> <span class="p">[</span><span class="n">result</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+
+<div class="viewcode-block" id="ASTSafetyError">
+<a class="viewcode-back" href="../../api/black.parsing.html#black.parsing.ASTSafetyError">[documentos]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ASTSafetyError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Raised when Black's generated code is not equivalent to the old AST."""</span></div>
+
+
+
+<div class="viewcode-block" id="SourceASTParseError">
+<a class="viewcode-back" href="../../api/black.parsing.html#black.parsing.SourceASTParseError">[documentos]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SourceASTParseError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Raised when the source file cannot be parsed by ast.parse().</span>
+
+<span class="sd">    This is not a bug in Black — Black's lib2to3-based parser is more lenient</span>
+<span class="sd">    than Python's ast.parse(), so it may accept code that ast.parse() rejects.</span>
+<span class="sd">    In blackd, this should be reported as a 400 Bad Request.</span>
+<span class="sd">    """</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_parse_single_version</span><span class="p">(</span>
+    <span class="n">src</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="o">*</span><span class="p">,</span> <span class="n">type_comments</span><span class="p">:</span> <span class="nb">bool</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ast</span><span class="o">.</span><span class="n">AST</span><span class="p">:</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="s2">"&lt;unknown&gt;"</span>
+    <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">"ignore"</span><span class="p">,</span> <span class="ne">SyntaxWarning</span><span class="p">)</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">"ignore"</span><span class="p">,</span> <span class="ne">DeprecationWarning</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ast</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span>
+            <span class="n">src</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">feature_version</span><span class="o">=</span><span class="n">version</span><span class="p">,</span> <span class="n">type_comments</span><span class="o">=</span><span class="n">type_comments</span>
+        <span class="p">)</span>
+
+
+<div class="viewcode-block" id="parse_ast">
+<a class="viewcode-back" href="../../api/black.parsing.html#black.parsing.parse_ast">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_ast</span><span class="p">(</span><span class="n">src</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ast</span><span class="o">.</span><span class="n">AST</span><span class="p">:</span>
+    <span class="c1"># TODO: support Python 4+ ;)</span>
+    <span class="n">versions</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">3</span><span class="p">,</span> <span class="n">minor</span><span class="p">)</span> <span class="k">for</span> <span class="n">minor</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+
+    <span class="n">first_error</span> <span class="o">=</span> <span class="s2">""</span>
+    <span class="k">for</span> <span class="n">version</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">versions</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_parse_single_version</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">type_comments</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">SyntaxError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">first_error</span><span class="p">:</span>
+                <span class="n">first_error</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+    <span class="c1"># Try to parse without type comments</span>
+    <span class="k">for</span> <span class="n">version</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">versions</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_parse_single_version</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">type_comments</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">SyntaxError</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+    <span class="k">raise</span> <span class="ne">SyntaxError</span><span class="p">(</span><span class="n">first_error</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_normalize</span><span class="p">(</span><span class="n">lineend</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="c1"># To normalize, we strip any leading and trailing space from</span>
+    <span class="c1"># each line...</span>
+    <span class="n">stripped</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">value</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()]</span>
+    <span class="n">normalized</span> <span class="o">=</span> <span class="n">lineend</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">stripped</span><span class="p">)</span>
+    <span class="c1"># ...and remove any blank lines at the beginning and end of</span>
+    <span class="c1"># the whole string</span>
+    <span class="k">return</span> <span class="n">normalized</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="stringify_ast">
+<a class="viewcode-back" href="../../api/black.parsing.html#black.parsing.stringify_ast">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">stringify_ast</span><span class="p">(</span><span class="n">node</span><span class="p">:</span> <span class="n">ast</span><span class="o">.</span><span class="n">AST</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Simple visitor generating strings to compare ASTs by content."""</span>
+    <span class="k">return</span> <span class="n">_stringify_ast</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="p">[])</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_stringify_ast_with_new_parent</span><span class="p">(</span>
+    <span class="n">node</span><span class="p">:</span> <span class="n">ast</span><span class="o">.</span><span class="n">AST</span><span class="p">,</span> <span class="n">parent_stack</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ast</span><span class="o">.</span><span class="n">AST</span><span class="p">],</span> <span class="n">new_parent</span><span class="p">:</span> <span class="n">ast</span><span class="o">.</span><span class="n">AST</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="n">parent_stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_parent</span><span class="p">)</span>
+    <span class="k">yield from</span> <span class="n">_stringify_ast</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">parent_stack</span><span class="p">)</span>
+    <span class="n">parent_stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_stringify_ast</span><span class="p">(</span><span class="n">node</span><span class="p">:</span> <span class="n">ast</span><span class="o">.</span><span class="n">AST</span><span class="p">,</span> <span class="n">parent_stack</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ast</span><span class="o">.</span><span class="n">AST</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">Constant</span><span class="p">)</span>
+        <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="s2">"u"</span>
+    <span class="p">):</span>
+        <span class="c1"># It's a quirk of history that we strip the u prefix over here. We used to</span>
+        <span class="c1"># rewrite the AST nodes for Python version compatibility and we never copied</span>
+        <span class="c1"># over the kind</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">kind</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">yield</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="s1">'    '</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">parent_stack</span><span class="p">)</span><span class="si">}{</span><span class="n">node</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">("</span>
+
+    <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">_fields</span><span class="p">):</span>
+        <span class="c1"># TypeIgnore has only one field 'lineno' which breaks this comparison</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">TypeIgnore</span><span class="p">):</span>
+            <span class="k">break</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">value</span><span class="p">:</span> <span class="nb">object</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">field</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="k">yield</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="s1">'    '</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">parent_stack</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="si">}{</span><span class="n">field</span><span class="si">}</span><span class="s2">="</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
+                <span class="c1"># Ignore nested tuples within del statements, because we may insert</span>
+                <span class="c1"># parentheses and they change the AST.</span>
+                <span class="k">if</span> <span class="p">(</span>
+                    <span class="n">field</span> <span class="o">==</span> <span class="s2">"targets"</span>
+                    <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">Delete</span><span class="p">)</span>
+                    <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">Tuple</span><span class="p">)</span>
+                <span class="p">):</span>
+                    <span class="k">for</span> <span class="n">elt</span> <span class="ow">in</span> <span class="n">_unwrap_tuples</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+                        <span class="k">yield from</span> <span class="n">_stringify_ast_with_new_parent</span><span class="p">(</span>
+                            <span class="n">elt</span><span class="p">,</span> <span class="n">parent_stack</span><span class="p">,</span> <span class="n">node</span>
+                        <span class="p">)</span>
+
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">AST</span><span class="p">):</span>
+                    <span class="k">yield from</span> <span class="n">_stringify_ast_with_new_parent</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">parent_stack</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">AST</span><span class="p">):</span>
+            <span class="k">yield from</span> <span class="n">_stringify_ast_with_new_parent</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">parent_stack</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">normalized</span><span class="p">:</span> <span class="nb">object</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">Constant</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="n">field</span> <span class="o">==</span> <span class="s2">"value"</span>
+                <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">parent_stack</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span>
+                <span class="c1"># Any standalone string, ideally this would</span>
+                <span class="c1"># exactly match black.nodes.is_docstring</span>
+                <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parent_stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">ast</span><span class="o">.</span><span class="n">Expr</span><span class="p">)</span>
+            <span class="p">):</span>
+                <span class="c1"># Constant strings may be indented across newlines, if they are</span>
+                <span class="c1"># docstrings; fold spaces after newlines when comparing. Similarly,</span>
+                <span class="c1"># trailing and leading space may be removed.</span>
+                <span class="n">normalized</span> <span class="o">=</span> <span class="n">_normalize</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">field</span> <span class="o">==</span> <span class="s2">"type_comment"</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="c1"># Trailing whitespace in type comments is removed.</span>
+                <span class="n">normalized</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">normalized</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">yield</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="s1">'    '</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">parent_stack</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="si">}{</span><span class="n">normalized</span><span class="si">!r}</span><span class="s2">,  #"</span>
+                <span class="sa">f</span><span class="s2">" </span><span class="si">{</span><span class="n">value</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">"</span>
+            <span class="p">)</span>
+
+    <span class="k">yield</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="s1">'    '</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">parent_stack</span><span class="p">)</span><span class="si">}</span><span class="s2">)  # /</span><span class="si">{</span><span class="n">node</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">"</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_unwrap_tuples</span><span class="p">(</span><span class="n">node</span><span class="p">:</span> <span class="n">ast</span><span class="o">.</span><span class="n">Tuple</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">ast</span><span class="o">.</span><span class="n">AST</span><span class="p">]:</span>
+    <span class="k">for</span> <span class="n">elt</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">elts</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">elt</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">Tuple</span><span class="p">):</span>
+            <span class="k">yield from</span> <span class="n">_unwrap_tuples</span><span class="p">(</span><span class="n">elt</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">elt</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2026, Laboratorio IE0417.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

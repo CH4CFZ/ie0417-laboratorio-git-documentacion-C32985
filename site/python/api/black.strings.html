@@ -1,0 +1,249 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>black.strings module &mdash; documentación de Black - 0.1 (commit 8947c48)</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=0dabe907"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=f85f4cfb"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+    <link rel="next" title="black.trans module" href="black.trans.html" />
+    <link rel="prev" title="black.schema module" href="black.schema.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Black
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenidos:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../introduccion.html">Introducción a Black</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduccion.html#que-es-black">¿Qué es Black?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduccion.html#organizacion-del-codigo-fuente">Organización del código fuente</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../introduccion.html#alcance-de-esta-documentacion">Alcance de esta documentación</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="modules.html">black</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="black.html">black package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Black</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../introduccion.html">Introducción a Black</a></li>
+          <li class="breadcrumb-item"><a href="modules.html">black</a></li>
+          <li class="breadcrumb-item"><a href="black.html">black package</a></li>
+      <li class="breadcrumb-item active">black.strings module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/black.strings.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-black.strings">
+<span id="black-strings-module"></span><h1>black.strings module<a class="headerlink" href="#module-black.strings" title="Link to this heading"></a></h1>
+<p>Simple formatting on strings. Further string formatting code is in trans.py.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="black.strings.sub_twice">
+<span class="sig-prename descclassname"><span class="pre">black.strings.</span></span><span class="sig-name descname"><span class="pre">sub_twice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Pattern</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">replacement</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">original</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/black/strings.html#sub_twice"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.strings.sub_twice" title="Link to this definition"></a></dt>
+<dd><p>Replace <cite>regex</cite> with <cite>replacement</cite> twice on <cite>original</cite>.</p>
+<p>This is used by string normalization to perform replaces on
+overlapping matches.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.strings.has_triple_quotes">
+<span class="sig-prename descclassname"><span class="pre">black.strings.</span></span><span class="sig-name descname"><span class="pre">has_triple_quotes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/black/strings.html#has_triple_quotes"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.strings.has_triple_quotes" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Devuelve<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True iff &#64;string starts with three quotation characters.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.strings.lines_with_leading_tabs_expanded">
+<span class="sig-prename descclassname"><span class="pre">black.strings.</span></span><span class="sig-name descname"><span class="pre">lines_with_leading_tabs_expanded</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/strings.html#lines_with_leading_tabs_expanded"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.strings.lines_with_leading_tabs_expanded" title="Link to this definition"></a></dt>
+<dd><p>Splits string into lines and expands only leading tabs.</p>
+<p>Black normalizes code indentation to four-space columns, so leading tabs in
+docstrings need the same width to keep relative indentation stable.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.strings.fix_multiline_docstring">
+<span class="sig-prename descclassname"><span class="pre">black.strings.</span></span><span class="sig-name descname"><span class="pre">fix_multiline_docstring</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">docstring</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/black/strings.html#fix_multiline_docstring"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.strings.fix_multiline_docstring" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.strings.get_string_prefix">
+<span class="sig-prename descclassname"><span class="pre">black.strings.</span></span><span class="sig-name descname"><span class="pre">get_string_prefix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/black/strings.html#get_string_prefix"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.strings.get_string_prefix" title="Link to this definition"></a></dt>
+<dd><dl class="simple">
+<dt>Pre-conditions:</dt><dd><ul class="simple">
+<li><p>assert_is_leaf_string(&#64;string)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve<span class="colon">:</span></dt>
+<dd class="field-odd"><p>&#64;string’s prefix (e.g. “”, “r”, “f”, or “rf”).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.strings.assert_is_leaf_string">
+<span class="sig-prename descclassname"><span class="pre">black.strings.</span></span><span class="sig-name descname"><span class="pre">assert_is_leaf_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/strings.html#assert_is_leaf_string"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.strings.assert_is_leaf_string" title="Link to this definition"></a></dt>
+<dd><p>Checks the pre-condition that &#64;string has the format that you would expect
+of <cite>leaf.value</cite> where <cite>leaf</cite> is some Leaf such that <cite>leaf.type ==
+token.STRING</cite>. A more precise description of the pre-conditions that are
+checked are listed below.</p>
+<dl>
+<dt>Pre-conditions:</dt><dd><ul class="simple">
+<li><p>&#64;string starts with either “, «, &lt;prefix&gt;”, or &lt;prefix&gt;» where</p></li>
+</ul>
+<p><cite>set(&lt;prefix&gt;)</cite> is some subset of <cite>set(STRING_PREFIX_CHARS)</cite>.
+* &#64;string ends with a quote character (” or «).</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Muestra<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>AssertionError</strong><strong>(</strong><strong>...</strong><strong>) </strong><strong>if the pre-conditions listed above are not</strong> – </p></li>
+<li><p><strong>satisfied.</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.strings.normalize_string_prefix">
+<span class="sig-prename descclassname"><span class="pre">black.strings.</span></span><span class="sig-name descname"><span class="pre">normalize_string_prefix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/black/strings.html#normalize_string_prefix"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.strings.normalize_string_prefix" title="Link to this definition"></a></dt>
+<dd><p>Make all string prefixes lowercase.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.strings.normalize_string_quotes">
+<span class="sig-prename descclassname"><span class="pre">black.strings.</span></span><span class="sig-name descname"><span class="pre">normalize_string_quotes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/black/strings.html#normalize_string_quotes"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.strings.normalize_string_quotes" title="Link to this definition"></a></dt>
+<dd><p>Prefer double quotes but only if it doesn’t cause more escaping.</p>
+<p>Adds or removes backslashes as appropriate.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.strings.normalize_fstring_quotes">
+<span class="sig-prename descclassname"><span class="pre">black.strings.</span></span><span class="sig-name descname"><span class="pre">normalize_fstring_quotes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">quote</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">middles</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Leaf</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_raw_fstring</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Leaf</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/black/strings.html#normalize_fstring_quotes"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.strings.normalize_fstring_quotes" title="Link to this definition"></a></dt>
+<dd><p>Prefer double quotes but only if it doesn’t cause more escaping.</p>
+<p>Adds or removes backslashes as appropriate.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.strings.normalize_unicode_escape_sequences">
+<span class="sig-prename descclassname"><span class="pre">black.strings.</span></span><span class="sig-name descname"><span class="pre">normalize_unicode_escape_sequences</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Leaf</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/black/strings.html#normalize_unicode_escape_sequences"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.strings.normalize_unicode_escape_sequences" title="Link to this definition"></a></dt>
+<dd><p>Replace hex codes in Unicode escape sequences with lowercase representation.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.strings.char_width">
+<span class="sig-prename descclassname"><span class="pre">black.strings.</span></span><span class="sig-name descname"><span class="pre">char_width</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">char</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../_modules/black/strings.html#char_width"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.strings.char_width" title="Link to this definition"></a></dt>
+<dd><p>Return the width of a single character as it would be displayed in a
+terminal or editor (which respects Unicode East Asian Width).</p>
+<p>Full width characters are counted as 2, while half width characters are
+counted as 1.  Also control characters are counted as 0.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.strings.str_width">
+<span class="sig-prename descclassname"><span class="pre">black.strings.</span></span><span class="sig-name descname"><span class="pre">str_width</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../_modules/black/strings.html#str_width"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.strings.str_width" title="Link to this definition"></a></dt>
+<dd><p>Return the width of <cite>line_str</cite> as it would be displayed in a terminal
+or editor (which respects Unicode East Asian Width).</p>
+<p>You could utilize this function to determine, for example, if a string
+is too wide to display in a terminal or editor.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="black.strings.count_chars_in_width">
+<span class="sig-prename descclassname"><span class="pre">black.strings.</span></span><span class="sig-name descname"><span class="pre">count_chars_in_width</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../_modules/black/strings.html#count_chars_in_width"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#black.strings.count_chars_in_width" title="Link to this definition"></a></dt>
+<dd><p>Count the number of characters in <cite>line_str</cite> that would fit in a
+terminal or editor of <cite>max_width</cite> (which respects Unicode East Asian
+Width).</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="black.schema.html" class="btn btn-neutral float-left" title="black.schema module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="black.trans.html" class="btn btn-neutral float-right" title="black.trans module" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2026, Laboratorio IE0417.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
