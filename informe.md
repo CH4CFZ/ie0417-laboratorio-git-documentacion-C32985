@@ -118,9 +118,11 @@
 Salida de `git log --graph --oneline --decorate --all`, capturada el 2 de setiembre del 2026:
 
 ```text
-* 238810a (HEAD -> main) Cambiando problema con los corchtes y una pregunta
-* d65c9cc (origin/main, origin/HEAD) Agregar hash del tag final
-*   c4ce10a (tag: v1.0-laboratorio) integrando README, informe, capturas e historial de git a main
+* faa4bcf (HEAD -> main, origin/main, origin/HEAD) Arreglando errores visuales
+* e237707 Actualizando historial de git
+* 238810a Cambiando problema con los corchtes y una pregunta
+* d65c9cc Agregar hash del tag final
+*   c4ce10a integrando README, informe, capturas e historial de git a main
 |\  
 | * f3d663b (origin/finalizacion, finalizacion) agregando el historial de git
 | * 860b8dc agregando el readme, informe e imagenes
