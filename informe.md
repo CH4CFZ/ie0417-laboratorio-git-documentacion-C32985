@@ -173,7 +173,7 @@ A lo largo del laboratorio se trató de implementar una rama para cada parte del
 | Campo | Valor |
 |---|---|
 | URL del repositorio de GitHub | https://github.com/CH4CFZ/ie0417-laboratorio-git-documentacion-C32985.git |
-| Hash del commit del tag `v1.0-laboratorio` | `95b43ed86117fe9023de79d5bfe18584342fbe4b` |
+| Hash del commit del tag `v1.0-laboratorio` | `8f4444596f56eca78a3694e570a3342c8697bdc9` |
 | URL pública de la portada | https://monumental-lokum-aedc73.netlify.app/ |
 | URL directa de la documentación Doxygen | https://monumental-lokum-aedc73.netlify.app/cpp/ |
 | URL directa de la documentación Sphinx | https://monumental-lokum-aedc73.netlify.app/python/ |
