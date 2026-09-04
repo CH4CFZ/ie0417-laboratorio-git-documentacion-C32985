@@ -22,7 +22,7 @@
 
 ![Nivel completado](evidencias/1.png)
 
-**Aprendizaje:** [Se aprendio a realizar un commit basico en git y como se ve en el historial]
+**Aprendizaje:** Se aprendio a realizar un commit basico en git y como se ve en el historial
 
 ---
 
@@ -42,7 +42,7 @@
 
 ![Nivel completado](evidencias/2.png)
 
-**Aprendizaje:** [Se aprendio la base para crear ramas]
+**Aprendizaje:** Se aprendio la base para crear ramas
 
 ---
 
@@ -63,7 +63,7 @@
 
 ![Nivel completado](evidencias/3.png)
 
-**Aprendizaje:** [Se adquirieron las bases para ir entendiendo lo que es mergear]
+**Aprendizaje:** Se adquirieron las bases para ir entendiendo lo que es mergear
 
 ---
 
@@ -86,7 +86,7 @@
 
 ![Nivel completado](evidencias/4.png)
 
-**Aprendizaje:** [Se comprendio como juntar el trabajo de varias ramas]
+**Aprendizaje:** Se comprendio como juntar el trabajo de varias ramas
 
 ---
 
@@ -104,7 +104,7 @@
 
 ![Nivel completado](evidencias/5.png)
 
-**Aprendizaje:** [Se comprendio como funciona el HEAD y como moverlo a un commit en particular]
+**Aprendizaje:** Se comprendio como funciona el HEAD y como moverlo a un commit en particular
 
 ---
 
@@ -122,7 +122,7 @@
 
 ![Nivel completado](evidencias/6.png)
 
-**Aprendizaje:** [Se aprendio a trasladar las ramas utilizando del ^]
+**Aprendizaje:** Se aprendio a trasladar las ramas utilizando del ^
 
 ---
 
@@ -141,7 +141,7 @@
 
 ![Nivel completado](evidencias/7.png)
 
-**Aprendizaje:** [Se logro implementar las referencias relativas en conjunto con la bandera -f]
+**Aprendizaje:** Se logro implementar las referencias relativas en conjunto con la bandera -f
 
 ---
 
@@ -162,7 +162,7 @@
 
 ![Nivel completado](evidencias/8.png)
 
-**Aprendizaje:** [Se comprendio a la perfeccion la diferencia entre como deshacer cambios de forma local y remota]
+**Aprendizaje:** Se comprendio a la perfeccion la diferencia entre como deshacer cambios de forma local y remota
 
 ---
 
@@ -180,7 +180,7 @@
 
 ![Nivel completado](evidencias/9.png)
 
-**Aprendizaje:** [Se comprendio como tomar copias de ciertos commits sin fusionar todo]
+**Aprendizaje:** Se comprendio como tomar copias de ciertos commits sin fusionar todo
 
 ---
 
@@ -199,7 +199,7 @@
 
 ![Nivel completado](evidencias/10.png)
 
-**Aprendizaje:** [Se aprendio como agrupar commits en un orden conveniente]
+**Aprendizaje:** Se aprendio como agrupar commits en un orden conveniente
 
 ---
 
@@ -218,7 +218,7 @@
 
 ![Nivel completado](evidencias/11.png)
 
-**Aprendizaje:** [Se fortalecio lo aprendido sobre el rebase iterativo y el rebase normal]
+**Aprendizaje:** Se fortalecio lo aprendido sobre el rebase iterativo y el rebase normal
 
 ---
 
@@ -239,7 +239,7 @@
 
 ![Nivel completado](evidencias/12.png)
 
-**Aprendizaje:** [Se fortalecio el manejo de commits aprendido con anteriorida y la forma de tratar los mismos]
+**Aprendizaje:** Se fortalecio el manejo de commits aprendido con anteriorida y la forma de tratar los mismos
 
 ---
 
@@ -260,7 +260,7 @@
 
 ![Nivel completado](evidencias/13.png)
 
-**Aprendizaje:** [Se mejoro el manejo de los commits teniendo dificultades en el orden de los comandos por lo extenso del arbol]
+**Aprendizaje:** Se mejoro el manejo de los commits teniendo dificultades en el orden de los comandos por lo extenso del arbol
 
 ---
 
@@ -280,7 +280,7 @@
 
 ![Nivel completado](evidencias/14.png)
 
-**Aprendizaje:** [Se aprendio el principio basico de los tags en git y su utilidad en el repositorio.]
+**Aprendizaje:** Se aprendio el principio basico de los tags en git y su utilidad en el repositorio.
 
 ---
 
@@ -292,13 +292,13 @@
 
 | Paso | Comando | Efecto sobre el repositorio |
 |---:|---|---|
-| 1 | `git describe main` | Muestra una cadena con el formato `<tag>_<cantidad_de_commits>_g<hash_abreviado>`, indicando el tag más reciente alcanzable desde `main` y cuántos commits lo separan de él. No modifica el repositorio; es un comando de solo lectura. |
+| 1 | `git commit` | Se genera el commit necesario en la rama bugFix para obtener la estructura deseada. |
 
 **Estado final:** Se obtiene la descripción textual solicitada por el nivel para cada rama o commit indicado, sin alterar el árbol.
 
 ![Nivel completado](evidencias/15.png)
 
-**Aprendizaje:** [Se reconocio el valor de este nuevo comando para el manejo de los commit]
+**Aprendizaje:** Se reconocio el valor de este nuevo comando para el manejo de los commit
 
 ---
 
@@ -320,7 +320,7 @@
 
 ![Nivel completado](evidencias/16.png)
 
-**Aprendizaje:** [Se mejoro la forma de iterar sobre las rammas y sus posiciones]
+**Aprendizaje:** Se mejoro la forma de iterar sobre las rammas y sus posiciones
 
 ---
 
@@ -338,7 +338,7 @@
 
 ![Nivel completado](evidencias/17.png)
 
-**Aprendizaje:** [Se aorendio a crear y mover una rama de forma mas compleja y simultanea]
+**Aprendizaje:** Se aorendio a crear y mover una rama de forma mas compleja y simultanea
 
 ---
 
@@ -360,7 +360,7 @@
 
 ![Nivel completado](evidencias/18.png)
 
-**Aprendizaje:** [Se finalizo el aprendizaje local y se logro entender a profundidad como tratar a los commits.]
+**Aprendizaje:** Se finalizo el aprendizaje local y se logro entender a profundidad como tratar a los commits.
 
 ---
 
@@ -380,7 +380,7 @@
 
 ![Nivel completado](evidencias/1R.png)
 
-**Aprendizaje:** [Se aprendio sobre el proceso de clonado para un repositorio remoto]
+**Aprendizaje:** Se aprendio sobre el proceso de clonado para un repositorio remoto
 
 ---
 
@@ -401,7 +401,7 @@
 
 ![Nivel completado](evidencias/2R.png)
 
-**Aprendizaje:** [Se aprendio como moverse y actualizar los commit en ramas remotas]
+**Aprendizaje:** Se aprendio como moverse y actualizar los commit en ramas remotas
 
 ---
 
@@ -419,7 +419,7 @@
 
 ![Nivel completado](evidencias/3R.png)
 
-**Aprendizaje:** [Se entendio el efecto del comando `fetch` en los repositorios de trabajo remoto evitando la fusion con lo local]
+**Aprendizaje:** Se entendio el efecto del comando `fetch` en los repositorios de trabajo remoto evitando la fusion con lo local
 
 ---
 
@@ -437,7 +437,7 @@
 
 ![Nivel completado](evidencias/4R.png)
 
-**Aprendizaje:** [Se comprendio como realizar el proceso de refrescamiento de un repositorio]
+**Aprendizaje:** Se comprendio como realizar el proceso de refrescamiento de un repositorio
 
 ---
 
@@ -456,7 +456,7 @@
 
 ![Nivel completado](evidencias/5R.png)
 
-**Aprendizaje:** [Se aprendio como se debe colaborar con cambios en el repositorio remoto e integrar lo propio ]
+**Aprendizaje:** Se aprendio como se debe colaborar con cambios en el repositorio remoto e integrar lo propio
 
 ---
 
@@ -476,7 +476,7 @@
 
 ![Nivel completado](evidencias/6R.png)
 
-**Aprendizaje:** [Se comprendio como subir los commits locales a repositorios remotos]
+**Aprendizaje:** Se comprendio como subir los commits locales a repositorios remotos
 
 ---
 
@@ -497,7 +497,7 @@
 
 ![Nivel completado](evidencias/7R.png)
 
-**Aprendizaje:** [Se comprendieron las base minimas para resolver un conflcto]
+**Aprendizaje:** Se comprendieron las base minimas para resolver un conflcto
 
 ---
 
@@ -509,7 +509,6 @@
 
 | Paso | Comando | Efecto sobre el repositorio |
 |---:|---|---|
-
 | 1 | `git reset o/main` | Mueve el puntero de la rama local activa de vuelta al estado conocido de `o/main`, dejando "sueltos" los commits propios (pero sin perderlos, siguen existiendo como objetos). |
 | 2 | `git checkout -b feature C2` | Crea una nueva rama `feature` apuntando al commit propio que se quería conservar (identificador según el árbol del nivel), en lugar de forzar `main`. |
 | 3 | `git push` (o `git push origin feature`) | Sube la nueva rama `feature` a `origin`, sin necesidad de tocar el historial ya publicado de `main`. |
@@ -520,7 +519,7 @@
 
 ![Nivel completado](evidencias/8R.png)
 
-**Aprendizaje:** [Se comprendio de manera optima como integrar cambios remotos cuando main esta protegida]
+**Aprendizaje:** Se comprendio de manera optima como integrar cambios remotos cuando main esta protegida
 
 ---
 
@@ -543,7 +542,7 @@
 
 ![Nivel completado](evidencias/9R.png)
 
-**Aprendizaje:** [Se comprendio de mejor como se integra el trabajo de varias ramas y aceptando cambios realizados en el remoto]
+**Aprendizaje:** Se comprendio de mejor como se integra el trabajo de varias ramas y aceptando cambios realizados en el remoto
 
 ---
 
@@ -566,7 +565,7 @@
 
 ![Nivel completado](evidencias/10R.png)
 
-**Aprendizaje:** [Se comprendio de mejor manera como se fusionan las ramas desde el remoto al local sin problemas]
+**Aprendizaje:** Se comprendio de mejor manera como se fusionan las ramas desde el remoto al local sin problemas
 
 ---
 
@@ -587,7 +586,7 @@
 
 ![Nivel completado](evidencias/11R.png)
 
-**Aprendizaje:** [Se vieron las relaciones de seguimiento logrando entender donde apuntan pull y push]
+**Aprendizaje:** Se vieron las relaciones de seguimiento logrando entender donde apuntan pull y push
 
 ---
 
@@ -606,7 +605,7 @@
  
 ![Nivel completado](evidencias/12R.png)
 
-**Aprendizaje:** [Se mejoro de manera considerada la sintaxis de git push enviando asi lo que se requiera segun el caso]
+**Aprendizaje:** Se mejoro de manera considerada la sintaxis de git push enviando asi lo que se requiera segun el caso
 
 ---
 
@@ -625,7 +624,7 @@
 
 ![Nivel completado](evidencias/13R.png)
 
-**Aprendizaje:** [Se mejoro eluso del git push incluyendo los argumentos basicos y el borrado de una rama.]
+**Aprendizaje:** Se mejoro eluso del git push incluyendo los argumentos basicos y el borrado de una rama.
 
 ---
 
@@ -647,7 +646,7 @@
 
 ![Nivel completado](evidencias/14R.png)
 
-**Aprendizaje:** [Se mejoro el uso del comando git fetch por medio del uso de sus argumentos trayendo asi ramas remotas a las locales.]
+**Aprendizaje:** Se mejoro el uso del comando git fetch por medio del uso de sus argumentos trayendo asi ramas remotas a las locales.
 
 ---
 
@@ -666,7 +665,7 @@
 
 ![Nivel completado](evidencias/15R.png)
 
-**Aprendizaje:** [Se loro borrar referencias remotas y crear ramas vacias segun a como corresponda]
+**Aprendizaje:** Se loro borrar referencias remotas y crear ramas vacias segun a como corresponda
 
 ---
 
@@ -685,7 +684,7 @@
 
 ![Nivel completado](evidencias/16R.png)
 
-**Aprendizaje:** [Se mejoro el uso de git pull combinandolo con comandos extra
+**Aprendizaje:** Se mejoro el uso de git pull combinandolo con comandos extra
 
 ---
 
@@ -703,44 +702,44 @@
 
 | ID | Nivel | Completado |
 |---|---|---|
-| M1.1 | Introduction to Git Commits | [Si] |
-| M1.2 | Branching in Git | [Si] |
-| M1.3 | Merging in Git | [Si] |
-| M1.4 | Rebase Introduction | [Si] |
-| M2.1 | Detach yo' HEAD | [Si] |
-| M2.2 | Relative Refs (^) | [Si] |
-| M2.3 | Relative Refs #2 (~) | [Si] |
-| M2.4 | Reversing Changes in Git | [Si] |
-| M3.1 | Cherry-pick Intro | [Si] |
-| M3.2 | Interactive Rebase Intro | [Si] |
-| M4.1 | Grabbing Just 1 Commit | [Si] |
-| M4.2 | Juggling Commits | [Si] |
-| M4.3 | Juggling Commits #2 | [Si] |
-| M4.4 | Git Tags | [Si] |
-| M4.5 | Git Describe | [Si] |
-| M5.1 | Rebasing over 9000 times | [Si] |
-| M5.2 | Multiple parents | [Si] |
-| M5.3 | Branch Spaghetti | [Si] |
-| R1.1 | Clone Intro | [Si] |
-| R1.2 | Remote Branches | [Si] |
-| R1.3 | Git Fetchin' | [Si] |
-| R1.4 | Git Pullin' | [Si] |
-| R1.5 | Faking Teamwork | [Si] |
-| R1.6 | Git Pushin' | [Si] |
-| R1.7 | Diverged History | [Si] |
-| R1.8 | Locked Main | [Si] |
-| R2.1 | Push Main! | [Si] |`
-| R2.2 | Merging with remotes | [Si] |
-| R2.3 | Remote Tracking | [Si] |
-| R2.4 | Git push arguments | [Si] |
-| R2.5 | Git push arguments - Expanded! | [Si] |
-| R2.6 | Fetch arguments | [Si] |
-| R2.7 | Source of nothing | [Si] |
-| R2.8 | Pull arguments | [Si] |
+| M1.1 | Introduction to Git Commits | Sí |
+| M1.2 | Branching in Git | Sí |
+| M1.3 | Merging in Git | Sí |
+| M1.4 | Rebase Introduction | Sí |
+| M2.1 | Detach yo' HEAD | Sí |
+| M2.2 | Relative Refs (^) | Sí |
+| M2.3 | Relative Refs #2 (~) | Sí |
+| M2.4 | Reversing Changes in Git | Sí |
+| M3.1 | Cherry-pick Intro | Sí |
+| M3.2 | Interactive Rebase Intro | Sí |
+| M4.1 | Grabbing Just 1 Commit | Sí |
+| M4.2 | Juggling Commits | Sí |
+| M4.3 | Juggling Commits #2 | Sí |
+| M4.4 | Git Tags | Sí |
+| M4.5 | Git Describe | Sí |
+| M5.1 | Rebasing over 9000 times | Sí |
+| M5.2 | Multiple parents | Sí |
+| M5.3 | Branch Spaghetti | Sí |
+| R1.1 | Clone Intro | Sí |
+| R1.2 | Remote Branches | Sí |
+| R1.3 | Git Fetchin' | Sí |
+| R1.4 | Git Pullin' | Sí |
+| R1.5 | Faking Teamwork | Sí |
+| R1.6 | Git Pushin' | Sí |
+| R1.7 | Diverged History | Sí |
+| R1.8 | Locked Main | Sí |
+| R2.1 | Push Main! | Sí |`
+| R2.2 | Merging with remotes | Sí |
+| R2.3 | Remote Tracking | Sí |
+| R2.4 | Git push arguments | Sí |
+| R2.5 | Git push arguments - Expanded! | Sí |
+| R2.6 | Fetch arguments | Sí |
+| R2.7 | Source of nothing | Sí |
+| R2.8 | Pull arguments | Sí |
 
 ## Síntesis de conceptos aprendidos (400-600 palabras)
 
-[A lo largo de la resolución de los 34 niveles de Learn Git Branching se aprendió, paso a paso, el funcionamiento interno de Git, partiendo de lo básico hasta los conceptos más complejos de trabajo remoto.
+A lo largo de la resolución de los 34 niveles de Learn Git Branching se aprendió, paso a paso, el funcionamiento interno de Git, partiendo de lo básico hasta los conceptos más complejos de trabajo remoto.
 
 En la sección Main, primero se aprendió a realizar un commit básico y cómo se ve reflejado en el historial, sentando la base para crear ramas. Se adquirieron las bases para entender lo que es mergear, y se comprendió cómo juntar el trabajo de varias ramas mediante el rebase. Se comprendió cómo funciona el HEAD y cómo moverlo a un commit en particular, además de aprender a trasladar las ramas utilizando el símbolo ^. Se logró implementar las referencias relativas junto con la bandera -f, y se comprendió la diferencia entre deshacer cambios de forma local y de forma remota.
 
@@ -748,7 +747,7 @@ Conforme avanzaron los niveles, se comprendió cómo tomar copias de commits sin
 
 Ya en la sección Remote, se aprendió el proceso de clonado de un repositorio remoto y cómo actualizar commits en ramas remotas. Se entendió el efecto del comando fetch evitando la fusión automática con lo local, y se comprendió cómo realizar el refrescamiento de un repositorio mediante pull. Se aprendió cómo colaborar con cambios en el repositorio remoto e integrar lo propio, y cómo subir los commits locales al remoto. Se comprendieron las bases para resolver un conflicto de historial divergente, e integrar cambios remotos cuando main está protegida.
 
-En los últimos niveles se comprendió cómo se integra el trabajo de varias ramas aceptando cambios del remoto, con rebase o con merge. Se vieron las relaciones de seguimiento, entendiendo hacia dónde apuntan pull y push, y se mejoró la sintaxis de git push, incluyendo sus argumentos y el borrado de una rama. Se mejoró también el uso de git fetch mediante argumentos, trayendo ramas remotas a las locales, y se logró borrar referencias remotas y crear ramas vacías según corresponda. Por último, se mejoró el uso de git pull combinándolo con comandos extra, cerrando el recorrido por los 34 niveles.]
+En los últimos niveles se comprendió cómo se integra el trabajo de varias ramas aceptando cambios del remoto, con rebase o con merge. Se vieron las relaciones de seguimiento, entendiendo hacia dónde apuntan pull y push, y se mejoró la sintaxis de git push, incluyendo sus argumentos y el borrado de una rama. Se mejoró también el uso de git fetch mediante argumentos, trayendo ramas remotas a las locales, y se logró borrar referencias remotas y crear ramas vacías según corresponda. Por último, se mejoró el uso de git pull combinándolo con comandos extra, cerrando el recorrido por los 34 niveles.
 
 ---
 
