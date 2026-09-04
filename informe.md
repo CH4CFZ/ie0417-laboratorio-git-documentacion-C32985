@@ -115,10 +115,46 @@
 
 ## 11. Historial de Git de este repositorio
 
-Salida de `git log --graph --oneline --decorate --all`, capturada el [COMPLETAR: fecha]:
+Salida de `git log --graph --oneline --decorate --all`, capturada el [2 de setiembre del 2026]:
 
 ```text
-[COMPLETAR: pegar acá la salida completa del comando]
+[ 860b8dc (HEAD -> finalizacion, origin/finalizacion) agregando el readme, informe e imagenes
+*   ed4d24a (origin/main, origin/HEAD, main) agregando el api restante a main
+|\  
+| * 2205c9d (origin/lugarde-publicacion, lugarde-publicacion) agregando archivos restantes para sphinx
+* | 7878eaf merge: integrar script de build y portada del sitio a main
+|\| 
+| * cafb7dd Agregando los cambios de una nueva generacion de docs
+| * 9117420 agregando portada de navegacion del sitio publicado
+| * 6cd7f62 agregando el script que genera los docs
+|/  
+*   655eabb agregando archivos finales de sphinx y doxy
+|\  
+| * 267255e (origin/cambios-documentacion, cambios-documentacion) Agregando archivos finales de sphinx
+* | 9138ade Integrando los archivos doxyfile
+|\| 
+| * d49e890 Archivos de doxygen
+|/  
+*   614531f (publicacion) merge: integrar documentacion Sphinx del proyecto Black (Parte IV) a main
+|\  
+| * 21b3f90 (origin/sphinx-docs, sphinx-docs) agregando registro de generacion
+| * bb07113 agregando requirements-docs.txt
+| * 880165b configurarando conf.py, index y pagina narrativa propia
+| * f458ced Colocando la seleccion del proyecto sphinx
+|/  
+*   5288953 Fusionando la documentacion de doxygen
+|\  
+| * 729dfb2 (origin/doxygen-docs, doxygen-docs) agregando el registro de generacion
+| * 680d6f3 configurar Doxyfile propio y pagina principal
+| * ae13e12 Agregando el archivo de seleccion (C++)
+|/  
+*   ce8777a Integrar el trabajo realizado en git-learn
+|\  
+| * ea40f5d (origin/git-learn, git-learn) Quitando error de formato
+| * 4807a97 Agregando la informacion recolectada de git
+|/  
+* 03253fb Initial commit
+]
 ```
 
 [A lo largo del laboratorio se trató de implementar una rama para cada parte del mismo; por ejemplo, la parte de Git tiene su rama, la parte de Doxygen la suya, y así con las demás partes, en las cuales se hacía push de sus modificaciones y, cuando se culminaba esa parte, se hacía un merge a main para contener todos los cambios realizados. Esto se repitió así hasta tener la rama llamada finalización, encargada de subir lo restante y culminar el laboratorio.]
