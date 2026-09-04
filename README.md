@@ -1,14 +1,14 @@
 # Laboratorio 1 - Control de versiones y documentación automática de software
 
 **Curso:** IE0417 - Diseño de Software para Ingeniería
-**Estudiante:** [Isaac Flores Zamora]
-**Carné:** [C32985]
+**Estudiante:** Isaac Flores Zamora
+**Carné:** C32985
 
 ## Repositorio y sitio publicado
 
 | Recurso | URL |
 |---|---|
-| Repositorio de entrega | [https://github.com/CH4CFZ/ie0417-laboratorio-git-documentacion-C32985.git] |
+| Repositorio de entrega | https://github.com/CH4CFZ/ie0417-laboratorio-git-documentacion-C32985.git |
 | Sitio publicado (portada) | https://monumental-lokum-aedc73.netlify.app/ |
 | Documentación C++ ({fmt}, generada con Doxygen) | https://monumental-lokum-aedc73.netlify.app/cpp/ |
 | Documentación Python (Black, generada con Sphinx) | https://monumental-lokum-aedc73.netlify.app/python/ |
@@ -47,6 +47,7 @@ Más detalle de cada selección en `doxygen/seleccion.md` y `sphinx/seleccion.md
 │   └── build.log
 ├── scripts/
 │   └── build-docs.sh
+├── capturas/
 └── site/
     ├── index.html
     ├── cpp/
@@ -90,10 +91,10 @@ FMT_SRC=/otra/ruta/fmt BLACK_SRC=/otra/ruta/black ./scripts/build-docs.sh
 |---|---|
 | Doxygen | 1.9.8 |
 | Graphviz | 2.43.0 |
-| Python | [3.13.3] |
+| Python | 3.13.3 |
 | Sphinx | 9.1.0 |
 | sphinx_rtd_theme | 3.1.0 |
-| Git | [2.48.1] |
+| Git | 2.48.1 |
 
 ## Licencia de este trabajo
 
