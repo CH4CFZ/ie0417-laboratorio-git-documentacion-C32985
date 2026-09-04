@@ -105,7 +105,7 @@
 | Campo | Valor |
 |---|---|
 | Fecha y hora de la prueba | 2 de septiembre del 2026 a las 3:34 p. m. |
-| Navegador utilizado | Google |
+| Navegador utilizado | Google Chrome |
 | ¿Ventana privada / sin sesión iniciada? | Sí |
 | URL de portada verificada | https://monumental-lokum-aedc73.netlify.app/ |
 | URL de Doxygen verificada | https://monumental-lokum-aedc73.netlify.app/cpp/ |
@@ -166,7 +166,7 @@ Salida de `git log --graph --oneline --decorate --all`, capturada el [2 de setie
 | Campo | Valor |
 |---|---|
 | URL del repositorio de GitHub | https://github.com/CH4CFZ/ie0417-laboratorio-git-documentacion-C32985.git |
-| Hash del commit del tag `v1.0-laboratorio` | [COMPLETAR: salida de `git rev-parse v1.0-laboratorio`] |
+| Hash del commit del tag `v1.0-laboratorio` | [95b43ed86117fe9023de79d5bfe18584342fbe4b`] |
 | URL pública de la portada | https://monumental-lokum-aedc73.netlify.app/ |
 | URL directa de la documentación Doxygen | https://monumental-lokum-aedc73.netlify.app/cpp/ |
 | URL directa de la documentación Sphinx | https://monumental-lokum-aedc73.netlify.app/python/ |
